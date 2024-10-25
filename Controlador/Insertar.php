@@ -14,7 +14,6 @@
 
         $titol = isset($titulo) ? trim(htmlspecialchars($titulo)) : '';
         $cos = isset($cuerpo) ? trim(htmlspecialchars($cuerpo)) : '';
-        var_dump($titol);
         if (empty($titol)) {
             $mensajes[] = 'El campo del titulo no puede estar vacio';
         } 
