@@ -1,0 +1,485 @@
+/* Christian Torres Barrantes */
+:root {
+  color-scheme: light dark;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a2e; /* Color de fondo opcional */
+}
+
+
+.container {
+    display: grid;
+    min-height: 100vh;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'nav content';
+}
+
+/*Barra de navegacion*/
+
+.nav-grid {
+  grid-area: nav;
+  display: flex;
+  min-height: 100vh;
+  background-color: #333; 
+  align-items: center;
+ position: fixed;
+}
+
+.nav-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  font-family: sans-serif;
+  padding: 30px;
+  position: sticky;
+  top: 0;
+  width: fit-content;
+}
+
+.nav-bar ul {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  list-style: none;
+  margin-right: 30px;
+  padding: 0;
+}
+
+.nav-bar li {
+  background-color: gray;
+  padding: 0;
+  border-radius: 10px;
+  margin-bottom: 50px;
+  position: relative;
+  width: 100%;
+}
+
+.nav-bar li a {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 0.3s ease; 
+  width: 75%;
+  height: 60%;
+}
+
+.nav-bar li:hover a {
+  background: #212120; 
+}
+
+.nav-bar li:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  max-width: 30px;
+  max-height: 30px;
+  transition: transform 0.3s; 
+}
+
+.nav-bar li:hover .icon {
+  transform: scale(1.2); 
+}
+
+.nav-bar li:hover {
+  cursor: pointer;
+}
+
+.nav-bar li span {
+  opacity: 0; 
+  transition: opacity 0.3s ease; 
+  margin-top: 10px; 
+}
+
+.nav-bar li:hover span {
+  opacity: 1; 
+}
+/* Fin barra de navegacion*/
+
+/* Posicionar el contenedor del icono en la parte superior derecha */
+.account {
+  position: fixed;
+  top: 40px;
+  right: 100px;
+  z-index: 1000;
+}
+
+/* Estilo para el contenedor del icono */
+.account-icon {
+  position: relative;
+  display: inline-block;
+}
+
+/* Estilo del icono */
+.account-icon img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+
+/* Estilo del menú desplegable (oculto por defecto) */
+.account-icon .dropdown {
+  display: none;
+  position: absolute;
+  top: 10px; /* Alinea el menú exactamente en el lugar del icono */
+  right: 40px;
+  background-color: #333;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Estilo de los enlaces dentro del desplegable */
+.account-icon .dropdown li {
+  list-style: none;
+}
+
+.account-icon .dropdown li a {
+  display: block;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: gray;
+  transition: background-color 0.3s ease;
+}
+
+.account-icon .dropdown li a:hover {
+  background-color: #212120; /* Color de fondo al pasar el ratón */
+}
+
+/* Cuando el ratón esté sobre el icono, desaparece el ícono y aparece el menú */
+.account-icon:hover img {
+  transform: scale(0.1); /* Reduce el tamaño del ícono a casi 0 */
+  opacity: 0; /* Elimina la visibilidad del ícono */
+}
+
+.account-icon:hover .dropdown {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  
+}
+
+/*   */
+
+.content {
+  grid-area: content;
+    display: flex;
+    flex-direction: column; 
+    padding-top: 2.5%;
+    padding-bottom: 5%;
+    width: 100%; /* Asegúrate de que ocupe todo el ancho del contenedor */
+    max-width: 800px; /* Controla el ancho máximo del contenido */
+    margin: 0 30%; /* Para centrar horizontalmente en contenedores más grandes */
+}
+
+/* Mostrar los articulos en dos columnas */
+.articulo-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual tamaño */
+  gap: 16px; /* Espacio entre los artículos */
+}
+
+.articulo, .selectB, .selectM {
+  max-height: 20vh;
+  overflow: hidden; /* Ocultar contenido que se desborde verticalmente */
+  overflow-y: auto; /* Añadir barra de desplazamiento vertical si el contenido es demasiado largo */
+  word-wrap: break-word; /* Asegurar que las palabras largas se ajusten al contenedor */
+  text-overflow: ellipsis;
+  border: 1px solid #ccc; /* Opcional: un borde para los artículos */
+  padding: 16px; /* Opcional: espacio interno */
+  background-color: gray; /* Opcional: fondo para los artículos */
+  border-radius: 4px; /* Opcional: bordes redondeados */
+}
+
+/* Fin de Mostrar los articulos en dos columnas*/
+.titulo {
+    text-align: center;
+   
+}
+
+.texto{
+    text-align: justify;
+    text-size-adjust: auto;
+}
+
+.content h1{
+  margin-block-start: 0%;
+  margin-block-end: 0%;
+  text-align: center;
+}
+.content h2{
+  margin-block-start: 0%;
+  margin-block-end: 0%;
+  text-align: center;
+}
+
+/* Estilos de los formilarios */
+ 
+  .formulario {
+    grid-area: content;
+    justify-content: center;
+    align-items: center;
+    
+    display: flex;
+    padding-top: 35%;
+    gap: 15px;
+    margin-top: 10px;
+    margin-left: 0;
+  }
+  
+  .formulario .contenido {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    backface-visibility: hidden;
+    padding: 65px 45px;
+    border-radius: 15px;
+    box-shadow: inset 2px 2px 10px rgba(0,0,0,1),
+    inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+  }
+  
+  .campos {
+    width: 245px;
+    min-height: 45px;
+    color: #fff;
+    outline: none;
+    transition: 0.35s;
+    padding: 0px 7px;
+    background-color: #212121;
+    border-radius: 6px;
+    border: 2px solid #212121;
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6);
+  }
+  
+  .campos::placeholder {
+    color: #999;
+    font-family: 'Times New Roman';
+  }
+  
+  .campos:focus.campos::placeholder {
+    transition: 0.3s;
+    opacity: 0;
+  }
+  
+  .campos:focus {
+    transform: scale(1.05);
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 10px rgba(0,0,0,1),
+    inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+  }
+
+  .mensaje {
+    width: 245px;
+    height: 145px;
+    min-height: 145px;
+    max-height: 300px;
+    color: #fff;
+    outline: none;
+    transition: 0.35s;
+    padding: 0px 7px;
+    background-color: #212121;
+    border-radius: 6px;
+    border: 2px solid #212121;
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6);
+    resize: vertical;
+    
+  }
+
+  .mensaje::placeholder {
+    color: #999;
+    font-family: 'Times New Roman';
+  }
+
+  .mensaje:focus.mensaje::placeholder {
+    transition: 0.3s;
+    opacity: 0;
+  }
+  
+  .mensaje:focus {
+    transform: scale(1.05);
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 10px rgba(0,0,0,1),
+    inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+  }
+
+  #caja_mensaje {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  #caja_mensaje.errors {
+    background-color: red; 
+    color: #fff;
+  }
+
+  #caja_mensaje.enviar {
+    background-color: green;
+    color: #333;
+  }
+
+  /* Fin de los estilos de los formularios*/
+
+  /* Estilos de los botones de los formularios*/
+  .botones-contenedor {
+    display: flex; /* Para alinear los botones en fila */
+    gap: 10px; /* Espacio entre los botones */
+    justify-content: center; /* Centrar los botones dentro del contenedor */
+    margin-top: 20px; /* Añade un margen superior para separar los botones del contenido anterior */
+  }
+  
+  .btn {
+    padding: 10px 35px;
+    cursor: pointer;
+    background-color: #212121;
+    border-radius: 6px;
+    border: 2px solid #212121;
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6);
+    color: #fff;
+    font-size: 15px;
+    font-weight: bold;
+    transition: 0.35s;
+  }
+  
+  .btn:hover {
+    transform: scale(1.05);
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 10px rgba(0,0,0,1),
+    inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+  }
+  
+  .btn:focus {
+    transform: scale(1.05);
+    box-shadow: 6px 6px 10px rgba(0,0,0,1),
+    1px 1px 10px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 10px rgba(0,0,0,1),
+    inset -1px -1px 5px rgba(255, 255, 255, 0.6);
+  }
+
+  /* Fin de los estilos de los botones de los formularios*/
+
+
+
+  /* Estilos de los articulos de la pagina de Borrar y Modificar*/
+  button {
+    width: 80%;
+    cursor: pointer;
+    align-items: center;
+    background: gray;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    justify-content: center;
+    justify-items: center;
+    margin-top: 2%;
+    margin-left: 10%;
+    margin-bottom: 40px;
+   }
+   
+   button .text {
+    transform: translateX(35px);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: justify;
+   }
+  .selectB {
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+  }
+   
+   .selectB:hover {
+    background: #e74c4c;
+    background-size: cover;
+   }
+
+   .no_artic {
+    justify-items: center;
+    margin-left: 35%;
+   }
+
+   .selectM:hover {
+    background: #00ff22;
+    
+   }
+   
+  /* Fin de los estilos de los Articulos*/
+
+   /* Paginacion */
+.pagination {
+  justify-items: center;
+  justify-content: center;
+    position: fixed; /* Fija la barra de paginación */
+    bottom: 20px; /* Espacio desde el fondo */
+    left: 56.1%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Compensa el desplazamiento de la mitad del ancho */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de elevación */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.pagination a {
+  padding: 10px 15px; /* Espaciado interno para los enlaces */
+  margin: 0 5px; /* Espaciado entre enlaces */
+  text-decoration: none; /* Quitar subrayado */
+  color: #007BFF; /* Color del texto */
+  background-color: white;
+  border: 1px solid #007BFF; /* Borde del enlace */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.pagination a:hover {
+  background-color: #007BFF; /* Color de fondo al pasar el ratón */
+  color: white; /* Color del texto al pasar el ratón */
+}
+
+.current-page {
+  padding: 10px 15px; /* Espaciado interno para la página actual */
+  margin: 0 5px; /* Espaciado entre la página actual y los demás enlaces */
+  background-color: #007BFF; /* Color de fondo para la página actual */
+  color: white; /* Color del texto para la página actual */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.arrow {
+  padding: 10px 15px; /* Espaciado interno */
+  margin: 0 5px; /* Espaciado entre enlaces */
+  text-decoration: none; /* Quitar subrayado */
+  color: #007BFF; /* Color del texto */
+  border: 1px solid #007BFF; /* Borde del enlace */
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.arrow:hover {
+  background-color: #007BFF; /* Color de fondo al pasar el ratón */
+  color: white; /* Color del texto al pasar el ratón */
+}

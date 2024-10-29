@@ -31,6 +31,9 @@
             <div class="errors">
                 <?php echo isset($mensaje) ? $mensaje : '' ?>
             </div>
+            <label>
+        <input type="checkbox" name="remember_me"> Recuérdame
+    </label><br><br>
             <button class="btn" type="submit">Entrar</button>
             <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
             <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>

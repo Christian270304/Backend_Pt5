@@ -4,6 +4,8 @@
     ini_set('session.gc_probability', 1);
     ini_set('session.gc_divisor', 100);
 
+    
+
     session_start();
     $tiempo_max_inactividad = 2400; 
 
@@ -79,10 +81,15 @@
                 require_once 'Controlador/Login.php';
                 include 'Html/Login.php';
                 break;
+            case 'SubirImagen':
+                require_once 'Controlador/Perfil.php';
+                include 'Html/Perfil.php';
+                break;
             case 'RecuperarContra':
                 include 'Html/RecuperarContra.php';
                 break;
             case 'Perfil':
+                require_once 'Controlador/Perfil.php';
                 include 'Html/Perfil.php';
                 break;
             case 'SignUp':
@@ -149,6 +156,11 @@
             case 'Restablecer':
                 require_once 'Controlador/RestablecerContra.php';
                 restablecerPassword($_POST['token'],$_POST['password1'],$_POST['password2']);
+                break;
+            case 'SubirImagen':
+                require_once 'Controlador/Perfil.php';
+                require_once 'Controlador/SubirImagen.php';
+                include 'Html/Perfil.php';
                 break;
             default:
                 include 'Html/Mostrar.php';

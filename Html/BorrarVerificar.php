@@ -8,11 +8,15 @@
     <link href="Estilos/estilos.css" rel="stylesheet">
 </head>
 <body>
-   
+    <?php
+    // PHP: Comprobar si el usuario ya tiene una imagen guardada
+    $defaultImage = "https://storage.googleapis.com/a1aa/image/JLwi3piUzQY3G92u0CH63SjxE3kuf8lWqsoTZH7fYWfAkqWnA.jpg"; // URL predeterminada
+    $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
+    ?>
     <div class="container">
         <div class="account">
             <div class="account-icon">
-                <img src="Imagenes/account.svg" alt="Cuenta">
+                <img src="<?php echo $profileImage; ?>" alt="Foto de perfil">
                 <ul class="dropdown">
                     <li><a href="index.php?pagina=Perfil">Perfil</a></li>
                     <li><a href="index.php?pagina=MostrarInici">Cerrrar Sesion</a></li>

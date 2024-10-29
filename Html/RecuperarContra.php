@@ -16,7 +16,7 @@
     <div class="card">
         <h4 class="title">Recuperar Contraseña</h4>
               
-        
+        <label>Introduce tu correo.</label>
         <form method="POST" action="index.php?pagina=Recuperar">
             <div class="field">
                 <svg class="input-icon" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">

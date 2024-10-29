@@ -1,10 +1,11 @@
 <!-- Christian Torres Barrantes -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borrar</title>
+    <title>Insertar</title>
     <link href="Estilos/estilos.css" rel="stylesheet">
 </head>
 
@@ -34,35 +35,26 @@
                 </ul>
             </nav>
         </div>
-       
-        <div class="content"> 
-            <h1>Que Articulo quieres borrar?</h1>
-            <form method="get" action="">
-                <label for="articulosPorPagina">Artículos por página:</label>
-                <?php
-                $totalArticulos = totArticles(); // Obtener el total de artículos
-                ?>
-                <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? (int)$_GET['page'] : 1; ?>">
-                <input type="hidden" name="pagina" value="<?php echo isset($_GET['pagina']) ? $_GET['pagina'] : 'Mostrar'; ?>">
-                <input type="number" name="articulosPorPagina" id="articulosPorPagina" 
-                    value="<?php echo isset($_GET['articulosPorPagina']) ? $_GET['articulosPorPagina'] : (isset($_COOKIE['articulosPorPagina_borrar']) ? $_COOKIE['articulosPorPagina_borrar'] : 5 ); ?>" 
-                    min="1" max="<?php echo $totalArticulos; ?>">
-                <button type="submit">Actualizar</button>
+
+        <div class="content">
+            <h1>Introduce un Articulo</h1>
+            <form class="formulario" method="POST" action="index.php?pagina=Insertar">
+                <div class="contenido">
+                    <label>
+                        <h1>Titol</h1>
+                    </label>
+                    <input type="text" id="titulo" value="<?php echo isset($titulo) ? $titulo : ''; ?>" name="titulo" class="campos">
+                    <label>
+                        <h1>Cos</h1>
+                    </label>
+                    <textarea id="cuerpo" name="cuerpo" class="mensaje"><?php echo isset($cuerpo) ? $cuerpo : ''; ?></textarea>
+                    <?php echo isset($mostrar) ? $mostrar : '' ?>
+                    <button class="btn" type="submit" name="boton">Enviar</button>
+                </div>
             </form>
-
-            <?php
-            // Obtener la página actual de la URL, por defecto es 1
-            $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
-            $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos);
-
-            echo mostrarArticulos(true, 'Borrar' , $paginaActual, (isset($_COOKIE['articulosPorPagina_borrar']) ? $_COOKIE['articulosPorPagina_borrar'] : $articulosPorPagina ));  // Usar el valor de artículos por página
-            ?>
         </div>
+
     </div>
-    <script>
-        function redireccion(id){
-            window.location.href = "index.php?pagina=BorrarVerificar&id=" + id;
-        }
-    </script>
 </body>
+
 </html>
