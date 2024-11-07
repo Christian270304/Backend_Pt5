@@ -1,3 +1,4 @@
+@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
 :root {
     color-scheme: light dark;
   }
@@ -234,31 +235,14 @@ grid-area: content;
     background-color: #1a1a2e;
     margin: 5% auto; /* 15% desde la parte superior */
     padding: 50px;
+    padding-right: 3.5%;
     border: 1px solid #888;
     width: 300px; /* Ancho del modal */
     border-radius: 5px;
     flex-direction: column;
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 25px;
-    font-weight: bold;
 
-    position: absolute;
-    top: 19%;
-    right: 40%;
-    cursor: pointer;
-    color: #fff;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
 
 .open {
     padding: 10px 35px;
@@ -290,8 +274,32 @@ grid-area: content;
     inset -1px -1px 5px rgba(255, 255, 255, 0.6);
   }
 
+  /* Cambiar contraseña X */
+  .header {
+    width: 322px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header h2 {
+    margin: 0;
+    font-size: 25px;
+  }
+  .header .close {
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 30px;
+  }
+  
+  .close:hover,
+  .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+  }
 
 .btn {
+    width: 322px;
     padding: 10px 35px;
     cursor: pointer;
     background-color: #212121;
@@ -320,6 +328,37 @@ grid-area: content;
     inset 2px 2px 10px rgba(0,0,0,1),
     inset -1px -1px 5px rgba(255, 255, 255, 0.6);
   }
+
+
+/* Estilo para el contenedor del input */
+.password-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Estilo del input de contraseña */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+  width: 100%;
+  padding-right: 40px; /* Espacio para el checkbox */
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+/* Checkbox como icono dentro del input */
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+i{
+  color: #fff;
+}
+
 
   
     

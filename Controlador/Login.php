@@ -8,7 +8,7 @@
      * @password Parametro que nos indica la contraseña del usuario.
      */
     function loginDatos($user, $password) {
-        $defaultImage = "https://storage.googleapis.com/a1aa/image/JLwi3piUzQY3G92u0CH63SjxE3kuf8lWqsoTZH7fYWfAkqWnA.jpg";
+        $defaultImage = "Imagenes/profile-user.svg";
         $mensajes = array();
         $mensaje = '';
 
@@ -32,9 +32,9 @@
                 // Verificar la contraseña con el hash
                 if (password_verify($contra, $result['password'])) {
                     // Iniciar la sesión
-                    $_SESSION['username'] = $result['username']? $result['username']: $defaultImage;
+                    $_SESSION['username'] = $result['username'];
                     // Guardar la ruta de la imagen del usuario.
-                    $_SESSION['profile_image'] = $result['ruta_imagen'];
+                    $_SESSION['profile_image'] = file_exists($result['ruta_imagen'])? $result['ruta_imagen']: $defaultImage;
                     header("Location: index.php?pagina=Mostrar");
                     exit;  // Detener ejecución después de redirigir
                 } else {

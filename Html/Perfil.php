@@ -12,8 +12,8 @@
 <body>
     <?php
     // PHP: Comprobar si el usuario ya tiene una imagen guardada
-    $defaultImage = "https://storage.googleapis.com/a1aa/image/JLwi3piUzQY3G92u0CH63SjxE3kuf8lWqsoTZH7fYWfAkqWnA.jpg"; // URL predeterminada
-    $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
+    $defaultImage = "Imagenes/profile-user.svg"; // URL predeterminada
+    $profileImage = (file_exists(!empty(isset($_SESSION['profile_image'])))) ? $_SESSION['profile_image'] : $defaultImage;
     ?>
     <div class="container">
         <div class="nav-grid">
@@ -57,7 +57,6 @@
                 </small>
             </div>
             <div class="form-group">
-                <form action="index.php?pagina=CambiarContra" method="POST">
                     <label for="public-email">Your password</label>
                         <!-- Botón para abrir el modal -->
                         <button class="open" id="openModal">Cambiar Contraseña</button>
@@ -65,18 +64,36 @@
                         <!-- El modal -->
                         <div id="myModal" class="modal">
                             <div class="modal-content">
-                                <span class="close" id="closeModal">&times;</span>
-                                <h2>Cambiar Contraseña</h2>
-                                <form id="changePasswordForm" action="cambiar_contrasena.php" method="POST">
-                                    <label for="old_password">Contraseña Actual:</label>
-                                    <input type="password" id="old_password" name="old_password" required><br><br>
-
+                                <div class="header">
+                                    <h2>Cambiar Contraseña</h2>
+                                    <span class="close" id="closeModal">&times;</span>
+                                </div>
+                                <form id="changePasswordForm" action="index.php?pagina=CambiarContra" method="POST">
+                                    <div class="password-container">
+                                        <label for="old_password">Contraseña Actual:</label>
+                                        <input type="password" id="old_password" name="old_password" value="<?php echo isset($contraAntigua)?>" ><br><br>
+                                        <input hidden type="checkbox" id="showPassword" onclick="togglePassword('old_password','icono')">
+                                        <label for="showPassword" id="icono" class="password-toggle"><i class="fi fi-rr-eye"></i></label>
+                                    </div>
+                                    
+                                    <div class="password-container">
                                     <label for="new_password">Nueva Contraseña:</label>
-                                    <input type="password" id="new_password" name="new_password" required><br><br>
+                                    <input type="password" id="new_password" name="new_password" value="<?php echo isset($contraNueva)?>"><br><br>
+                                        <input hidden type="checkbox" id="showPassword2" onclick="togglePassword('new_password','icono1')">
+                                        <label for="showPassword2" id="icono1" class="password-toggle"><i class="fi fi-rr-eye"></i></label>
+                                    </div>
 
+                                    <div class="password-container">
                                     <label for="confirm_password">Confirmar Nueva Contraseña:</label>
-                                    <input type="password" id="confirm_password" name="confirm_password" required><br><br>
+                                    <input type="password" id="confirm_password" name="confirm_password" value="<?php echo isset($contraNueva2)?>"><br><br>
+                                        <input hidden type="checkbox" id="showPassword3" onclick="togglePassword('confirm_password','icono2')">
+                                        <label for="showPassword3" id="icono2" class="password-toggle"><i class="fi fi-rr-eye"></i></label>
+                                    </div>
+                                    
+                                    
 
+                                    
+                                    <?php if (!empty($errores)) {echo $errores;}?>
                                     <button class="btn" type="submit">Guardar Cambios</button>
                                 </form>
                             </div>
@@ -84,7 +101,6 @@
                     <small>
                         Aqui puedes cambiar tu contraseña
                     </small>
-                </form>
             </div>
             <div class="form-group">
                 <label for="bio">
@@ -121,20 +137,32 @@
         }
 
 
+        document.addEventListener('DOMContentLoaded', function() {
+            <?php if (!empty($errores)): ?>
+                // Abre el modal automáticamente si hay errores de validación
+                modal.style.display = "block";
+            <?php endif; ?>
+        });
+
+        function togglePassword(tipo,cos) {
+            const passwordField = document.getElementById(tipo);
+            const icono = document.getElementById(cos);
+            // Cambia el tipo del campo entre "password" y "text"
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icono.innerHTML = '<i class="fi fi-rr-eye-crossed"></i>';
+            } else {
+                passwordField.type = "password";
+                icono.innerHTML = '<i class="fi fi-rr-eye"></i>';
+            }
+        }
+
         function previewImage(event) {
             const file = event.target.files[0];
-            if (file && file.type.startsWith('image/')) {
-                const profileImage = document.getElementById('profile-image');
-                profileImage.src = URL.createObjectURL(file);
-                profileImage.onload = function() {
-                    URL.revokeObjectURL(profileImage.src);
-                };
-
-                // Envía el formulario automáticamente al seleccionar la imagen
-                document.getElementById('upload-form').submit();
-            } else {
-                alert("Por favor, selecciona un archivo de imagen válido.");
-            }
+            const profileImage = document.getElementById('profile-image');
+            profileImage.src = file;
+            document.getElementById('upload-form').submit();
+            
         }
     </script>
 </body>

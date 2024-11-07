@@ -162,6 +162,11 @@
                 require_once 'Controlador/SubirImagen.php';
                 include 'Html/Perfil.php';
                 break;
+            case 'CambiarContra':
+                require_once 'Controlador/Perfil.php';
+                verificarPassword($_POST['old_password'],$_POST['new_password'],$_POST['confirm_password']);
+             
+                break;
             default:
                 include 'Html/Mostrar.php';
         }

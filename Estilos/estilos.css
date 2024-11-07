@@ -48,7 +48,7 @@ body {
 }
 
 .nav-bar li {
-  background-color: gray;
+  background-color: #808080;
   padding: 0;
   border-radius: 10px;
   margin-bottom: 50px;
@@ -121,8 +121,8 @@ body {
 /* Estilo del icono */
 .account-icon img {
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   display: block;
 }
 
