@@ -1,0 +1,134 @@
+/* Christian Torres Barrantes */
+:root {
+    color-scheme: light dark;
+  }
+  
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #1a1a2e; /* Color de fondo opcional */
+}
+
+.card {
+    width: 280px;
+    padding: 2.5rem 2.5rem;
+    text-align: center;
+    background: #2a2b38;
+   }
+   
+   /*Inputs*/
+   .field {
+    margin-top: 0.5rem;
+    margin-bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    background-color: #1f2029;
+    border-radius: 4px;
+    padding: 0.9em 1em;
+   }
+   
+   .input-icon {
+    height: 1em;
+    width: 1em;
+    fill: #ffeba7;
+   }
+   
+   .input-field {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #d3d3d3;
+   }
+   
+   /*Text*/
+   .title {
+    margin-block-start: 0%;
+    margin-block-end: 0%;
+    margin-inline-start: 0%;
+    margin-inline-end: 0%;
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #f5f5f5;
+   }
+   
+   /*Buttons*/
+   .btn {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .9em;
+    text-transform: uppercase;
+    padding: 0.6em 5em;
+    background-color: #ffeba7;
+    color: #5e6681;
+    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+    transition: all .3s ease-in-out;
+    
+   }
+   
+   
+   
+   /*Hover & focus*/
+   .field input:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+   }
+   
+   .btn:hover {
+    background-color: #5e6681;
+    color: #ffeba7;
+    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+   }
+   
+.salir {
+    overflow: hidden;
+    position: absolute;
+    /* Posicionarlo de manera absoluta */
+    top: 20px;
+    /* Ajusta la distancia desde la parte superior */
+    left: 20px;
+    /* Ajusta la distancia desde la parte izquierda */
+    border: none;
+    padding: 0;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background: transparent;
+    color: #1da1f2;
+    font: inherit;
+    cursor: pointer;
+}
+
+.salir:focus {
+    outline: solid 0 transparent;
+    box-shadow: 0 0 0 2px #8ed0f9;
+}
+
+.salir:hover {
+    background: rgba(29, 161, 142, .1);
+}
+
+.salir:before, .salir:after {
+    position: absolute;
+    top: 15%;
+    left: calc(50% - .0625em);
+    width: .125em;
+    height: 70%;
+    border-radius: .125em;
+    transform: rotate(45deg);
+    background: currentcolor;
+    content: '';
+}
+
+.salir:after {
+    transform: rotate(-45deg);
+}

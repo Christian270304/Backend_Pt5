@@ -1,0 +1,23 @@
+name: Deploy to DonDominio
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v2
+
+    - name: Upload files to DonDominio via FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with:
+        ftp-server: ftp://ftp.ctorres.cat
+        ftp-username: ${{ secrets.FTP_USERNAME }}
+        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./  
+        server-dir: / 
