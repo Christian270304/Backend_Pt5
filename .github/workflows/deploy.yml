@@ -3,7 +3,7 @@ name: Deploy to DonDominio
 on:
   push:
     branches:
-      - main
+      - master  # Cambia a 'main' si esa es tu rama principal
 
 jobs:
   deploy:
@@ -11,13 +11,20 @@ jobs:
 
     steps:
     - name: Check out the repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Upload files to DonDominio via FTP
-      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        ftp-server: ftp://ftp.ctorres.cat
-        ftp-username: ${{ secrets.FTP_USERNAME }}
-        ftp-password: ${{ secrets.FTP_PASSWORD }}
+        server: ftp.ctorres.cat
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./  
-        server-dir: / 
+        server-dir: /public/
+        exclude: |
+          *.sql
+          assets/**
+          README.md
+          .git/**
+          .github/**
+          .gitignore
