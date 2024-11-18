@@ -1,10 +1,10 @@
 <?php
     // Christian Torres Barrantes
 
-    $servername = "localhost";
-    $usernamebd = "root";
-    $password = "";
-    $dbname = "pt05_christian_torres";
+    $servername = SERVERNAME;
+    $usernamebd = USERNAMEBD;
+    $password = PASSBD;
+    $dbname = DBNAME;
 
     try {
         // Cremos una conexion PDO.

@@ -1,6 +1,9 @@
 <?php
     // Christian Torres Barrantes
 
+
+    require_once 'env.php';
+
     ini_set('session.gc_probability', 1);
     ini_set('session.gc_divisor', 100);
 

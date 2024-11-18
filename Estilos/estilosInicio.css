@@ -1,24 +1,22 @@
-/* Christian Torres Barrantes */
 :root {
-    color-scheme: light dark;
-  }
-  
-  body {
-      margin: 0;
-      padding: 0;
-      background-color: #1a1a2e;
-  }
-
-  .container {
-    display: grid;
-    min-height: 100vh;
-    grid-template-columns: 1fr;
-    grid-template-areas: 'content';
-    position: relative;
+  color-scheme: light dark;
 }
 
-/*Barra de navegacion*/
-/* Posicionar el contenedor del icono en la parte superior derecha */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a2e;
+}
+
+.container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'content';
+  position: relative;
+}
+
+/* Barra de navegación */
 .menu {
   position: fixed;
   top: 40px;
@@ -26,59 +24,59 @@
   z-index: 1000;
 }
 
-/* Estilo para el contenedor del icono */
 .account-icon {
-  
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
-/* Estilo del icono */
 .account-icon img {
-  stroke:#ffffff;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: transform 0.3s ease, opacity 0.3s ease; /* Transiciones suaves */
+    stroke: #ffffff;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Estilo del menú desplegable (oculto por defecto) */
+/* Estilo del menú desplegable */
 .account-icon .dropdown {
-  display: none;
-  position: absolute;
-  top: -20px; /* Alinea el menú exactamente en el lugar del icono */
-  right: -20px;
-  background-color: #333;
-  min-width: 150px;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: none;
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    background-color: #333;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Estilo de los enlaces dentro del desplegable */
 .account-icon .dropdown li {
-  list-style: none;
+    list-style: none;
 }
 
 .account-icon .dropdown li a {
-  display: block;
-  color: white;
-  padding: 12px 16px;
-  text-decoration: none;
-  background-color: gray;
-  transition: background-color 0.3s ease;
+    display: block;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    background-color: gray;
+    transition: background-color 0.3s ease;
 }
 
 .account-icon .dropdown li a:hover {
-  background-color: #212120; /* Color de fondo al pasar el ratón */
+    background-color: #212120;
 }
 
-/* Cuando el ratón esté sobre el icono, desaparece el ícono y aparece el menú */
 .account-icon:hover img {
-  transform: scale(0.1); /* Reduce el tamaño del ícono a casi 0 */
-  opacity: 0; /* Elimina la visibilidad del ícono */
+  transform: scale(0.1);
+  opacity: 0;
+}
+
+.account-icon.active .dropdown {
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 .account-icon:hover .dropdown {
@@ -87,98 +85,162 @@
   visibility: visible;
 }
 
-
-
-
-
-  .content {
-    grid-area: content;
-    padding-top: 5%;
-    padding-left: 20%;
-    padding-right: 20%;
-    padding-bottom: 5%;
+.content {
+  grid-area: content;
+  padding: 5% 20%;
 }
 
 .articulo-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual tamaño */
-    gap: 16px; /* Espacio entre los artículos */
-  }
-  
-  .articulo {
-    max-height: 20vh;
-  overflow: hidden; /* Ocultar contenido que se desborde verticalmente */
-  overflow-y: auto; /* Añadir barra de desplazamiento vertical si el contenido es demasiado largo */
-  word-wrap: break-word; /* Asegurar que las palabras largas se ajusten al contenedor */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.articulo {
+  max-height: 20vh;
+  overflow: hidden;
+  overflow-y: auto;
+  word-wrap: break-word;
   text-overflow: ellipsis;
-  border: 1px solid #ccc; /* Opcional: un borde para los artículos */
-  padding: 16px; /* Opcional: espacio interno */
-  background-color: gray; /* Opcional: fondo para los artículos */
-  border-radius: 4px; /* Opcional: bordes redondeados */
-  }
-  
-  /* Fin de Mostrar los articulos en dos columnas*/
-  .titulo {
-      text-align: center;
-  }
-  
-  .texto{
-      text-align: justify;
-  }
-  
-  .content h1{
-    text-align: center;
+  border: 1px solid #ccc;
+  padding: 16px;
+  background-color: gray;
+  border-radius: 4px;
+}
+
+.titulo {
+  text-align: center;
+}
+
+.texto {
+  text-align: justify;
+}
+
+.content h1 {
+  text-align: center;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.pagination a {
+  padding: 10px 15px;
+  margin: 0 5px;
+  text-decoration: none;
+  color: #007BFF;
+  background-color: white;
+  border: 1px solid #007BFF;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+.current-page {
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+}
+
+.arrow {
+  padding: 10px 15px;
+  margin: 0 5px;
+  text-decoration: none;
+  color: #007BFF;
+  border: 1px solid #007BFF;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.arrow:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+/* Responsivo */
+/* Ajustes para pantallas medianas */
+@media (max-width: 1024px) {
+  .content {
+      padding: 5% 10%;
   }
 
-  /* Paginacion */
-.pagination {
-    justify-items: center;
-    justify-content: center;
-      position: fixed; /* Fija la barra de paginación */
-      bottom: 20px; /* Espacio desde el fondo */
-      left: 56.1%; /* Centra horizontalmente */
-      transform: translateX(-50%); /* Compensa el desplazamiento de la mitad del ancho */
-      padding: 10px; /* Espaciado interno */
-      border-radius: 5px; /* Bordes redondeados */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de elevación */
-      z-index: 1000; /* Asegura que esté por encima de otros elementos */
+  .menu {
+      top: 20px;
+      right: 50px;
   }
-  
-  .pagination a {
-    padding: 10px 15px; /* Espaciado interno para los enlaces */
-    margin: 0 5px; /* Espaciado entre enlaces */
-    text-decoration: none; /* Quitar subrayado */
-    color: #007BFF; /* Color del texto */
-    background-color: white;
-    border: 1px solid #007BFF; /* Borde del enlace */
-    border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Hover en pantallas grandes */
+@media (min-width: 769px) {
+  .account-icon:hover img {
+      transform: scale(0.1);
+      opacity: 0;
   }
-  
-  .pagination a:hover {
-    background-color: #007BFF; /* Color de fondo al pasar el ratón */
-    color: white; /* Color del texto al pasar el ratón */
+  .account-icon:hover .dropdown {
+      display: block;
+      opacity: 1;
+      visibility: visible;
   }
-  
-  .current-page {
-    padding: 10px 15px; /* Espaciado interno para la página actual */
-    margin: 0 5px; /* Espaciado entre la página actual y los demás enlaces */
-    background-color: #007BFF; /* Color de fondo para la página actual */
-    color: white; /* Color del texto para la página actual */
-    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .content {
+      padding: 5%;
   }
-  
-  .arrow {
-    padding: 10px 15px; /* Espaciado interno */
-    margin: 0 5px; /* Espaciado entre enlaces */
-    text-decoration: none; /* Quitar subrayado */
-    color: #007BFF; /* Color del texto */
-    border: 1px solid #007BFF; /* Borde del enlace */
-    border-radius: 5px; /* Bordes redondeados */
-    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+
+  .articulo-container {
+      grid-template-columns: 1fr; /* Cambiar a una sola columna */
   }
-  
-  .arrow:hover {
-    background-color: #007BFF; /* Color de fondo al pasar el ratón */
-    color: white; /* Color del texto al pasar el ratón */
+
+  .pagination {
+      position: relative;
+      left: 0;
+      bottom: 0;
+      transform: none;
+      margin-top: 20px;
   }
+
+  .account-icon img {
+    opacity: 1;
+    transform: scale(1);
+}
+.account-icon.active .dropdown {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .menu {
+      right: 20px;
+  }
+
+  .account-icon img {
+      width: 30px;
+      height: 30px;
+  }
+
+  .pagination a, .current-page {
+      padding: 8px 12px;
+      margin: 0 3px;
+  }
+}

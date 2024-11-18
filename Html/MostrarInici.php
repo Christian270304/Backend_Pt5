@@ -52,6 +52,31 @@
             ?>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const accountIconBtn = document.getElementById('account-icon-btn');
+            const accountIcon = document.querySelector('.account-icon');
+
+            // Detectar si el dispositivo es móvil
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+            // Configuración para dispositivos móviles
+            if (isMobile) {
+                accountIconBtn.addEventListener('click', function (event) {
+                    event.preventDefault(); // Evita redirección en caso de usar `a` o `button`
+                    event.stopPropagation();
+                    accountIcon.classList.toggle('active'); // Alterna la clase active
+                });
+
+                // Cierra el menú desplegable si se hace clic fuera del icono
+                document.addEventListener('click', function (event) {
+                    if (!accountIcon.contains(event.target)) {
+                        accountIcon.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

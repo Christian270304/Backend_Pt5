@@ -102,6 +102,23 @@ body {
 .nav-bar li:hover span {
   opacity: 1; 
 }
+
+/* Estilos para el ícono del menú hamburguesa */
+.menu-toggle {
+  display: none; /* Ocultar por defecto */
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.menu-toggle .line {
+  background-color: #fff;
+  height: 3px;
+  width: 100%;
+  border-radius: 2px;
+}
 /* Fin barra de navegacion*/
 
 /* Posicionar el contenedor del icono en la parte superior derecha */
@@ -482,4 +499,129 @@ body {
 .arrow:hover {
   background-color: #007BFF; /* Color de fondo al pasar el ratón */
   color: white; /* Color del texto al pasar el ratón */
+}
+
+
+/* Estilos Responsivos */
+
+@media (max-width: 1024px) {
+  /* Reducir el tamaño de la barra de navegación en pantallas medianas */
+  .nav-grid {
+      width: 60px; /* Cambiar el ancho */
+      overflow: hidden;
+  }
+  .nav-bar li span {
+      display: none; /* Ocultar los textos de los iconos */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Cambiar de barra lateral a barra superior en móviles */
+  .nav-grid {
+    left: -350px;
+  }
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: -350px; /* Empuja el menú fuera de la vista */
+  width: 50px; /* Ancho del menú */
+  height: 100vh; /* Altura completa */
+  background-color: #333;
+  padding-top: 20px; /* Espacio para los íconos de la navegación */
+  transition: left 0.25s ease; /* Transición para deslizamiento */
+  z-index: 1000;
+}
+  .nav-bar ul {
+      
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+  }
+  
+
+  .nav-bar.active {
+    left: 0; /* Deja el menú visible en la pantalla */
+    .menu-toggle {
+      visibility: hidden;
+    }
+}
+
+/* Mostrar el ícono de menú hamburguesa */
+.menu-toggle {
+    display: flex;
+    position: absolute;
+    top: 20px; /* Ajustar la distancia superior */
+    right: 85%; /* Ajustar la distancia derecha */
+    z-index: 2000; /* Asegurarse de que esté encima de la navegación */
+}
+
+/* Clase que oculta el ícono de hamburguesa cuando el menú está abierto */
+.menu-toggle.hide {
+  display: none; /* Esconde el ícono de hamburguesa */
+}
+
+  /* Ajuste para el contenedor principal */
+  .container {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+          
+          'content';
+      padding-top: 40px; /* Espacio para la barra de navegación */
+  }
+
+  /* Ajuste para el icono de cuenta */
+  .account {
+      top: 30px;
+      right: 50px;
+  }
+
+  /* Ajustes de contenido */
+  .content {
+      padding: 10px;
+      margin: 0;
+      max-width: 90vw;
+  }
+
+  /* Cambia los artículos a una columna en pantallas pequeñas */
+  .articulo-container {
+      grid-template-columns: 1fr; /* Una sola columna */
+      padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustar el tamaño del icono de la cuenta en pantallas muy pequeñas */
+  .account-icon img {
+      width: 50px;
+      height: 50px;
+  }
+
+  /* Reducir el tamaño de los íconos de la barra de navegación */
+  .icon {
+      max-width: 20px;
+      max-height: 20px;
+  }
+
+  /* Ajustar el formulario */
+  .formulario {
+      padding-top: 20px;
+  }
+
+  /* Botones más pequeños */
+  .btn {
+      padding: 8px 20px;
+  }
+
+  /* Ajuste para la paginación en pantallas pequeñas */
+  .pagination {
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px;
+  }
+
+  .pagination a, .current-page, .arrow {
+      padding: 5px 10px;
+      font-size: 12px;
+  }
 }
