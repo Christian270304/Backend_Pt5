@@ -7,51 +7,68 @@
      * @user Parametro que nos indica el username del usuario.
      * @password Parametro que nos indica la contraseña del usuario.
      */
-    function loginDatos($user, $password) {
+    function loginDatos($user, $password,$token) {
         $defaultImage = "Imagenes/profile-user.svg";
+        $recaptchaSecret = CLAVE_SECRETA;
         $mensajes = array();
         $mensaje = '';
-
+    
         // Validar inputs
         $username = isset($user) ? trim(htmlspecialchars($user)) : '';
         $contra = isset($password) ? trim(htmlspecialchars($password)) : '';
 
+       
+    
         if (empty($username)) {
-            $mensajes[] = "El campo del correo no puede estar vacío";
+            $mensajes[] = "El camp del correu no pot estar vuit";
         }
-
+    
         if (empty($contra)) {
-            $mensajes[] = "El campo de la contraseña no puede estar vacío";
+            $mensajes[] = "El camp del password no pot estar vuit";
         }
-
+    
         // Solo continuamos si no hay errores previos
         if (empty($mensajes)) {
-            // Buscar usuario en la base de datos
             $result = buscarUsuario($username);
             if ($result) {
-                // Verificar la contraseña con el hash
                 if (password_verify($contra, $result['password'])) {
                     // Iniciar la sesión
                     $_SESSION['username'] = $result['username'];
-                    // Guardar la ruta de la imagen del usuario.
-                    $_SESSION['profile_image'] = file_exists($result['ruta_imagen'])? $result['ruta_imagen']: $defaultImage;
+                    $_SESSION['profile_image'] = file_exists($result['ruta_imagen']) ? $result['ruta_imagen'] : $defaultImage;
+    
+                    // opción "Remember Me"
+                    if (isset($_POST['remember_me'])) {
+                        // Generar un token único
+                        $token = bin2hex(random_bytes(32)); // 64 caracteres hexadecimales
+
+                        // Almacenar el token en la base de datos
+                        guardarToken($result['id'], $token);
+
+                        // Configurar cookie con el token
+                        setcookie('session_token', $token, time() + (30 * 24 * 60 * 60), "/"); // Cookie válida por 30 días
+
+                        // Redirigir al usuario
+                        header("Location: index.php?pagina=Inicio");
+                        exit();
+                    }
+    
                     header("Location: index.php?pagina=Mostrar");
-                    exit;  // Detener ejecución después de redirigir
+                    exit;  
                 } else {
-                    $mensajes[] = "Contraseña incorrecta";
+                    $mensajes[] = "Contrasenya incorrecta";
                 }
             } else {
-                $mensajes[] = "Usuario no encontrado";
+                $mensajes[] = "Usuario no trobat";
             }
         }
-
+    
         // Mostrar errores si existen
         if (!empty($mensajes)) {
             foreach ($mensajes as $errors) {
                 $mensaje .= $errors . '<br/>';
             }
         }
-
+    
         include 'Html/Login.php';
     }
 

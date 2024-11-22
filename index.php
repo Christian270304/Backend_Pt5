@@ -28,16 +28,31 @@
                 header("Location: index.php?pagina=MostrarInici&expired=1");
                 exit();
             }
-        }
+        } 
 
         // Actualizar la última actividad del usuario
         $_SESSION['last_activity'] = time();
     }
 
-   
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
         $opcion = isset($_GET['pagina']) ? $_GET['pagina'] : 'MostrarInici';
         switch ($opcion) {
+            case 'Inicio':
+                if (!isset($_SESSION['username'])){
+                    header("Location: index.php?pagina=MostrarInici&expired=1");
+                } else {
+                    require_once 'Controlador/MostrarInici.php';
+                    include 'Html/Inicio.php';
+                }
+                break;
+            case 'Mostrar':
+                if (!isset($_SESSION['username'])){
+                    header("Location: index.php?pagina=MostrarInici&expired=1");
+                } else {
+                    require_once 'Controlador/Mostrar.php';
+                    include 'Html/Mostrar.php';
+                }
+                break;
             case 'Insertar':
                 if (!isset($_SESSION['username'])){
                     header("Location: index.php?pagina=MostrarInici&expired=1");
@@ -62,16 +77,9 @@
                     include 'Html/Modificar.php';
                 }
                 break;
-            case 'Mostrar':
-                if (!isset($_SESSION['username'])){
-                    header("Location: index.php?pagina=MostrarInici&expired=1");
-                } else {
-                    require_once 'Controlador/Mostrar.php';
-                    include 'Html/Mostrar.php';
-                }
-                break;
             case 'MostrarInici':
                 if (isset($_SESSION['username'])){
+                    session_unset();
                     session_destroy();
                     require_once 'Controlador/MostrarInici.php';
                     include 'Html/MostrarInici.php';
@@ -142,7 +150,7 @@
                 break;
             case 'Login':
                 require_once 'Controlador/Login.php';
-                loginDatos($_POST['username'],$_POST['contra']);
+                loginDatos($_POST['username'],$_POST['contra'],$_POST['recaptchaResponse']);
                 break;
             case 'SignUp':
                 require_once 'Controlador/SignUp.php';
@@ -168,14 +176,11 @@
             case 'CambiarContra':
                 require_once 'Controlador/Perfil.php';
                 verificarPassword($_POST['old_password'],$_POST['new_password'],$_POST['confirm_password']);
-             
                 break;
             default:
                 include 'Html/Mostrar.php';
         }
     } 
-
-    
     
     
 ?>

@@ -96,6 +96,11 @@ body {
   gap: 16px;
 }
 
+.ArticulosInicio{
+  background: none;
+  border: none;
+}
+
 .articulo {
   max-height: 20vh;
   overflow: hidden;

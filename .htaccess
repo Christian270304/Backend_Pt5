@@ -1,0 +1,8 @@
+# Personalitzar error 404 (pàgina no trobada)
+ErrorDocument 404 /Html/404.php
+
+# Personalitzar error 403 (accés prohibit)
+ErrorDocument 403 /errors/403.html
+
+# Personalitzar error 500 (error del servidor)
+ErrorDocument 500 /errors/500.html

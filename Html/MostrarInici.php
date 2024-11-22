@@ -48,7 +48,7 @@
             $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
             $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
 
-            echo mostrarTodosArticulos(false, 'MostrarInici', $paginaActual, $articulosPorPagina);  // Usar el valor de artículos por página
+            echo mostrarTodosArticulos('MostrarInici', $paginaActual, $articulosPorPagina);  // Usar el valor de artículos por página
             ?>
         </div>
     </div>

@@ -1,16 +1,13 @@
-<!-- Christian Torres Barrantes -->
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="cat">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles</title>
     <link href="Estilos/estilos.css" rel="stylesheet">
+    <title>Inici</title>
 </head>
-
 <body>
-    <?php
+<?php
     // PHP: Comprobar si el usuario ya tiene una imagen guardada
     $defaultImage = "https://storage.googleapis.com/a1aa/image/JLwi3piUzQY3G92u0CH63SjxE3kuf8lWqsoTZH7fYWfAkqWnA.jpg"; // URL predeterminada
     $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
@@ -44,17 +41,14 @@
         <div class="content">
             <form method="get" action="">
                 <label for="articulosPorPagina">Artículos por página:</label>
-                <?php $totalArticulos = totArticles(); ?>
+                <?php
+                $totalArticulos = totArticles(); // Obtener el total de artículos
+                ?>
                 <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? (int)$_GET['page'] : 1; ?>">
                 <input type="hidden" name="pagina" value="<?php echo isset($_GET['pagina']) ? $_GET['pagina'] : 'Mostrar'; ?>">
                 <input type="number" name="articulosPorPagina" id="articulosPorPagina"
                     value="<?php echo isset($_GET['articulosPorPagina']) ? $_GET['articulosPorPagina'] : (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : 5); ?>"
                     min="1" max="<?php echo $totalArticulos; ?>">
-                <label for="order">Ordenar por:</label>
-                <select name="order" id="order">
-                    <option value="ASC" <?php echo (isset($_GET['order']) && $_GET['order'] == 'ASC') ? 'selected' : ''; ?>>Ascendente</option>
-                    <option value="DESC" <?php echo (isset($_GET['order']) && $_GET['order'] == 'DESC') ? 'selected' : ''; ?>>Descendente</option>
-                </select>
                 <button type="submit">Actualizar</button>
             </form>
 
@@ -63,33 +57,9 @@
             $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
             $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
 
-            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina));  // Usar el valor de artículos por página
+            echo mostrarTodosArticulos( "Inicio",$paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina));  // Usar el valor de artículos por página
             ?>
         </div>
     </div>
-    <script>
-    // Obtener el ícono del menú, la barra de navegación y el contenedor del menú
-    const menuToggle = document.getElementById('menu-toggle');
-    const navBar = document.querySelector('.nav-bar');
-    const body = document.querySelector('body');
-
-    // Agregar un evento al ícono de menú
-    menuToggle.addEventListener('click', () => {
-        navBar.classList.toggle('active'); // Alternar la clase 'active' para mostrar/ocultar el menú
-
-        // Alternar la clase 'hide' para mostrar/ocultar el ícono de hamburguesa
-        menuToggle.classList.toggle('hide');
-    });
-
-    // Función para cerrar el menú si el clic fue fuera de la barra de navegación
-    body.addEventListener('click', (event) => {
-        // Verificar si el clic fue fuera del menú y del ícono de hamburguesa
-        if (!navBar.contains(event.target) && !menuToggle.contains(event.target)) {
-            navBar.classList.remove('active'); // Cerrar el menú
-            menuToggle.classList.remove('hide'); // Mostrar el ícono de hamburguesa nuevamente
-        }
-    });
-</script>
 </body>
-
 </html>

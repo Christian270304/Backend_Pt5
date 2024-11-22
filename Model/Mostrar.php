@@ -5,9 +5,9 @@
     /**
      * Funcion para seleccionar todos los articulos del usuario que le pasamos por parametro.
      */
-    function selectUsuario($user_id){
+    function selectUsuario($user_id, $order = 'ASC') {
         global $conn;
-        $query = "SELECT * FROM articles WHERE user_id = :user_id";
+        $query = "SELECT * FROM articles WHERE user_id = :user_id ORDER BY titol " . $order;
         $statement = $conn->prepare($query);
         $statement->execute([':user_id' => $user_id]);
         $resultado = $statement->fetchAll();

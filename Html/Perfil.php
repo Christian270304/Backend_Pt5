@@ -71,28 +71,25 @@
                                 <form id="changePasswordForm" action="index.php?pagina=CambiarContra" method="POST">
                                     <div class="password-container">
                                         <label for="old_password">Contraseña Actual:</label>
-                                        <input type="password" id="old_password" name="old_password" value="<?php echo isset($contraAntigua)?>" ><br><br>
+                                        <input type="password" id="old_password" name="old_password" value="<?php echo isset($contraAntigua)? $contraAntigua:"" ?>" ><br><br>
                                         <input hidden type="checkbox" id="showPassword" onclick="togglePassword('old_password','icono')">
                                         <label for="showPassword" id="icono" class="password-toggle"><i class="fi fi-rr-eye"></i></label>
                                     </div>
                                     
                                     <div class="password-container">
                                     <label for="new_password">Nueva Contraseña:</label>
-                                    <input type="password" id="new_password" name="new_password" value="<?php echo isset($contraNueva)?>"><br><br>
+                                    <input type="password" id="new_password" name="new_password" value="<?php echo isset($contraNueva)? $contraNueva:""?>"><br><br>
                                         <input hidden type="checkbox" id="showPassword2" onclick="togglePassword('new_password','icono1')">
                                         <label for="showPassword2" id="icono1" class="password-toggle"><i class="fi fi-rr-eye"></i></label>
                                     </div>
 
                                     <div class="password-container">
                                     <label for="confirm_password">Confirmar Nueva Contraseña:</label>
-                                    <input type="password" id="confirm_password" name="confirm_password" value="<?php echo isset($contraNueva2)?>"><br><br>
+                                    <input type="password" id="confirm_password" name="confirm_password" value="<?php echo isset($contraNueva2)? $contraNueva2:"" ?>"><br><br>
                                         <input hidden type="checkbox" id="showPassword3" onclick="togglePassword('confirm_password','icono2')">
                                         <label for="showPassword3" id="icono2" class="password-toggle"><i class="fi fi-rr-eye"></i></label>
                                     </div>
-                                    
-                                    
 
-                                    
                                     <?php if (!empty($errores)) {echo $errores;}?>
                                     <button class="btn" type="submit">Guardar Cambios</button>
                                 </form>

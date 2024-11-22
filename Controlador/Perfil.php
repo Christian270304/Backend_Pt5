@@ -31,24 +31,28 @@
 
         // Solo continuamos si no hay errores previos
         if (empty($mensajes)) {
-            // Buscar usuario en la base de datos
             $result = buscarUsuario($_SESSION['username']);
             if ($result) {
-                // Verificar la contraseña con el hash
-                if (password_verify($contraAntigua, $result['password'])) {
-                    $hashed_password = password_hash($passNuevo, PASSWORD_DEFAULT);
-                    $changed = cambiarPassword($result['id'],$hashed_password);
-                    if ($changed){
-                        header("Location: index.php?pagina=Perfil");
-                        exit;  // Detener ejecución después de redirigir
+                $passwVerificado = validarContrasena($contraNueva);
+                if ($passwVerificado){
+                    if (password_verify($contraAntigua, $result['password'])) {
+                        $hashed_password = password_hash($passNuevo, PASSWORD_DEFAULT);
+                        $changed = cambiarPassword($result['id'],$hashed_password);
+                        if ($changed){
+                            $mensajes[] = "La contrasenya s'ha modificat.";
+                            //header("Location: index.php?pagina=Perfil");
+                            //exit;  
+                        } else {
+                            $mensajes[] = "No s'ha pogut cambiar la contrasenya";
+                        }
                     } else {
-                        $mensajes[] = "No se ha podido cambiar la contraseña";
+                        $mensajes[] = "Contrasenya incorrecta";
                     }
                 } else {
-                    $mensajes[] = "Contraseña incorrecta";
+                    $mensajes[] = "La contrasenya ha de contenir:<br/> - Un mínim de 8 caràcters. <br/> - Una lletra majúscula. <br/> - Una lletra minúscula. <br/> - Un nombre. <br/> - I un caràcter especial.";
                 }
             } else {
-                $mensajes[] = "Usuario no encontrado";
+                $mensajes[] = "Usuario no trobat";
             }
         }
 
@@ -62,5 +66,21 @@
         }
 
         include 'Html/Perfil.php';
+    }
+
+    function validarContrasena($password) {
+        // Requisitos de la contraseña
+        $longitudMinima = 8;
+        $tieneMayuscula = preg_match('/[A-Z]/', $password);
+        $tieneMinuscula = preg_match('/[a-z]/', $password);
+        $tieneNumero = preg_match('/\d/', $password);
+        $tieneCaracterEspecial = preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password);
+    
+        // Verificar que la contraseña cumple con todos los requisitos
+        if (strlen($password) >= $longitudMinima && $tieneMayuscula && $tieneMinuscula && $tieneNumero && $tieneCaracterEspecial) {
+            return true;
+        } else {
+            return false;
+        }
     }
 ?>

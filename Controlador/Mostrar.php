@@ -7,10 +7,11 @@
      *$page El numero de pagina en la que esta el usuario.
      *$articlesPerPage El numero de articulos por pagina
     */
-    function mostrarArticulos($click = false, $cat, $page=1, $articlesPerPage) {
+    function mostrarArticulos( $cat, $page=1, $articlesPerPage) {
         $article_data = '<div class="articulo-container">'; // Contenedor para los artículos.
         $user_id = idUsuario($_SESSION['username']);
-        $articles = selectUsuario($user_id); // Obtener los artículos de la base de datos
+        $order = isset($_GET['order']) ? $_GET['order'] : 'ASC';
+        $articles = selectUsuario($user_id, $order); // Obtener los artículos de la base de datos
         
         if (isset($_GET['articulosPorPagina'])) {
             $articlesPerPage = intval($_GET['articulosPorPagina']);
@@ -30,22 +31,10 @@
         // Mostrar artículos según la página
         for ($i = $startIndex; $i < $endIndex; $i++) {
             $article = $articles[$i];
-            if (!$click && $cat == 'Mostrar') {
-                $article_data .= '<div class="articulo" id="' . $article['id'] . '">';
-                $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
-                $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-                $article_data .= '</div>';
-            } elseif ($cat == 'Borrar') {
-                $article_data .= '<button onclick="redireccion(' . $article['id'] . ')" class="selectB" id="' . $article['id'] . '">';
-                $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
-                $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-                $article_data .= '</button>';
-            } else { // Para la opción de Modificar
-                $article_data .= '<button onclick="redireccion(' . $article['id'] . ')" class="selectM" id="' . $article['id'] . '">';
-                $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
-                $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-                $article_data .= '</button>';
-            }
+            $article_data .= '<div class="articulo" id="' . $article['id'] . '">';
+            $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
+            $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
+            $article_data .= '</div>'; 
         }
 
         $article_data .= '</div>'; // Cerrar el contenedor de artículos
@@ -63,7 +52,7 @@
         $user_id = idUsuario($_SESSION['username']);
         $articles = selectUsuario($user_id); // Obtener todos los artículos
         $totalArticles = count($articles); // Calcular el número total de artículos
-        $totalPagines = ceil($totalArticles / $articlesPerPage); // Número total de páginas
+        $totalPagines = ceil($totalArticles / ($articlesPerPage >= 0)? $articlesPerPage : 1); // Número total de páginas
         
         
 

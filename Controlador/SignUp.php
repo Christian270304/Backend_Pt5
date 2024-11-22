@@ -52,14 +52,14 @@
                         header("Location: index.php?pagina=Login");
                         exit();
                     } else {
-                        $mensajes[] = "Error al registrar el usuario.";
+                        $mensajes[] = "Error al registrar l'usuario.";
                     }
                 } else {
                     // Mensaje si la contraseña no es fuerte
-                    $mensajes[] = "La contraseña debe contener:<br/> - Un minimo de 8 caracteres. <br/> - Una letra mayúscula. <br/> - Una letra minúscula. <br/> - Un número. <br/> - Y un carácter especial.";
+                    $mensajes[] = "La contrasenya ha de contenir:<br/> - Un mínim de 8 caràcters. <br/> - Una lletra majúscula. <br/> - Una lletra minúscula. <br/> - Un nombre. <br/> - I un caràcter especial.";
                 }
             } else {
-                $mensajes[] = "Las contraseñas no coinciden.";
+                $mensajes[] = "Les contrasenyes no coincideixen.";
             }
         }
     

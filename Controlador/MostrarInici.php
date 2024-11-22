@@ -6,7 +6,7 @@
         $click = Boolean dependiendo de si los articulos tienen que tener la opcion de ser clickable.
         $cat = String que define si es de la categoria Borrar o Modificar.
     */
-    function mostrarTodosArticulos($click = false, $cat, $page = 1, $articlesPerPage = 5) {
+    function mostrarTodosArticulos($cat, $page = 1, $articlesPerPage = 5) {
         $article_data = '<div class="articulo-container">'; // Contenedor para los artículos.
         $articles = select(); // Obtener los artículos de la base de datos
         
@@ -23,22 +23,14 @@
         // Mostrar artículos según la página
         for ($i = $startIndex; $i < $endIndex; $i++) {
             $article = $articles[$i];
-            if (!$click && $cat == 'MostrarInici') {
-                $article_data .= '<div class="articulo" id="' . $article['id'] . '">';
-                $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
-                $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-                $article_data .= '</div>';
-            } elseif ($cat == 'Borrar') {
-                $article_data .= '<button onclick="redireccion(' . $article['id'] . ')" class="selectB" id="' . $article['id'] . '">';
-                $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
-                $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-                $article_data .= '</button>';
-            } else { // Para la opción de Modificar
-                $article_data .= '<button onclick="redireccion(' . $article['id'] . ')" class="selectM" id="' . $article['id'] . '">';
-                $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
-                $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-                $article_data .= '</button>';
-            }
+            
+            $article_data .= '<button class="ArticulosInicio">';
+            $article_data .= '<div class="articulo" id="' . $article['id'] . '">';
+            $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
+            $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
+            $article_data .= '</div>';
+            $article_data .= '</button>';
+            
         }
     
         $article_data .= '</div>'; // Cerrar el contenedor de artículos
