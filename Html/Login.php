@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://www.google.com/recaptcha/api.js?render="+ CLAVE_SITIO></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render="+ CLAVE_SITIO></script> -->
     <link href="Estilos/Login.css" rel="stylesheet">
     <title>Iniciar Sesion</title>
 </head>
@@ -53,6 +53,7 @@
         </form>
     </div>
 </body>
+<!--
 <script>
     grecaptcha.ready(function() {
         grecaptcha.execute(CLAVE_SITIO, {action: 'submit'}).then(function(token) {
@@ -60,4 +61,5 @@
         });
     });
 </script>
+                        -->
 </html>
