@@ -4,10 +4,10 @@
 
     function restablecerPassword($toke,$password1,$password2) {
         $token = isset($toke) ? trim($toke) : '';
-        var_dump($token);
         $contra1 = isset($password1) ? trim($password1) : '';
         $contra2 = isset($password2) ? trim($password2) : '';
-
+        $error_message = '';
+        $success_message = '';
         if (!empty($token) && !empty($contra1) && $contra1 === $contra2) {
             // Verificar si el token es válido y no ha expirado
             $usuario = obtenerUsuarioPorToken($token);
@@ -15,26 +15,28 @@
             if ($usuario) {
                 // Validar fortaleza de la contraseña (puedes reutilizar la función de antes)
                 if (validarContraseña($contra1)) {
-                    // Encriptar la nueva contraseña
-                    $hashed_password = password_hash($contra1, PASSWORD_DEFAULT);
-
-                    // Actualizar la contraseña del usuario en la base de datos
-                    actualizarContrasena($usuario['user_id'], $hashed_password);
-
-                    // Borrar el token de la base de datos
-                    borrarToken($token);
-
-                    echo "Contraseña actualizada con éxito. Ahora puedes iniciar sesión.";
-                    header("Location: index.php?pagina=Login");
+                    if (!verificarContrasenaActual($usuario['username'], $contra1)) {
+                        // Encriptar la nueva contraseña
+                        $hashed_password = password_hash($contra1, PASSWORD_DEFAULT);
+                        // Actualizar la contraseña del usuario
+                        actualizarContrasena($usuario['id'], $hashed_password);
+                        // Borrar el token después de usarlo
+                        borrarToken($token);
+                        $success_message .= "La contrasenya s'ha restablert correctament";
+                    } else {
+                        $error_message .= "La nova contrasenya no pot ser igual a l'actual";
+                    }
                 } else {
-                    echo "La contraseña no es lo suficientemente fuerte.";
+                    $error_message .= "La contrasenya no és prou forta";
                 }
             } else {
-                echo "El token es inválido o ha expirado.";
+                $error_message .= "El token és invàlid o ha expirat";
             }
         } else {
-            echo "Las contraseñas no coinciden.";
+            $error_message .= "Les contrasenyes no coincideixen";
         }
+
+        include 'Html/RestablecerContra.php';
     }
 
     function validarContraseña($password) {
@@ -51,6 +53,14 @@
         } else {
             return false;
         }
+    }
+
+    function mostrarMensaje($mensaje, $tipo = 'success') {
+        if (!empty($mensaje)) {
+            $class = $tipo === 'error' ? 'error-message' : 'success-message';
+            return '<div class="' . $class . '">' . htmlspecialchars($mensaje) . '</div>';
+        }
+        return '';
     }
     
 ?>

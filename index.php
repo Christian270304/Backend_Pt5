@@ -32,6 +32,26 @@
 
         // Actualizar la última actividad del usuario
         $_SESSION['last_activity'] = time();
+    } else {
+        // Verificar si hay un token de sesión
+        if (isset($_COOKIE['session_token'])) {
+            $token = $_COOKIE['session_token'];
+            require_once 'Model/RestablecerContra.php';
+            // Obtener usuario por token
+            $usuario = obtenerUsuarioPorToken($token);
+            if ($usuario) {
+                // Iniciar sesión automáticamente
+                $_SESSION['username'] = $usuario['username'];
+                $_SESSION['profile_image'] = $usuario['ruta_imagen']; // O la imagen predeterminada
+                $_SESSION['login_attempts'] = 0; // Reiniciar intentos de inicio de sesión
+                header("Location: index.php?pagina=Mostrar");
+                exit();
+            } else {
+                // Token no válido, puedes eliminar la cookie
+                setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
+                cerrarSesion();
+            }
+        }
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
@@ -79,6 +99,7 @@
                 break;
             case 'MostrarInici':
                 if (isset($_SESSION['username'])){
+                    setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
                     session_unset();
                     session_destroy();
                     require_once 'Controlador/MostrarInici.php';
@@ -93,22 +114,40 @@
                 include 'Html/Login.php';
                 break;
             case 'SubirImagen':
-                require_once 'Controlador/Perfil.php';
-                include 'Html/Perfil.php';
+                if (isset($_SESSION['username'])){
+                    require_once 'Controlador/Perfil.php';
+                    include 'Html/Perfil.php';
+                } else {
+                    header("Location: index.php?pagina=MostrarInici");
+                    exit;
+                }
                 break;
             case 'RecuperarContra':
+                require_once 'Controlador/RecuperarContra.php';
                 include 'Html/RecuperarContra.php';
                 break;
             case 'Perfil':
-                require_once 'Controlador/Perfil.php';
-                include 'Html/Perfil.php';
+                if (isset($_SESSION['username'])){
+                    require_once 'Controlador/Perfil.php';
+                    include 'Html/Perfil.php';
+                } else {
+                    header("Location: index.php?pagina=MostrarInici");
+                    exit;
+                }
                 break;
             case 'SignUp':
                 include 'Html/SignUp.php';
                 break;
             case 'Restablecer':
-                require_once 'Controlador/RestablecerContra.php';
-                include 'Html/RestablecerContra.php';
+                if (isset($_GET['token']) ? $_GET['token']: "") {
+                    require_once 'Controlador/RestablecerContra.php';
+                    include 'Html/RestablecerContra.php';
+                    
+                } else {
+                    header("Location: index.php?pagina=MostrarInici");
+                    exit;
+                }
+                
                 break;
             case 'BorrarVerificar':
                 require_once 'Controlador/Borrar.php';
@@ -118,12 +157,25 @@
                 require_once 'Controlador/Modificar.php';
                 modificarPagina($_GET['id']);
                 break;
+            case 'Admin':
+                if (isset($_SESSION['username']) && $_SESSION['username'] == 'admin'){
+                    include 'Html/AdminUsuarios.php';
+                } else {
+                    if (isset($_SESSION['username'])) {
+                        header("Location: index.php?pagina=Mostrar");
+                        exit;
+                    } else {
+                        header("Location: index.php?pagina=MostrarInici");
+                        exit;
+                    }
+                }
+                break;
             default:
             if (isset($_SESSION['username'])){
                 header("Location: index.php?pagina=Mostrar");
                 exit;
             } else {
-                header("Location: index.php?pagina=MostrarInici&expired=1");
+                header("Location: index.php?pagina=MostrarInici");
             }
                
         }
@@ -150,11 +202,11 @@
                 break;
             case 'Login':
                 require_once 'Controlador/Login.php';
-                loginDatos($_POST['username'],$_POST['contra'],$_POST['recaptchaResponse']);
+                loginDatos($_POST['username'],$_POST['contra'],isset($_POST['g-recaptcha-response'])?$_POST['g-recaptcha-response']:"");
                 break;
             case 'SignUp':
                 require_once 'Controlador/SignUp.php';
-                verificarDatos($_POST['username'],$_POST['correo'],$_POST['contra1'],$_POST['contra2']);
+                verificarDatos($_POST['username'],$_POST['correo'],$_POST['contra1'],$_POST['contra2'],$_POST['id_token']);
                 break;
             case 'Modificar':
                 require_once 'Controlador/Modificar.php';
@@ -176,6 +228,10 @@
             case 'CambiarContra':
                 require_once 'Controlador/Perfil.php';
                 verificarPassword($_POST['old_password'],$_POST['new_password'],$_POST['confirm_password']);
+                break;
+            case 'EliminarUsuario':
+                require_once 'Controlador/EliminarUsuario.php';
+                eliminarCuenta($_POST['user_id'],$_POST['eliminarArticulos']);
                 break;
             default:
                 include 'Html/Mostrar.php';

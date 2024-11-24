@@ -7,9 +7,13 @@
      * @user Parametro que nos indica el username del usuario.
      * @password Parametro que nos indica la contraseña del usuario.
      */
-    function loginDatos($user, $password,$token) {
+    function loginDatos($user, $password,$recaptcha) {
         $defaultImage = "Imagenes/profile-user.svg";
         $recaptchaSecret = CLAVE_SECRETA;
+        $recaptchaResponse = $recaptcha;
+        // Verifica si el token de reCAPTCHA es válido
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$recaptchaSecret}&response={$recaptchaResponse}");
+        $responseKeys = json_decode($response, true);
         $mensajes = array();
         $mensaje = '';
     
@@ -20,22 +24,27 @@
        
     
         if (empty($username)) {
-            $mensajes[] = "El camp del correu no pot estar vuit";
+            $mensajes[] = "El camp del correu no pot estar buit";
         }
     
         if (empty($contra)) {
-            $mensajes[] = "El camp del password no pot estar vuit";
+            $mensajes[] = "El camp de la contrasenya no pot estar buit";
         }
-    
+        if (!isset($_SESSION['login_attempts'])) {
+            $_SESSION['login_attempts'] = 0;  
+        }
+
+        $showRecaptcha = $_SESSION['login_attempts'] >= 3;
         // Solo continuamos si no hay errores previos
         if (empty($mensajes)) {
             $result = buscarUsuario($username);
             if ($result) {
                 if (password_verify($contra, $result['password'])) {
                     // Iniciar la sesión
-                    $_SESSION['username'] = $result['username'];
+                    if ($responseKeys["success"] || !$showRecaptcha) {
+                        $_SESSION['username'] = $result['username'];
                     $_SESSION['profile_image'] = file_exists($result['ruta_imagen']) ? $result['ruta_imagen'] : $defaultImage;
-    
+                    
                     // opción "Remember Me"
                     if (isset($_POST['remember_me'])) {
                         // Generar un token único
@@ -46,22 +55,25 @@
 
                         // Configurar cookie con el token
                         setcookie('session_token', $token, time() + (30 * 24 * 60 * 60), "/"); // Cookie válida por 30 días
-
-                        // Redirigir al usuario
-                        header("Location: index.php?pagina=Inicio");
-                        exit();
                     }
     
                     header("Location: index.php?pagina=Mostrar");
-                    exit;  
+                    exit;
+                    } else {
+                        $mensajes[] = "Check the reCAPTCHA";
+                    }
+                      
                 } else {
+                    $_SESSION['login_attempts']++;
                     $mensajes[] = "Contrasenya incorrecta";
+                    
                 }
             } else {
                 $mensajes[] = "Usuario no trobat";
             }
         }
-    
+        
+        
         // Mostrar errores si existen
         if (!empty($mensajes)) {
             foreach ($mensajes as $errors) {

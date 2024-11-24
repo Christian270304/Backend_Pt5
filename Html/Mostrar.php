@@ -21,7 +21,10 @@
                 <img src="<?php echo $profileImage; ?>" alt="Foto de perfil">
                 <ul class="dropdown">
                     <li><a href="index.php?pagina=Perfil">Perfil</a></li>
-                    <li><a href="index.php?pagina=MostrarInici">Cerrrar Sesion</a></li>
+                    <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin'): ?>
+                        <li><a href="index.php?pagina=Admin">Administrar Usuarios</a></li>
+                    <?php endif; ?>
+                    <li><a href="index.php?pagina=MostrarInici">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>
@@ -55,6 +58,8 @@
                     <option value="ASC" <?php echo (isset($_GET['order']) && $_GET['order'] == 'ASC') ? 'selected' : ''; ?>>Ascendente</option>
                     <option value="DESC" <?php echo (isset($_GET['order']) && $_GET['order'] == 'DESC') ? 'selected' : ''; ?>>Descendente</option>
                 </select>
+                <label for="search">Buscar Artículo:</label>
+                <input type="text" name="search" id="search" placeholder="Buscar por título o contenido" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                 <button type="submit">Actualizar</button>
             </form>
 
@@ -62,8 +67,9 @@
             // Obtener la página actual de la URL, por defecto es 1
             $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
             $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
+            $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; // Obtener la consulta de búsqueda
 
-            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina));  // Usar el valor de artículos por página
+            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina), $searchQuery);  // Usar el valor de artículos por página
             ?>
         </div>
     </div>

@@ -8,7 +8,6 @@
         $query = "SELECT id FROM users WHERE email = :correo";
         $stmt = $conn->prepare($query);
         $stmt->execute([':correo' => $correo]);
-        var_dump($stmt);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 

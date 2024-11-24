@@ -632,3 +632,49 @@ body {
       font-size: 12px;
   }
 }
+/* Estilos para el modal de la pagina Administar Usuarios */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000; /* En la parte superior */
+  left: 0;
+  top: 0;
+  width: 100%; /* Ancho completo */
+  height: 100%; /* Alto completo */
+  overflow: none; /* Scroll si es necesario */
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro */
+}
+
+.modal-content {
+  position: absolute; /* Asegúrate de que el contenido del modal esté posicionado correctamente */
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta la posición para que esté centrado */
+  background-color: rgb(0, 0, 0); /* Fondo blanco para el contenido del modal */
+  padding: 20px; /* Espacio interno */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el efecto de elevación */
+}
+
+.header {
+  width: 322px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header h2 {
+  margin: 0;
+  font-size: 25px;
+}
+.header .close {
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

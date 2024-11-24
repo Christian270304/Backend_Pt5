@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="<?php echo CLAVE_ID; ?>">
     <link href="Estilos/SignUp.css" rel="stylesheet">
     <title>Crear Cuenta</title>
 </head>
@@ -41,11 +43,26 @@
             <div class="errors">
                 <?php echo isset($mensaje) ? $mensaje : '' ?>
             </div>
+            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="sign_in_with" data-size="large" data-logo_alignment="left"></div>
             <button class="btn" type="submit">Crear</button>
             <a href="index.php?pagina=Login" class="btn-link">Tengo una cuenta</a>
             <a href="#" class="btn-link">Te has olvidado la contraseña?</a>
         </form>
     </div>
+    <script>
+        function onSignIn(googleUser ) {
+            var id_token = googleUser .getAuthResponse().id_token;
+
+            // Enviar el ID token a tu servidor
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'tu_script_de_autenticacion.php');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('id_token=' + id_token);
+        }
+    </script>
 </body>
 
 </html>

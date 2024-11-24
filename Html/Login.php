@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://www.google.com/recaptcha/api.js?render="+ CLAVE_SITIO></script> -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link href="Estilos/Login.css" rel="stylesheet">
     <title>Iniciar Sesion</title>
 </head>
@@ -18,7 +18,7 @@
         <h4 class="title">Iniciar Sesion</h4>
 
 
-        <form method="POST" action="index.php?pagina=Login">
+        <form method="POST" action="index.php?pagina=Login" id="form">
             <div class="field">
                 <svg class="input-icon" width="800px" height="800px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -46,20 +46,21 @@
             <label>
                 <input type="checkbox" name="remember_me"> Recuérdame
             </label><br><br>
-            <input type="hidden" name="recaptchaResponse" id="recaptchaResponse">
+            <?php if (isset($showRecaptcha)? $showRecaptcha: false): ?>
+                <div class="g-recaptcha" data-sitekey="<?php echo CLAVE_SITIO; ?>" ></div>
+
+            <?php endif; ?>
             <button class="btn" type="submit">Entrar</button>
             <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
             <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>
         </form>
     </div>
-</body>
-<!--
+    
 <script>
-    grecaptcha.ready(function() {
-        grecaptcha.execute(CLAVE_SITIO, {action: 'submit'}).then(function(token) {
-            document.getElementById('recaptchaResponse').value = token;
-        });
-    });
+    function onSubmit() {
+        document.getElementById("form").submit(); // Envía el formulario
+    }
 </script>
-                        -->
+</body>
+
 </html>

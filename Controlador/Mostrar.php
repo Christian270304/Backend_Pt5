@@ -7,11 +7,11 @@
      *$page El numero de pagina en la que esta el usuario.
      *$articlesPerPage El numero de articulos por pagina
     */
-    function mostrarArticulos( $cat, $page=1, $articlesPerPage) {
+    function mostrarArticulos( $cat, $page=1, $articlesPerPage, $searchQuery = '') {
         $article_data = '<div class="articulo-container">'; // Contenedor para los artículos.
         $user_id = idUsuario($_SESSION['username']);
         $order = isset($_GET['order']) ? $_GET['order'] : 'ASC';
-        $articles = selectUsuario($user_id, $order); // Obtener los artículos de la base de datos
+        $articles = selectUsuario($user_id, $order,$searchQuery); // Obtener los artículos de la base de datos
         
         if (isset($_GET['articulosPorPagina'])) {
             $articlesPerPage = intval($_GET['articulosPorPagina']);
@@ -38,7 +38,7 @@
         }
 
         $article_data .= '</div>'; // Cerrar el contenedor de artículos
-        $article_data .= generarPaginacion($page,$articlesPerPage,$cat);
+        $article_data .= generarPaginacion($page,$articlesPerPage,$cat,$articles);
         return $article_data;
     }
 
@@ -48,9 +48,9 @@
         $page El numero de pagina en la que esta el usuario.
         $articlesPerPage El numero de articulos por pagina
     */
-    function generarPaginacion($pagina, $articlesPerPage,$cat) {
+    function generarPaginacion($pagina, $articlesPerPage,$cat,$articles) {
         $user_id = idUsuario($_SESSION['username']);
-        $articles = selectUsuario($user_id); // Obtener todos los artículos
+        $articles = selecArticleUsuario($user_id); // Obtener todos los artículos
         $totalArticles = count($articles); // Calcular el número total de artículos
         $totalPagines = ceil($totalArticles / ($articlesPerPage >= 0)? $articlesPerPage : 1); // Número total de páginas
         

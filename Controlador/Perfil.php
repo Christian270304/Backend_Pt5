@@ -20,11 +20,11 @@
         $contraNueva2 = isset($passNuevo2) ? trim(htmlspecialchars($passNuevo2)) : '';
 
         if (empty($contraAntigua)) {
-            $mensajes[] = "Tiene que introducir su contraseña actual";
+            $mensajes[] = "Ha d'introduir la seva contrasenya actual";
         }
 
         if (empty($passNuevo)) {
-            $mensajes[] = "El campo de la nueva contraseña no puede estar vacio";
+            $mensajes[] = "El camp de la nova contrasenya no pot estar buit";
         }else if (empty($passNuevo2)){
             $mensajes[] = "Por favor repita la contraseña";
         }

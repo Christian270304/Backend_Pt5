@@ -32,4 +32,16 @@
 
         return $mensaje;
     }
+
+    /*
+        Funcion para seleccionar el id de un articulo mediante el titulo y el cuerpo.
+    */
+    function selectId($titol,$cos){
+        global $conn;
+        $sql = "SELECT id FROM articles WHERE titol = :titol AND cos = :cos"; // Sentencia sql.
+        $statement = $conn->prepare($sql); // Preparar la sentencia.
+        $statement->execute([':titol' => $titol,':cos' => $cos]); // Ejecutar la consulta.  
+        $result = $statement->fetch(PDO::FETCH_ASSOC); // Obtener el resultado como un array asociativo.
+        return $result ? $result['id'] : null; // Verificar si hay resultados y devolver el ID, o null si no se encuentra.
+    }
 ?>

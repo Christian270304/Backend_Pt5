@@ -119,7 +119,6 @@ ALTER TABLE `articles`
 --
 ALTER TABLE `tokens`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
   ADD UNIQUE KEY `token` (`token`);
 
 --

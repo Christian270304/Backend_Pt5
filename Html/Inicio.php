@@ -56,8 +56,9 @@
             // Obtener la página actual de la URL, por defecto es 1
             $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
             $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
+            $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; // Obtener la consulta de búsqueda
 
-            echo mostrarTodosArticulos( "Inicio",$paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina));  // Usar el valor de artículos por página
+            echo mostrarTodosArticulos( "Inicio",$paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina),$searchQuery);  // Usar el valor de artículos por página
             ?>
         </div>
     </div>
