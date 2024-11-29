@@ -143,3 +143,32 @@ body {
 .salir:after {
     transform: rotate(-45deg);
 }
+
+.g_id_signin {
+    display: inline-block; /* Asegura que el botón se comporte como un botón en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    border: 2px solid #4285F4; /* Borde azul de Google */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: white; /* Fondo blanco */
+    color: #4285F4; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    text-align: center; /* Centrar el texto */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.g_id_signin:hover {
+    background-color: #4285F4; /* Cambia el fondo al pasar el ratón */
+    color: white; /* Cambia el color del texto al pasar el ratón */
+}
+
+.g_id_signin:active {
+    transform: scale(0.95); /* Efecto de pulsación al hacer clic */
+}
+
+/* Opcional: Estilo para el logo de Google */
+.g_id_signin img {
+    margin-right: 8px; /* Espacio entre el logo y el texto */
+    vertical-align: middle; /* Alinear verticalmente */
+}

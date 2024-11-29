@@ -157,7 +157,7 @@ ALTER TABLE `users`
 -- Filtros para la tabla `articles`
 --
 ALTER TABLE `articles`
-  ADD CONSTRAINT `user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `user_id_users_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
 
 --
 -- Filtros para la tabla `tokens`

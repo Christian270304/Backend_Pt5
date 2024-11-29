@@ -100,7 +100,7 @@
                 break;
             case 'MostrarInici':
                 if (isset($_SESSION['username'])){
-                    //setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
+                    setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
                     session_unset();
                     session_destroy();
                     require_once 'Controlador/MostrarInici.php';
@@ -137,6 +137,7 @@
                 }
                 break;
             case 'SignUp':
+                require_once 'Controlador/SignUp.php';
                 include 'Html/SignUp.php';
                 break;
             case 'Restablecer':
@@ -232,7 +233,7 @@
                 break;
             case 'EliminarUsuario':
                 require_once 'Controlador/EliminarUsuario.php';
-                eliminarCuenta($_POST['user_id'],$_POST['eliminarArticulos']);
+                eliminarCuenta($_POST['user_id'],isset($_POST['eliminarArticulos'])? $_POST['eliminarArticulos']: false);
                 break;
             default:
                 include 'Html/Mostrar.php';
