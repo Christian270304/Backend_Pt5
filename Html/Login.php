@@ -40,16 +40,17 @@
                 </svg>
                 <input autocomplete="on" id="logpass" placeholder="Contraseña" class="input-field" name="contra" type="password" value="<?php echo isset($contra) ? $contra : ''; ?>">
             </div>
-            <div class="errors">
-                <?php echo isset($mensaje) ? $mensaje : '' ?>
-            </div>
             <label>
-                <input type="checkbox" name="remember_me"> Recuérdame
+                <input type="checkbox" name="remember_me"> Recuérdame 
             </label><br><br>
+            
             <?php if (isset($showRecaptcha)? $showRecaptcha: false): ?>
                 <div class="g-recaptcha" data-sitekey="<?php echo CLAVE_SITIO; ?>" ></div>
 
             <?php endif; ?>
+            <div class="errors">
+                <?php echo isset($mensaje) ? $mensaje : '' ?>
+            </div><br>
             <button class="btn" type="submit">Entrar</button>
             <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
             <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>

@@ -6,7 +6,8 @@
 
     ini_set('session.gc_probability', 1);
     ini_set('session.gc_divisor', 100);
-
+    ini_set('session.use_cookies', 1);
+    
     
 
     session_start();
@@ -99,7 +100,7 @@
                 break;
             case 'MostrarInici':
                 if (isset($_SESSION['username'])){
-                    setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
+                    //setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
                     session_unset();
                     session_destroy();
                     require_once 'Controlador/MostrarInici.php';
@@ -202,7 +203,7 @@
                 break;
             case 'Login':
                 require_once 'Controlador/Login.php';
-                loginDatos($_POST['username'],$_POST['contra'],isset($_POST['g-recaptcha-response'])?$_POST['g-recaptcha-response']:"");
+                loginDatos($_POST['username'],$_POST['contra'],isset($_POST['g-recaptcha-response'])?$_POST['g-recaptcha-response']: "",isset($_POST['remember_me']) ? $_POST['remember_me'] : "");
                 break;
             case 'SignUp':
                 require_once 'Controlador/SignUp.php';

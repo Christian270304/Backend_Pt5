@@ -7,24 +7,19 @@
     */
     
     function verificarDelet($id)  {
-        $ids = isset($id) ? trim(htmlspecialchars($id)) : '';
-        $verificar = verificarId($ids);
-        $mensaje = '';
+        $ids = isset($id) ? intval(trim(($id))) : 0;
+        $user_id = idUsuario($_SESSION['username']);
+        $article = selectOne($ids,$user_id);
+        
         $titol = '';
         $cos = '';
-        if ($verificar == false){
-            include 'Html/404.php';
-        } else {
-            $articles = selectTitolCos($id);
-            foreach ($articles as $article) {
-                $titol = $article['titol'] ;
-                $cos = $article['cos'];
-                
-            }   
-            include 'Html/BorrarVerificar.php';
-        }
-        
-        
+        if ($article== null){
+            include 'Html/403.php';
+            return;
+        } 
+        $titol = $article['titol'];
+        $cos = $article['cos'];
+        include 'Html/BorrarVerificar.php';
     }
 
     /*
@@ -187,8 +182,8 @@
         Funcion para verificar si el id pasado por parametro exite dentro de la base de datos.
         Devuelve true si el artículo existe, false si no.
     */
-    function verificarId($id) {
-        $verificar = selectOne($id);
+    function verificarId($id,$user_id) {
+        $verificar = selectOne($id,$user_id);
         return $verificar ? true : false;
     }
 ?>

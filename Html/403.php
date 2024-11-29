@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="Estilos/404.css">
+    <link rel="stylesheet" type="text/css" href="Estilos/403.css">
     <link rel="stylesheet" type="text/css" href="Estilos/oxygen.fonts.css">
     <script defer type="text/javascript" src="js/script.js"></script>
-    <title>404</title>
+    <title>405</title>
     
 
 </head>
@@ -32,10 +32,9 @@
 
         <div class="content">
         <div class="error">
-            <h1>404</h1>
-            <h2>error</h2>
-            <p>No hemos podido encontrar lo que estás buscando. Revisa la URL e intentalo nuevamente</p>
-            <p class="subtitle">ERR_NOT_FOUND</p>
+            <h1>403</h1>
+            <h2>Forbidden</h2>
+            <p>Access to this resource on the server is denied!</p>
         </div>
         <div class="stack-container">
             <div class="card-container">

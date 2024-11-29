@@ -1,5 +1,6 @@
 /* Christian Torres Barrantes */
 :root {
+    --error-color: #FF6B6B; /* Color para errores */
     color-scheme: light dark;
   }
   
@@ -95,7 +96,10 @@ body {
    }
 
    .errors {
-    text-align: justify;
+    color: var(--error-color);
+    text-align: center; /* Centrar el mensaje de error */
+    margin-top: 10px;
+    font-size: 20px;
    }
 
 

@@ -141,33 +141,31 @@
     }
 
 
-    /*
-        Funcion para mostrar los datos del articulo que ha seleccionado el usuario en la pagina de ModificarArticulo.
-     */
-    function modificarPagina($id)  {
-        $ids = isset($id) ? trim(htmlspecialchars($id)) : '';
-        $verificar = verificarId($ids);
-        $mensaje = '';
-        $titol = '';
-        $cos = '';
-        if ($verificar == false){
-            include 'Html/404.php';
-        } else {
-            $articles = selectTitolCos($id);
-            if (!empty($articles)) {
-                foreach ($articles as $article) {
-                    $titol = $article['titol'] ;
-                    $cos = $article['cos'];
-                    include 'Html/ModificarArticulo.php';
-                }
-            } else {
-                $mensaje = "No s'ha trobat l'article.";
-            }
-            
-        }
-        
-        
+    /**
+ * Función para mostrar los datos del artículo que ha seleccionado el usuario en la página de ModificarArticulo.
+ * @param mixed $id El ID del artículo que se desea modificar.
+ */
+function modificarPagina($id) {
+    // Sanitizar el ID y asegurarse de que sea un entero
+    $ids = isset($id) ? intval(trim($id)) : 0;
+    $user_id = idUsuario($_SESSION['username']);
+    
+    // Obtener el artículo correspondiente al ID
+    $article = selectOne($ids, $user_id);
+
+    // Verificar si el artículo existe
+    if ($article === null) {
+        include 'Html/403.php';
+        return; // Detener la ejecución de la función
     }
+
+    // Asignar los valores del artículo a las variables
+    $titol = $article['titol'];
+    $cos = $article['cos'];
+
+    // Incluir la vista para modificar el artículo
+    include 'Html/ModificarArticulo.php';
+}
 
     /*
         Funcion que modifica el articulo con el titulo o el campo modificado. Si no ha modificado nada en el formulario 
@@ -176,7 +174,7 @@
     function modificar($id,$titulo,$cuerpo)  {
        $titol = isset($titulo) ? trim($titulo) : '';
        $cos = isset($cuerpo) ? trim($cuerpo) : '';
-       $verid = verificarId($id);
+       $verid = verificarId($id,idUsuario($_SESSION['username']));
        if ($verid == true){
             $mensaje = update($id,$titol,$cos);
             include 'Html/ModificarArticulo.php';
@@ -190,8 +188,8 @@
         Funcion para verificar si el id pasado por parametro exite dentro de la base de datos.
         Devuelve true si el artículo existe, false si no.
     */
-    function verificarId($id) {
-        $verificar = selectOne($id);
+    function verificarId($id,$user_id) {
+        $verificar = selectOne($id,$user_id);
         return $verificar ? true : false;
     }
 ?>

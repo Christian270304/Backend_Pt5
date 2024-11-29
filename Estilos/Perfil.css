@@ -44,7 +44,6 @@ body {
     display: grid;
     grid-template-rows: repeat(4, auto);
     list-style: none;
-    margin-right: 30px;
     padding: 0;
   }
   
@@ -52,7 +51,7 @@ body {
     background-color: gray;
     padding: 0;
     border-radius: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 2.5em;
     position: relative;
     width: 100%;
   }

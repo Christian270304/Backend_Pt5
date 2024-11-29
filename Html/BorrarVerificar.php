@@ -26,7 +26,7 @@
         <div class="nav-grid">
         <nav class="nav-bar">
             <ul>
-            <li><a href="index.php?pagina=Inicio"><i class="fas fa-home"></i><span>Inici</span></a></li>
+            <li><a href="index.php?pagina=Inicio"><img class="icon" src="Imagenes/house.svg"><span>Inici</span></a></li>
                 <li><a href="index.php?pagina=Mostrar"><img class="icon" src="Imagenes/newspaper.svg"><span>Articles</span></a></li>
                 <li><a href="index.php?pagina=Insertar"><img class="icon" src="Imagenes/add-square.svg"><span>Insertar Article</span></a></li>
                 <li><a href="index.php?pagina=Borrar"><img class="icon" src="Imagenes/delete-button.svg"><span>Borrar Article</span></a></li>
@@ -41,7 +41,7 @@
                     <label><h1>Seguro que quiere borrar este articulo?</h1></label>
                     <input readonly type="text" id="titulo" value="<?php echo $titol; ?>" name="titulo" class="campos">
                     <textarea readonly id="cuerpo" name="cuerpo" class="mensaje"><?php echo $cos; ?></textarea>
-                    <?php  echo $mensaje?>
+                    <?php  echo isset($mensaje)?>
                     <div class="botones-contenedor">
                         <button class="btn" type="submit" name="boton" value="Si">Borrar</button>   
                         <button class="btn" type="submit" name="boton" value="No">Cancelar</button> 

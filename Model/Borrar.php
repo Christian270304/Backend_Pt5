@@ -95,11 +95,11 @@
     /*
         Funcion para seleccionar un articulo mediante el id.
     */
-    function selectOne($id){
+    function selectOne($id,$user_id) {
         global $conn;
-        $sql = "SELECT * FROM articles WHERE id = :id"; 
+        $sql = "SELECT * FROM articles WHERE id = :id AND user_id = :user_id"; 
         $statement = $conn->prepare($sql);
-        $statement->execute([':id' => $id]); 
+        $statement->execute([':id' => $id,':user_id' => $user_id]); 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         return $result ? $result : null; 
     }
