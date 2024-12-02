@@ -60,6 +60,7 @@
             <div class="form-group">
                     <label for="public-email">Your password</label>
                         <!-- Botón para abrir el modal -->
+                        <?php if (!mostrarPassword() === ""):?>
                         <button class="open" id="openModal">Cambiar Contraseña</button>
 
                         <!-- El modal -->
@@ -96,6 +97,7 @@
                                 </form>
                             </div>
                         </div>
+                        <?php endif;?>
                     <small>
                         Aqui puedes cambiar tu contraseña
                     </small>

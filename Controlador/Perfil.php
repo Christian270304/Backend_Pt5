@@ -10,6 +10,12 @@
         return $email;
     }
 
+    function mostrarPassword() {
+        $user_id = idUsuario($_SESSION['username']);
+        $password = password($user_id);
+        return $password;
+    }
+
     function verificarPassword($passAntigui, $passNuevo, $passNuevo2) {
         $mensajes = [];
         $errores = '';

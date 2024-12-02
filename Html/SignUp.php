@@ -44,7 +44,7 @@
             <div class="errors">
                 <?php echo isset($mensaje) ? $mensaje : '' ?>
             </div>
-            
+            <?php require 'Controlador/OAuth_google.php';?>
             <button class="btn" type="submit">Crear</button>
             <div class="g_id_signin" 
      data-type="standard" 
@@ -53,11 +53,20 @@
      data-text="sign_in_with" 
      data-size="large" 
      data-logo_alignment="left" >
+     <?php
+     require_once 'libs/Google_Auth/vendor/autoload.php';
+     $client = new Google_Client();
+     $client->setClientId(CLIENTE_ID);
+     $client->setClientSecret(CLIENTE_SECRET);
+     $client->setRedirectUri(REDIRECT_URI);
+     $client->addScope("email");
+     $client->addScope("profile");
+     ?>
+     <a href="<?php echo $client->createAuthUrl() ?>">
     <img src="Imagenes/Google-Icon.png" alt="Google Logo" width="20" height="20"> <!-- Logo opcional -->
     Iniciar sesión con Google
-</div>
+</div><a href="Controlador/authenticate.php">Login with GitHub</a>
             <a href="index.php?pagina=Login" class="btn-link">Tengo una cuenta</a>
-            <a href="#" class="btn-link">Te has olvidado la contraseña?</a>
         </form>
     </div>
     <script>

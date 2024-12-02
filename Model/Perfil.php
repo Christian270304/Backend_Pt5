@@ -29,6 +29,15 @@
         return $resultado ? $resultado['email'] : null;
     }
 
+    function password($user_id) {
+        global $conn;
+        $query = "SELECT password FROM users WHERE id = :user_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':user_id' => $user_id]);
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado['password'] : null;
+    }
+
     function cambiarPassword($user_id,$password) {
         global $conn;
         $query = "UPDATE users SET password = :password WHERE id = :id";

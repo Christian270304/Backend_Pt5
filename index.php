@@ -67,10 +67,11 @@
                 }
                 break;
             case 'Mostrar':
-                if (!isset($_SESSION['username'])){
-                    header("Location: index.php?pagina=MostrarInici&expired=1");
+                if (!isset($_SESSION['username']) && !isset($_GET['code'])){
+                    header("Location: index.php?pagina=MostrarInici");
                 } else {
                     require_once 'Controlador/Mostrar.php';
+                    require_once 'Controlador/OAuth_google.php';
                     include 'Html/Mostrar.php';
                 }
                 break;
