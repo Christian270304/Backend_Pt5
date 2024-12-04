@@ -67,11 +67,10 @@
                 }
                 break;
             case 'Mostrar':
-                if (!isset($_SESSION['username']) && !isset($_GET['code'])){
+                if (!(isset($_SESSION['username']))){
                     header("Location: index.php?pagina=MostrarInici");
                 } else {
                     require_once 'Controlador/Mostrar.php';
-                    require_once 'Controlador/OAuth_google.php';
                     include 'Html/Mostrar.php';
                 }
                 break;
@@ -159,6 +158,12 @@
             case 'ModificarArticulo':
                 require_once 'Controlador/Modificar.php';
                 modificarPagina($_GET['id']);
+                break;
+            case 'hybridauth':
+                require_once 'Controlador/authenticate.php';
+                break;
+            case 'OAuth':
+                require_once 'Controlador/OAuth_google.php';
                 break;
             case 'Admin':
                 if (isset($_SESSION['username']) && $_SESSION['username'] == 'admin'){

@@ -52,9 +52,27 @@
                 <?php echo isset($mensaje) ? $mensaje : '' ?>
             </div><br>
             <button class="btn" type="submit">Entrar</button>
+            
             <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
             <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>
         </form>
+        <?php
+            require_once 'libs/vendor/autoload.php';
+            $client = new Google_Client();
+            $client->setClientId(CLIENTE_ID);
+            $client->setClientSecret(CLIENTE_SECRET);
+            $client->setRedirectUri(REDIRECT_URI);
+            $client->addScope("email");
+            $client->addScope("profile");
+            ?>
+            <a class="g_id_signin" href="<?php echo $client->createAuthUrl() ?>">
+                <img src="Imagenes/Google-Icon.png" alt="Google Logo" width="20" height="20"> <!-- Logo opcional -->
+                Iniciar sesión con Google</a>
+
+
+            <a class="btn-github" href="Controlador/authenticate.php">
+                <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="github-logo">
+                Iniciar sesión con GitHub</a>
     </div>
     
 <script>

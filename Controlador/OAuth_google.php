@@ -1,10 +1,10 @@
 <?php
 
 // Cargar la biblioteca de Google API
-require_once 'libs/Google_Auth/vendor/autoload.php';
-require_once 'Model/OAuth_google.php';
-
-require_once 'env.php';
+require_once __DIR__ . '\..\libs\vendor\autoload.php';
+require_once __DIR__ . '\..\Model\Social_Auth.php';
+require_once __DIR__ . '\..\conexion.php';
+require_once __DIR__ . '\..\env.php';
 
 
 // Crear un cliente de Google
@@ -16,7 +16,7 @@ $client->setRedirectUri(REDIRECT_URI);
 
 if (isset($_GET['code'])) {
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-    $client->setAccessToken($token['access_token']);
+    
 
     // Obtener el perfil de Google
     $google_oauth = new Google_Service_Oauth2($client);
@@ -24,13 +24,11 @@ if (isset($_GET['code'])) {
     $email = $google_user_data->email;
     $name = $google_user_data->name;
 
-    
     $result = buscarUsuarioPorEmail($email); // Implementa esta función para buscar por email
 
     if ($result) {
         // Usuario existe, iniciar sesión
-        $_SESSION['username'] = $result['username'];
-        $_SESSION['profile_image'] = $result['ruta_imagen']; // O la imagen predeterminada
+        $_SESSION['username'] = $name;
         header("Location: index.php?pagina=Mostrar");
     } else {
         // Usuario no existe, puedes crear uno nuevo
@@ -39,6 +37,9 @@ if (isset($_GET['code'])) {
             header("Location: index.php?pagina=Mostrar");
         }
     }
+    echo "Usuario creado o iniciado sesión";
+} else if ($_GET['error'] === 'access_denied') {
+    header("Location: index.php?pagina=Login");
 }
 
 

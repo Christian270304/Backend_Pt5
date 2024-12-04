@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3
+class ComposerStaticInit3e6e79e410cd98a8d86f36f772fe3690
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
@@ -31,6 +31,10 @@ class ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3
         'M' => 
         array (
             'Monolog\\' => 8,
+        ),
+        'H' => 
+        array (
+            'Hybridauth\\' => 11,
         ),
         'G' => 
         array (
@@ -76,6 +80,10 @@ class ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3
         'Monolog\\' => 
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
+        ),
+        'Hybridauth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hybridauth/hybridauth/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -134,9 +142,9 @@ class ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9904088971a3d7708dc3f5f28f4f6fc3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3e6e79e410cd98a8d86f36f772fe3690::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3e6e79e410cd98a8d86f36f772fe3690::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3e6e79e410cd98a8d86f36f772fe3690::$classMap;
 
         }, null, ClassLoader::class);
     }

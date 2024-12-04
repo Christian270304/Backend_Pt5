@@ -146,3 +146,76 @@ body {
 .salir:after {
     transform: rotate(-45deg);
 }
+
+.g_id_signin {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 20px; /* Espaciado interno */
+    border: 2px solid #4285F4; /* Borde azul de Google */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: white; /* Fondo blanco */
+    color: #4285F4; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    text-align: center; /* Centrar el texto */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.g_id_signin:hover {
+    background-color: #4285F4; /* Cambia el fondo al pasar el ratón */
+    color: white; /* Cambia el color del texto al pasar el ratón */
+    transform: scale(1.05); /* Aumentar ligeramente el tamaño */
+}
+
+.g_id_signin:active {
+    transform: scale(0.95); /* Efecto de pulsación al hacer clic */
+}
+
+/* Opcional: Estilo para el logo de Google */
+.g_id_signin img {
+    margin-right: 8px; /* Espacio entre el logo y el texto */
+    vertical-align: middle; /* Alinear verticalmente */
+}
+
+/* Estilo base del botón */
+.btn-github {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 20px; /* Espaciado interno */
+    border: 2px solid #4285F4; /* Borde azul de Google */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: white; /* Fondo blanco */
+    color: #4285F4; /* Color del texto */
+    font-size: 16px; /* Tamaño de fuente */
+    font-weight: bold; /* Negrita */
+    text-align: center; /* Centrar el texto */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */ /* Animación suave */
+}
+
+
+/* Estilo del logo */
+.github-logo {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+/* Efectos al pasar el ratón */
+.btn-github:hover {
+    background-color: #1b1f23; /* Oscurecer ligeramente el fondo */
+    transform: scale(1.05); /* Aumentar ligeramente el tamaño */
+}
+
+/* Efectos al hacer clic */
+.btn-github:active {
+    transform: scale(0.95); /* Reducir ligeramente el tamaño */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reducir la sombra */
+}
+
+/* Accesibilidad */
+.btn-github:focus {
+    outline: 2px solid #0366d6; /* Contorno visible al enfocar */
+    outline-offset: 2px; /* Separar el contorno del botón */
+}

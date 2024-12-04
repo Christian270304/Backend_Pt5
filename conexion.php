@@ -1,6 +1,6 @@
 <?php
     // Christian Torres Barrantes
-
+    require_once 'env.php';
     $servername = SERVERNAME;
     $usernamebd = USERNAMEBD;
     $password = PASSBD;
