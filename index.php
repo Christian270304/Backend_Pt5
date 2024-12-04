@@ -67,7 +67,7 @@
                 }
                 break;
             case 'Mostrar':
-                if (!(isset($_SESSION['username']))){
+                if (!(isset($_SESSION['username'])) && !(isset($_SESSION['social-auth']))){
                     header("Location: index.php?pagina=MostrarInici");
                 } else {
                     require_once 'Controlador/Mostrar.php';
@@ -236,6 +236,14 @@
             case 'CambiarContra':
                 require_once 'Controlador/Perfil.php';
                 verificarPassword($_POST['old_password'],$_POST['new_password'],$_POST['confirm_password']);
+                break;
+            case 'ChangeEmail':
+                require_once 'Controlador/Perfil.php';
+                changeEmail($_POST['email']);
+                break;
+            case 'ChangeUsername':
+                require_once 'Controlador/Perfil.php';
+                changeUsername($_POST['username']);
                 break;
             case 'EliminarUsuario':
                 require_once 'Controlador/EliminarUsuario.php';

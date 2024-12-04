@@ -214,6 +214,11 @@ grid-area: content;
     background-color: red; 
     color: #fff;
     }
+  #caja_mensaje.mensaje {
+    text-align: center;
+    background-color: green; 
+    color: #fff;
+    }
 
 
 /* Estilos para el modal */

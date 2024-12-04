@@ -10,6 +10,13 @@
         return $email;
     }
 
+    function mostrarUsername() {
+        $user_id = idUsuario($_SESSION['username']);
+        $username = username($user_id);
+        
+        return $username;
+    }
+
     function mostrarPassword() {
         $user_id = idUsuario($_SESSION['username']);
         $password = password($user_id);
@@ -71,6 +78,87 @@
             $errores .= '</div>';
         }
 
+        include 'Html/Perfil.php';
+    }
+
+    function changeEmail($email) {
+        $mensajes=[];
+        $errors = [];
+        $mostrar = '';
+
+        if (empty($email)) {
+            $errors[] = "El camp del correu no pot estar buit";
+        }
+
+        if (empty($mensajes) && empty($errors)){
+            $result = buscarEmail($email);
+            if ($result) {
+                $user = buscarUsuario($_SESSION['username']);
+                if (cambiarEmail($email,$user['id'])){
+                    $mensajes[] = "S'ha modificat el correu";
+                } else {
+                    $errors[] = "No s'ha pogut modificar el correu";
+                }
+            } else {
+                $errors[] = "Aquest correu ya existeix";
+            }
+        }
+        if (!empty($errors)) {
+            $mostrar .= '<div id="caja_mensaje" class="errors">';
+            foreach ($errors as $mensaje) {
+                $mostrar .= $mensaje . '<br/>';
+            }
+            $mostrar .= '</div>';
+        }
+
+        if (!empty($mensajes)) {
+            $mostrar .= '<div id="caja_mensaje" class="mensaje">';
+            foreach ($mensajes as $mensaje) {
+                $mostrar .= $mensaje . '<br/>';
+            }
+            $mostrar .= '</div>';
+        }
+        include 'Html/Perfil.php';
+    }
+
+    function changeUsername($username) {
+        $mensajes=[];
+        $errors = [];
+        $mostrar = '';
+
+        if (empty($username)) {
+            $errors[] = "El camp del username no pot estar buit";
+        }
+
+        if (empty($mensajes) && empty($errors)){
+            $result = buscarUsuario($username);
+            if (!$result) {
+                $user = buscarUsuario($_SESSION['username']);
+                if (cambiarUsername($username,$user['id'])){
+                    $_SESSION['username'] = $username;
+                    $mensajes[] = "S'ha modificat el username";
+                } else {
+                    $errors[] = "No s'ha pogut modificar el username";
+                }
+            } else {
+                $errors[] = "Aquest username ya existeix";
+            }
+        }
+        if (!empty($errors)) {
+            $mostrar .= '<div id="caja_mensaje" class="errors">';
+            foreach ($errors as $mensaje) {
+                $mostrar .= $mensaje . '<br/>';
+            }
+            $mostrar .= '</div>';
+        }
+
+        if (!empty($mensajes)) {
+            $mostrar .= '<div id="caja_mensaje" class="mensaje">';
+            foreach ($mensajes as $mensaje) {
+                $mostrar .= $mensaje . '<br/>';
+            }
+            $mostrar .= '</div>';
+        }
         include 'Html/Perfil.php';
     }
 

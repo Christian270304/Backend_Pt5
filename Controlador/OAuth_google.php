@@ -1,10 +1,10 @@
 <?php
 
 // Cargar la biblioteca de Google API
-require_once __DIR__ . '\..\libs\vendor\autoload.php';
-require_once __DIR__ . '\..\Model\Social_Auth.php';
-require_once __DIR__ . '\..\conexion.php';
-require_once __DIR__ . '\..\env.php';
+require_once 'libs/vendor/autoload.php';
+require_once 'Model/Social_Auth.php';
+require_once 'conexion.php';
+require_once 'env.php';
 
 
 // Crear un cliente de Google
@@ -37,7 +37,6 @@ if (isset($_GET['code'])) {
             header("Location: index.php?pagina=Mostrar");
         }
     }
-    echo "Usuario creado o iniciado sesión";
 } else if ($_GET['error'] === 'access_denied') {
     header("Location: index.php?pagina=Login");
 }
