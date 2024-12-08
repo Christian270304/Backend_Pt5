@@ -101,7 +101,7 @@ function handleLogin($result, $contra, $defaultImage, $rememberMe) {
             // Iniciar la sesión
             $_SESSION['username'] = $result['username'];
             $_SESSION['profile_image'] = file_exists($result['ruta_imagen']) ? $result['ruta_imagen'] : $defaultImage;
-
+            echo $rememberMe;
             // Opción "Remember Me"
             if ($rememberMe === 'on') {
                 $token = bin2hex(random_bytes(32)); // Generar un token único
@@ -134,5 +134,10 @@ function formatErrorMessages($mensajes) {
     return !empty($mensajes) ? implode('<br/>', $mensajes) : '';
 }
 
+function validarTokenRememberMe($token) {
+    $result = buscarUsuarioPorToken($token);
+    return $result;
+    
+}
     
 ?>

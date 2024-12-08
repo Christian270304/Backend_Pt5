@@ -99,16 +99,27 @@
                 }
                 break;
             case 'MostrarInici':
-                if (isset($_SESSION['username'])){
-                    setcookie('session_token', '', time() - 3600, "/"); // Eliminar cookie
+                require_once 'Controlador/Login.php';
+
+                if (isset($_SESSION['username']) && isset($_COOKIE['session_token'])) {
+                    
+                    $user = validarTokenRememberMe($_COOKIE['session_token']); // Ensure this function is defined
+
+                    if ($user) {
+                        
+                        $_SESSION['username'] = $user['username'];
+                        header("Location: index.php?pagina=Mostrar");
+                    }
+                }
+              
+                if (isset($_SESSION['username']) && isset($_GET['logout'])) {
+                    setcookie('session_token', '', time() - 3600, "/"); 
                     session_unset();
                     session_destroy();
-                    require_once 'Controlador/MostrarInici.php';
-                    include 'Html/MostrarInici.php';
-                } else {
-                    require_once 'Controlador/MostrarInici.php';
-                    include 'Html/MostrarInici.php';
                 }
+                
+                require_once 'Controlador/MostrarInici.php';
+                include 'Html/MostrarInici.php';
                 break;
             case 'Login':
                 require_once 'Controlador/Login.php';

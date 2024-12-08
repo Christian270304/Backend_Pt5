@@ -24,7 +24,7 @@
                     <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin'): ?>
                         <li><a href="index.php?pagina=Admin">Administrar Usuarios</a></li>
                     <?php endif; ?>
-                    <li><a href="index.php?pagina=MostrarInici">Cerrar Sesión</a></li>
+                    <li><a href="index.php?pagina=MostrarInici&logout=1">Cerrar Sesión</a></li>
                 </ul>
             </div>
         </div>

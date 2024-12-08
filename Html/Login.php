@@ -52,12 +52,9 @@
                 <?php echo isset($mensaje) ? $mensaje : '' ?>
             </div><br>
             <button class="btn" type="submit">Entrar</button>
-            
-            <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
-            <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>
-        </form>
-        <?php
+            <?php
             require_once 'libs/vendor/autoload.php';
+            use Google\Client as Google_Client;
             $client = new Google_Client();
             $client->setClientId(CLIENTE_ID);
             $client->setClientSecret(CLIENTE_SECRET);
@@ -70,9 +67,13 @@
                 Iniciar sesión con Google</a>
 
 
-            <a class="btn-github" href="Controlador/authenticate.php">
+            <a class="btn-github" href="index.php?pagina=hybridauth">
                 <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="github-logo">
                 Iniciar sesión con GitHub</a>
+            <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
+            <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>
+        </form>
+        
     </div>
     
 <script>

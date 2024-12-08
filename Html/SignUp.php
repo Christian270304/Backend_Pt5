@@ -71,7 +71,7 @@
                 Iniciar sesión con Google</a>
 
 
-            <a class="btn-github" href="Controlador/authenticate.php">
+            <a class="btn-github" href="index.php?pagina=hybridauth">
                 <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" class="github-logo">
                 Iniciar sesión con GitHub</a>
 

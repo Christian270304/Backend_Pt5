@@ -341,3 +341,41 @@ username: 'gorka_63' password: 'hRBO3kM1?' correo: 'zrt5pg2i@lycos.es'
 username: 'franciscojesus_74' password: 'xG5rF3nB!' correo: '65swvtqw3@caramail.com'
 
 username: 'merce_72' password: 'eI3iE1dE!' correo: 'u3xtm8fwy@lycos.es'
+
+
+# Recuperació/canvi de contrasenya
+
+Para la opción de recuperar la contraseña lo que hago es, usando la libreria PHPMAILER envio un correo al usuario siempre y caundo exista en la base da datos y no se haya logueado con la autenticación social.
+En este correo hay un boton donde te lleva a un formulario donde puedes cambiar la contraseña. En esta pagina tambien se manda un token por url para luego poder verificar que el usuario que esta cambiando la contraseña es el que quiere cambiarla.
+
+Para la opcion de cambiar la contraseña lo que hago es, en la pagina de perfil le doy la opcion de cambiar la contraseña siempre y cuando no esta logueado con autenticaicon social. El usuario tiene que poner su actual contraseña y luego la nueva contraseña.
+
+# Ordenació dels articles
+
+Para la ordenacion de los articulos lo que hago es que mediante un input dentro de un formulario hacer una peticion get para luego agarra ese valor y poder pasarle a la funcion que muestra los articulos. 
+
+# Remember me
+
+Para el Remember me lo que hago es una cookie que se mantiene activa durante un mes. Dentro de esta cookie se almacena un token que tambine se almacena en la base de datos. Cuando el usuario entra a la pagina y esta la cookie le abrira la sesión directamente.
+
+# reCAPTCHA
+
+Para el reCAPTCHA lo que hago es que cuando el usuario esta intentando iniciar sesion y se equvoca tres veces, le aparece el reCAPTCA, si no ha hecho el reCAPTCHA no podrá iniciar sesión aunque las credenciales esten correctas.
+
+# Autenticació social
+
+Por la parte de OAuth lo he hecho con Google. Lo unico que he hecho ha sido importar las librerias de Google con Composer para luego en un href crear una instancia de un cliente de Google y hacer una petición para obtener el token de acceso. Una vez obtenido el token lo verifico. Luego verifico que el usuario no exista dentro de la base de datos, de lo contrario le abro la sesion automaticamente sin crearle una cuenta nueva.
+
+Por la parte de hybridauth lo mismo, importo las librerias y verifico que el usuario no exista dentro de la base de datos.
+
+### Editar perfil personal
+
+Los usuarios pueden editar su información de perfil personal, incluyendo su nombre de usuario, correo electrónico y foto de perfil. El usuario y el correo lo pueden cambiar siempre y caundo no esten logueados con autenticación social.
+
+### Usuari Admin
+
+Para el usuario admin lo que he hecho a sido crear una nueva vista que solo puede acceder el admin mediante el dropdown del usuario una vez logueado. Dentro el admin podra elegir la opcion de eliminar a cualquiere usaurio a exepcion de si mismo. Caundo quiere eliminar un usuario le da la opcion de si quiere eliminar solo al usuario o si quiere eliminar al usuario y su articulos. Esto lo hago mediante un "ON DELETE SET NULL".
+
+### Barra de cerca
+
+La pagina incluye una barra de búsqueda que permite a los usuarios buscar artículos basados en palabras clave. Esto facilita la navegación y permite a los usuarios encontrar rápidamente el contenido que están buscando.

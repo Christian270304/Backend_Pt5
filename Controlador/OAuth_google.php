@@ -5,10 +5,11 @@ require_once 'libs/vendor/autoload.php';
 require_once 'Model/Social_Auth.php';
 require_once 'conexion.php';
 require_once 'env.php';
-
+use Google\Client;
+use Google\Service\Oauth2;
 
 // Crear un cliente de Google
-$client = new Google_Client();
+$client = new Google\Client();
 $client->setClientId(CLIENTE_ID); // Reemplaza con tu Client ID
 $client->setClientSecret(CLIENTE_SECRET);
 $client->setRedirectUri(REDIRECT_URI);
@@ -19,7 +20,7 @@ if (isset($_GET['code'])) {
     
 
     // Obtener el perfil de Google
-    $google_oauth = new Google_Service_Oauth2($client);
+    $google_oauth = new Google\Service\Oauth2($client);
     $google_user_data = $google_oauth->userinfo->get();
     $email = $google_user_data->email;
     $name = $google_user_data->name;

@@ -18,7 +18,9 @@ function recuperarPassword($email)
         $usuario = obtenerUsuarioPorCorreo($correo);
 
         if ($usuario) {
-            // Generar un token único
+
+            if (!verificarCuentaSocial($usuario['id'])) {
+                // Generar un token único
             $token = bin2hex(random_bytes(50)); // Token de 100 caracteres
 
             // Guardar el token en la base de datos junto con el correo del usuario
@@ -51,6 +53,10 @@ function recuperarPassword($email)
             require 'enviar_correo.php';
 
             $success_message = "S'ha enviat un enllaç de recuperació al teu correu electrònic";
+            } else {
+                $error_message = "Aquest correu està associat a una compte Socil. No es pot restablir la contrasenya";
+                
+            }
         } else {
             $error_message = "El correu electrònic no està registrat";
         }

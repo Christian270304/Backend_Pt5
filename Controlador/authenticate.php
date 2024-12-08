@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '\..\libs\vendor\autoload.php';
-require_once __DIR__ . '\..\Model\Social_Auth.php';
-require_once __DIR__ . '\..\conexion.php';
+require_once  'libs\vendor\autoload.php';
+require_once 'Model\Social_Auth.php';
+require_once  'conexion.php';
 use Hybridauth\Hybridauth;
 use Hybridauth\Hybridauth\SRC\HttpClient;
 
-$config = require __DIR__ . '\..\hybridauth.php';
+$config = require  'hybridauth.php';
 
 try {
     $hybridauth = new Hybridauth($config);

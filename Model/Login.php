@@ -17,5 +17,15 @@
         $stmt->execute([':user_id' => $userId, ':token' => $token, ':expira' => $expira]);
     }
 
-    
+    function buscarUsuarioPorToken($token) {
+        global $conn;
+        $stmt = $conn->prepare("
+            SELECT users.* 
+            FROM users 
+            JOIN tokens ON users.id = tokens.user_id 
+            WHERE tokens.token = :token
+        ");
+        $stmt->execute([':token' => $token]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 ?>

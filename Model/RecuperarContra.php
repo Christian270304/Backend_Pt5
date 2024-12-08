@@ -17,4 +17,13 @@
         $stmt = $conn->prepare("INSERT INTO tokens (user_id, token, expira) VALUES (:id, :token, :expira)");
         return $stmt->execute([':id' => $usuario, ':token' => $token, ':expira' => $expira]);
     }
+
+    // Funcion para verificar si el usuario tiene una cuenta de Google
+    function verificarCuentaSocial($user_id) {
+        global $conn;
+        $query = "SELECT OAuth FROM users WHERE id = :user_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':user_id' => $user_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 ?>

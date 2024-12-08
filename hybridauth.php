@@ -1,7 +1,7 @@
 <?php
 require_once 'env.php';
 return [
-    'callback' => 'http://localhost/Backend_PT5/index.php?pagina=hybridauth',
+    'callback' => 'http://localhost/Backend-Pt05/index.php?pagina=hybridauth',
     'providers' => [
         'GitHub' => [
             'enabled' => true,
