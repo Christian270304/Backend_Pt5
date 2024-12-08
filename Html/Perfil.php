@@ -129,7 +129,7 @@
                     Aqui puedes escribir sobre ti.
                 </small>
             </div>
-            <button class="button logout"><a href="index.php?pagina=MostrarInici">Cerrrar Sesion</a></button>
+            <button class="button logout"><a href="index.php?pagina=MostrarInici&logout=1">Cerrrar Sesion</a></button>
             <!-- Input oculto para cargar la imagen -->
             <input type="file" id="file-input" accept="image/*" onchange="loadImage(event)">
         </div>

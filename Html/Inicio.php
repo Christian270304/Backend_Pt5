@@ -18,7 +18,7 @@
                 <img src="<?php echo $profileImage; ?>" alt="Foto de perfil">
                 <ul class="dropdown">
                     <li><a href="index.php?pagina=Perfil">Perfil</a></li>
-                    <li><a href="index.php?pagina=MostrarInici">Cerrrar Sesion</a></li>
+                    <li><a href="index.php?pagina=MostrarInici&logout=1">Cerrrar Sesion</a></li>
                 </ul>
             </div>
         </div>
