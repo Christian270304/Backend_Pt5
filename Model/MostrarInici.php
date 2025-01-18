@@ -4,10 +4,11 @@
     /*
         Funcion para agarrar todos los campos de articles en la base de datos.
     */
-    function select(){
+    function select($searchQuery = ''){
         global $conn;
-        $query = "SELECT * FROM articles";
+        $query = "SELECT * FROM articles WHERE titol RLIKE :searchQuery OR cos RLIKE :searchQuery";
         $statement = $conn->prepare($query);
+        $statement->bindParam(':searchQuery',$searchQuery, PDO::PARAM_STR);
         $statement->execute();
         $resultado = $statement->fetchAll();
         $articles = [];
@@ -15,7 +16,8 @@
             $articles[] = [
                 'id' => $row['id'],
                 'titol' => $row['titol'],
-                'cos' => $row['cos']
+                'cos' => $row['cos'],
+                'ruta_imagen' => $row['ruta_imagen']
             ];
         }
         return $articles;

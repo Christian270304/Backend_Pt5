@@ -5,7 +5,7 @@ require_once 'conexion.php';
 /**
  * Funcion para seleccionar todos los articulos del usuario que le pasamos por parametro.
  */
-function selectUsuario($user_id, $order = 'ASC', $searchQuery)
+function selectUsuario($user_id, $order = 'ASC', $searchQuery = '')
 {
     global $conn;
     $query = "SELECT * FROM articles WHERE user_id = :user_id ";
@@ -28,6 +28,7 @@ function selectUsuario($user_id, $order = 'ASC', $searchQuery)
             'id' => $row['id'],
             'titol' => $row['titol'],
             'cos' => $row['cos']
+            ,'ruta_imagen' => $row['ruta_imagen']
         ];
     }
     return $articles;

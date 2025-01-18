@@ -8,7 +8,7 @@
      *$articlesPerPage El numero de articulos por pagina
     */
     function mostrarArticulos( $cat, $page=1, $articlesPerPage, $searchQuery = '') {
-        $article_data = '<div class="articulo-container">'; // Contenedor para los artículos.
+        $article_data = ""; // Contenedor para los artículos.
         $user_id = idUsuario($_SESSION['username']);
         $order = isset($_GET['order']) ? $_GET['order'] : 'ASC';
         $articles = selectUsuario($user_id, $order,$searchQuery); // Obtener los artículos de la base de datos
@@ -31,13 +31,21 @@
         // Mostrar artículos según la página
         for ($i = $startIndex; $i < $endIndex; $i++) {
             $article = $articles[$i];
-            $article_data .= '<div class="articulo" id="' . $article['id'] . '">';
-            $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
+            $article_data .= '<div class="user-article" id="' . $article['id'] . '">';
+            $article_data .= '<img src="' . $article['ruta_imagen'] . '" alt="Imagen de ' . $article['titol'] . '">';
+            $article_data .= '<div class="article-content">';
+            $article_data .= '<h4 class="titulo">' . $article['titol'] . '</h4>';
             $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
+            $article_data .= '</div>';
+            $article_data .= '<div class="card-actions">';
+            $article_data .= '<button onclick="readArticle(' . $article['id'] . ')">Leer</button>';
+            $article_data .= '<button onclick="editArticle(' . $article['id'] . ')">Editar</button>';
+            $article_data .= '<button onclick="deleteArticle(' . $article['id'] . ')">Eliminar</button>';
+            $article_data .= '</div>';
             $article_data .= '</div>'; 
         }
 
-        $article_data .= '</div>'; // Cerrar el contenedor de artículos
+        
         $article_data .= generarPaginacion($page,$articlesPerPage,$cat,$articles);
         return $article_data;
     }

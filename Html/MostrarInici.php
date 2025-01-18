@@ -1,6 +1,6 @@
 <!-- Christian Torres Barrantes -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="cat">
 
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,70 @@
 </head>
 
 <body>
-    <?php if (isset($_GET['expired']) && $_GET['expired'] == 1) {
+    <div class="container">
+    <form method="get" action="">
+        <div class="header">
+            <div class="logo">
+                <a href="index.php?pagina=MostrarInici">
+                    <img src="images/favicon.png" alt="Logotip de la pàgina">
+                </a>
+            </div>
+        
+            <div class="search-bar">
+                <input placeholder="Search..." type="text" />
+            </div>
+            <div class="articles-per-page">
+            <label for="articulosPorPagina">Artículos por página:</label>
+                <?php
+                $totalArticulos = totArticles(); // Obtener el total de artículos
+                ?>
+                <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? (int)$_GET['page'] : 1; ?>">
+                <input type="hidden" name="pagina" value="<?php echo isset($_GET['pagina']) ? $_GET['pagina'] : 'MostrarInici'; ?>">
+                <input type="number" name="articulosPorPagina" id="articulosPorPagina"
+                    value="<?php echo isset($_GET['articulosPorPagina']) ? $_GET['articulosPorPagina'] : 5; ?>"
+                    min="1" max="12">
+                <button type="submit">Actualizar</button>
+            </div>
+            <div class="sort-buttons">
+
+            </div>
+            <div class="user-icon">
+                <label  for ="dropdown">
+                    <img src="images/profile-user-account.svg" alt="User Icon" id="userIcon">
+                </label>
+                <input hidden class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
+                <div class="section-dropdown">
+                <?php if (isset($_SESSION['username'])): ?>
+                        <a href="index.php?pagina=Perfil">Perfil <i class="uil uil-arrow-right"></i></a>
+                        <?php if ($_SESSION['username'] === "admin"): ?>
+                            <a href="index.php?pagina=Admin">Admin <i class="uil uil-arrow-right"></i></a>
+                        <?php endif; ?>
+                        <!-- <a href="/logout">Tancar Sessió <i class="uil uil-arrow-right"></i></a> -->
+                    <?php else: ?>
+                        <a href="index.php?pagina=Login">Iniciar Sessió <i class="uil uil-arrow-right"></i></a>
+                        <a href="index.php?pagina=SignUp">Crear Compte <i class="uil uil-arrow-right"></i></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="content" id="articlesContainer">
+        
+                
+            
+
+            <?php
+            // Obtener la página actual de la URL, por defecto es 1
+            $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
+            $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
+
+            echo mostrarTodosArticulos('MostrarInici', $paginaActual, $articulosPorPagina);  // Usar el valor de artículos por página
+            ?>
+        </div>
+        </form>
+    </div>
+
+
+    <!-- <?php if (isset($_GET['expired']) && $_GET['expired'] == 1) {
         echo "<script>alert('Su sesión ha expirado por inactividad. Por favor, inicie sesión nuevamente.');</script>";
     } ?>
     <div class="container">
@@ -30,28 +93,9 @@
             </div>
         </div>
         <div class="content">
-            <form method="get" action="">
-                <label for="articulosPorPagina">Artículos por página:</label>
-                <?php
-                $totalArticulos = totArticles(); // Obtener el total de artículos
-                ?>
-                <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? (int)$_GET['page'] : 1; ?>">
-                <input type="hidden" name="pagina" value="<?php echo isset($_GET['pagina']) ? $_GET['pagina'] : 'MostrarInici'; ?>">
-                <input type="number" name="articulosPorPagina" id="articulosPorPagina"
-                    value="<?php echo isset($_GET['articulosPorPagina']) ? $_GET['articulosPorPagina'] : 5; ?>"
-                    min="1" max="<?php echo $totalArticulos; ?>">
-                <button type="submit">Actualizar</button>
-            </form>
-
-            <?php
-            // Obtener la página actual de la URL, por defecto es 1
-            $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
-            $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
-
-            echo mostrarTodosArticulos('MostrarInici', $paginaActual, $articulosPorPagina);  // Usar el valor de artículos por página
-            ?>
+            
         </div>
-    </div>
+    </div> -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const accountIconBtn = document.getElementById('account-icon-btn');

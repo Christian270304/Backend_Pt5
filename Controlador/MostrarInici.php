@@ -6,9 +6,9 @@
         $click = Boolean dependiendo de si los articulos tienen que tener la opcion de ser clickable.
         $cat = String que define si es de la categoria Borrar o Modificar.
     */
-    function mostrarTodosArticulos($cat, $page = 1, $articlesPerPage = 5) {
-        $article_data = '<div class="articulo-container">'; // Contenedor para los artículos.
-        $articles = select(); // Obtener los artículos de la base de datos
+    function mostrarTodosArticulos($cat, $page = 1, $articlesPerPage = 5, $searchQuery = '') {
+        $article_data =""; // Contenedor para los artículos.
+        $articles = select($searchQuery = ''); // Obtener los artículos de la base de datos
         
         // Verificar si hay artículos
         if (empty($articles)) {
@@ -24,16 +24,17 @@
         for ($i = $startIndex; $i < $endIndex; $i++) {
             $article = $articles[$i];
             
-            $article_data .= '<button class="ArticulosInicio">';
-            $article_data .= '<div class="articulo" id="' . $article['id'] . '">';
-            $article_data .= '<h2 class="titulo">' . $article['titol'] . '</h2>';
+            $article_data .= '<button class="card" id="' . $article['id'] . '">';
+            $article_data .= '<img src="' . $article['ruta_imagen'] . '" alt="Imagen de ' . $article['titol'] . '">';
+            $article_data .= '<div class="article-content">';
+            $article_data .= '<h4 class="titulo">' . $article['titol'] . '</h4>';
             $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
             $article_data .= '</div>';
             $article_data .= '</button>';
             
         }
     
-        $article_data .= '</div>'; // Cerrar el contenedor de artículos
+        //$article_data .= '</div>'; // Cerrar el contenedor de artículos
         $article_data .= generarPaginacion($page,$articlesPerPage,$cat);
         return $article_data;
     }

@@ -10,7 +10,79 @@
 </head>
 
 <body>
+<div class="container">
+<form method="get" action="">
+    <div class="header">
+        <div class="logo">
+            <a href="">
+                <img src="images/favicon.png" alt="Logotip de la pàgina">
+            </a>
+        </div>
+        <?php if (isset($_SESSION['username'])): ?>
+                <nav>
+                    <ul>
+                        <li><a href="index.php?pagina=Inicio" id="showAllArticles" >Inici</a></li>
+                        <li><a href="index.php?pagina=Mostrar" id="showMyArticles" >Articles</a></li>
+                        <li><a href="index.php?pagina=Insertar" id="newArticle" >Crear Article</a></li>
+                    </ul>
+                </nav>
+        <?php endif; ?>
+        
+            <div class="search-bar">
+                <input type="text" name="search" id="search" placeholder="Buscar por título o contenido" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+            </div>
+            <div class="articles-per-page">
+                <label for="articlesPerPage">Artículos por página:</label>
+                <?php $totalArticulos = totArticles(); ?>
+                <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? (int)$_GET['page'] : 1; ?>">
+                <input type="hidden" name="pagina" value="<?php echo isset($_GET['pagina']) ? $_GET['pagina'] : 'Mostrar'; ?>">
+                <input type="number" name="articulosPorPagina" id="articulosPorPagina"
+                    value="<?php echo isset($_GET['articulosPorPagina']) ? $_GET['articulosPorPagina'] : (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : 5); ?>"
+                    min="1" max="<?php echo $totalArticulos ; ?> ">
+
+                    <button type="submit">Actualizar</button>
+            </div>
+            <div class="sort-buttons">
+                <button type="submit" name="order" value="ASC" <?php echo (isset($_GET['order']) && $_GET['order'] == 'ASC') ? 'class="active"' : ''; ?>>A-Z</button>
+                <button type="submit" name="order" value="DESC" <?php echo (isset($_GET['order']) && $_GET['order'] == 'DESC') ? 'class="active"' : ''; ?>>Z-A</button>
+
+            </div>
+            <div class="user-icon">
+                <label  for ="dropdown">
+                    <img src="images/profile-user-account.svg" alt="User Icon" id="userIcon">
+                </label>
+                <input hidden class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
+                <div class="section-dropdown">
+                <?php if (isset($_SESSION['username'])): ?>
+                        <a href="index.php?pagina=Perfil">Perfil <i class="uil uil-arrow-right"></i></a>
+                        <?php if ($_SESSION['username'] === "admin"): ?>
+                            <a href="index.php?pagina=Admin">Admin <i class="uil uil-arrow-right"></i></a>
+                        <?php endif; ?>
+                        <a href="index.php?pagina=MostrarInici">Tancar Sessió <i class="uil uil-arrow-right"></i></a>
+                    <?php else: ?>
+                        <a href="index.php?pagina=Login">Iniciar Sessió <i class="uil uil-arrow-right"></i></a>
+                        <a href="index.php?pagina=SignUp">Crear Compte <i class="uil uil-arrow-right"></i></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        
+
+    </div>
+    </form>
+    <div class="content">
     <?php
+            // Obtener la página actual de la URL, por defecto es 1
+            $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
+            $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
+            $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; // Obtener la consulta de búsqueda
+
+            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina), $searchQuery);  // Usar el valor de artículos por página
+            ?>
+    </div>
+    
+</div>
+
+    <!-- <?php
     // PHP: Comprobar si el usuario ya tiene una imagen guardada
     $defaultImage = "https://storage.googleapis.com/a1aa/image/JLwi3piUzQY3G92u0CH63SjxE3kuf8lWqsoTZH7fYWfAkqWnA.jpg"; // URL predeterminada
     $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
@@ -45,7 +117,7 @@
             </nav>
         </div>
         <div class="content">
-            <form method="get" action="">
+
                 <label for="articulosPorPagina">Artículos por página:</label>
                 <?php $totalArticulos = totArticles(); ?>
                 <input type="hidden" name="page" value="<?php echo isset($_GET['page']) ? (int)$_GET['page'] : 1; ?>">
@@ -63,39 +135,48 @@
                 <button type="submit">Actualizar</button>
             </form>
 
-            <?php
-            // Obtener la página actual de la URL, por defecto es 1
-            $paginaActual = validarEntero('page', 1, 1, ceil($totalArticulos / 1));
-            $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
-            $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; // Obtener la consulta de búsqueda
 
-            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina), $searchQuery);  // Usar el valor de artículos por página
-            ?>
+        </div>
+    </div> -->
+<!-- Modal -->
+<div id="articleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalArticleContent"></div>
         </div>
     </div>
+    
     <script>
-    // Obtener el ícono del menú, la barra de navegación y el contenedor del menú
-    const menuToggle = document.getElementById('menu-toggle');
-    const navBar = document.querySelector('.nav-bar');
-    const body = document.querySelector('body');
+    function readArticle(articleId) {
+    fetch(`/Backend_Pt5/ajax/read_article.php?id=${articleId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('modalArticleContent').innerHTML = `
+                <img src="${data.image}" alt="Imatge Article">
+                <h4>${data.title}</h4>
+                <p>${data.content}</p>
+            `;
+            var modal = document.getElementById("articleModal");
+            modal.style.display = "block";
+        })
+        .catch(error => console.error('Error:', error));
+    }   
+   
 
-    // Agregar un evento al ícono de menú
-    menuToggle.addEventListener('click', () => {
-        navBar.classList.toggle('active'); // Alternar la clase 'active' para mostrar/ocultar el menú
+    // Modal functionality
+    var modal = document.getElementById("articleModal");
+    var span = document.getElementsByClassName("close")[0];
 
-        // Alternar la clase 'hide' para mostrar/ocultar el ícono de hamburguesa
-        menuToggle.classList.toggle('hide');
-    });
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 
-    // Función para cerrar el menú si el clic fue fuera de la barra de navegación
-    body.addEventListener('click', (event) => {
-        // Verificar si el clic fue fuera del menú y del ícono de hamburguesa
-        if (!navBar.contains(event.target) && !menuToggle.contains(event.target)) {
-            navBar.classList.remove('active'); // Cerrar el menú
-            menuToggle.classList.remove('hide'); // Mostrar el ícono de hamburguesa nuevamente
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
-    });
-</script>
+    }
+    </script>
 </body>
 
 </html>
