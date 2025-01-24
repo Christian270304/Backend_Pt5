@@ -9,11 +9,23 @@
     function mostrarTodosArticulos($cat, $page = 1, $articlesPerPage = 5, $searchQuery = '') {
         $article_data =""; // Contenedor para los artículos.
         $articles = select($searchQuery = ''); // Obtener los artículos de la base de datos
-        
+
+        if (isset($_GET['articulosPorPagina'])) {
+            $articlesPerPage = intval($_GET['articulosPorPagina']);
+            setcookie('articulosPorPagina_' . $cat, $articlesPerPage, time() + (86400 * 7), "/");  // Guardar cookie por 7 días
+        } 
         // Verificar si hay artículos
         if (empty($articles)) {
             return '<h1>No hi han articles a la base de dades.</h1>';
         }
+        
+        // Verificar si hay una cookie con la última página visitada
+        if (isset($_COOKIE['ultima_pagina_inicio'])) {
+            $page = intval($_COOKIE['ultima_pagina_inicio']);
+            // Eliminar cookie
+            setcookie('ultima_pagina_inicio', '', time() - 3600, "/");
+
+        } 
     
         // Calcular el número total de artículos
         $totalArticles = count($articles);
@@ -23,12 +35,15 @@
         // Mostrar artículos según la página
         for ($i = $startIndex; $i < $endIndex; $i++) {
             $article = $articles[$i];
+            $usernameArray = nomUsuari($article['id']);
             
+            $username = is_array($usernameArray) ? implode(', ', $usernameArray) : $usernameArray;
             $article_data .= '<button class="card" id="' . $article['id'] . '">';
             $article_data .= '<img src="' . $article['ruta_imagen'] . '" alt="Imagen de ' . $article['titol'] . '">';
             $article_data .= '<div class="article-content">';
             $article_data .= '<h4 class="titulo">' . $article['titol'] . '</h4>';
             $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
+            $article_data .= '<span>'.$username .'</span>';
             $article_data .= '</div>';
             $article_data .= '</button>';
             
@@ -48,7 +63,21 @@
         $articles = select(); // Obtener todos los artículos
         $totalArticles = count($articles); // Calcular el número total de artículos
         $totalPagines = ceil($totalArticles / $articlesPerPage); // Número total de páginas
+
         
+
+        // Verificar si el usuario ha seleccionado manualmente una página (desde la URL)
+        if (isset($_GET['page'])) {
+            $pagina = intval($_GET['page']);  // Si está en la URL, usamos el valor de la página
+            // Actualizar la cookie solo si se seleccionó una nueva página
+            setcookie("ultima_pagina_inicio", $pagina, time() + (86400 * 7), "/");
+        } elseif (isset($_COOKIE['ultima_pagina_inicio'])) {
+            // Si no hay valor en la URL, usamos la página almacenada en la cookie
+            $pagina = intval($_COOKIE['ultima_pagina_inicio']);
+        } else {
+            // Si no hay cookie ni valor en la URL, usamos la página 1 por defecto
+            $pagina = 1; 
+        }
         // Generar la barra de paginación
         $pagination = '<div class="pagination">';
     

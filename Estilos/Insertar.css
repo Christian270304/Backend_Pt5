@@ -1,0 +1,231 @@
+/* Christian Torres Barrantes */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+
+    /* Custom Properties */
+    --rojo-intenso: #FF1E1E;
+    --negro-carbon: #1C1C1C;
+    --blanco-hielo: #F7F7F7;
+    --gris-metalico: #B0B0B0;
+    --amarillo-dorado: #FFC300;
+}
+.container {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+        'header'
+        'content';
+}
+.header {
+    grid-area: header;
+    background-color: var(--negro-carbon);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    background-color: var(--rojo-intenso);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    
+}
+.logo a {
+    text-decoration: none;
+    color: white;
+    border-radius: 40%;
+}
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 40%;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: var(--blanco-hielo);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--rojo-intenso);
+}
+
+.user-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.user-icon input[type="checkbox"] {
+    display: none;
+}
+
+.section-dropdown {
+    position: absolute;
+    padding: 5px;
+    background-color: #111;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    border-radius: 4px;
+    display: block;
+    box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 200ms linear;
+}
+
+.user-icon input[type="checkbox"]:checked ~ .section-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.section-dropdown:before {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    content: '';
+    display: block;
+    z-index: 1;
+}
+
+.section-dropdown:after {
+    position: absolute;
+    top: -7px;
+    right: 10px; /* Mueve el triángulo a la derecha */
+    width: 0; 
+    height: 0; 
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent; 
+    border-bottom: 8px solid #111;
+    content: '';
+    display: block;
+    z-index: 2;
+    transition: all 200ms linear;
+}
+
+.section-dropdown a {
+    position: relative;
+    color: #fff;
+    transition: all 200ms linear;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 2px;
+    padding: 5px 0;
+    padding-left: 20px;
+    padding-right: 15px;
+    margin: 2px 0;
+    text-align: left;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-dropdown a:hover {
+    color: #102770;
+    background-color: #ffeba7;
+}
+
+.section-dropdown a .uil {
+    font-size: 22px;
+}
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #d3d3d3;
+    padding: 20px;
+    border-radius: 10px;
+}
+.form {
+    height: 50%;
+    display: grid;
+    gap: 20px;
+    grid-template-areas: 'imagen titulo'
+                        'imagen cuerpo';
+    grid-template-columns: 300px 300px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+.image-grid{
+  grid-area: imagen;
+}
+.image-selector {
+    background-color: #4a4a4a;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.image-selector button {
+    background-color: #d3d3d3;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.titol-grid-containter {
+    grid-area: titulo;
+}
+.cuerpo-grid-container {
+    grid-area: cuerpo;
+}
+
+textarea{
+    width: 300px;
+    height: 230px;
+  resize: none;
+}
+
+.text-fields input, .text-fields textarea {
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
+}

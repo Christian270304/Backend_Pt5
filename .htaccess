@@ -6,3 +6,8 @@ ErrorDocument 403 /errors/403.html
 
 # Personalitzar error 500 (error del servidor)
 ErrorDocument 500 /errors/500.html
+RewriteEngine On
+
+# Redirigir todas las solicitudes que comiencen con /api/ a index.php
+RewriteCond %{REQUEST_URI} ^/Backend_Pt5/api/
+RewriteRule ^api/(.*)$ index.php [QSA,L]

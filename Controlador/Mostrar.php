@@ -15,8 +15,14 @@
         
         if (isset($_GET['articulosPorPagina'])) {
             $articlesPerPage = intval($_GET['articulosPorPagina']);
-            setcookie('articulosPorPagina_mostrar', $articlesPerPage, time() + (86400 * 7), "/");  // Guardar cookie por 7 días
+            setcookie('articulosPorPagina_' . $cat, $articlesPerPage, time() + (86400 * 7), "/");  // Guardar cookie por 7 días
         } 
+
+        // Verificar si hay una cookie con la última página visitada
+        if (isset($_COOKIE['ultima_pagina_mostrar'])) {
+            $page = intval($_COOKIE['ultima_pagina_mostrar']);
+        }
+        
 
         // Verificar si hay artículos
         if (empty($articles)) {
@@ -60,7 +66,7 @@
         $user_id = idUsuario($_SESSION['username']);
         $articles = selecArticleUsuario($user_id); // Obtener todos los artículos
         $totalArticles = count($articles); // Calcular el número total de artículos
-        $totalPagines = ceil($totalArticles / ($articlesPerPage >= 0)? $articlesPerPage : 1); // Número total de páginas
+        $totalPagines = ceil($totalArticles / max($articlesPerPage, 1)); // Número total de páginas
         
         
 

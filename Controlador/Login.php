@@ -9,7 +9,7 @@
  * @param string $recaptcha Respuesta del reCAPTCHA.
  */
 function loginDatos($user, $password, $recaptcha, $rememberMe) {
-    $defaultImage = "Imagenes/profile-user.svg";
+    $defaultImage = "images/profile-user-account.svg";
     $recaptchaSecret = CLAVE_SECRETA;
     $showRecaptcha = false; 
     // Inicializar mensajes de error

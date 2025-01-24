@@ -6,26 +6,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="Estilos/Perfil.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <title>Perfil</title>
 </head>
 
 <body>
-    <?php
-    // PHP: Comprobar si el usuario ya tiene una imagen guardada
-    $defaultImage = "Imagenes/profile-user.svg"; // URL predeterminada
-    $profileImage = (file_exists(!empty(isset($_SESSION['profile_image'])))) ? $_SESSION['profile_image'] : $defaultImage;
-    ?>
     <div class="container">
-        <div class="nav-grid">
-            <nav class="nav-bar">
+        <div class="header">
+            <div class="logo">
+            </div>
+            <nav>
                 <ul>
-                    <li><a href="index.php?pagina=Inicio"><img class="icon" src="Imagenes/house.svg"><span>Inici</span></a></li>
-                    <li><a href="index.php?pagina=Mostrar"><img class="icon" src="Imagenes/newspaper.svg"><span>Articles</span></a></li>
-                    <li><a href="index.php?pagina=Insertar"><img class="icon" src="Imagenes/add-square.svg"><span>Insertar Article</span></a></li>
-                    <li><a href="index.php?pagina=Borrar"><img class="icon" src="Imagenes/delete-button.svg"><span>Borrar Article</span></a></li>
-                    <li><a href="index.php?pagina=Modificar"><img class="icon" src="Imagenes/edit.svg"><span>Modificar Article</span></a></li>
+                    <li><a href="index.php?pagina=Inicio">Inici</a></li>
+                    <li><a href="index.php?pagina=Mostrar">Articles</a></li>
+                    <li><a href="index.php?pagina=Insertar">Insertar Article</a></li>
                 </ul>
             </nav>
+            <div class="user-icon">
+                <label for="dropdown">
+                    <?php
+                    // PHP: Comprobar si el usuario ya tiene una imagen guardada
+                    $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
+                    ?>
+                    <img src="<?php echo $profileImage; ?>" alt="Foto de perfil" id="userIcon">
+                </label>
+                <input hidden class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
+                <div class="section-dropdown">
+                    <?php if (isset($_SESSION['username'])): ?>
+                        <?php if ($_SESSION['username'] === "admin"): ?>
+                            <a href="index.php?pagina=Admin">Admin <i class="uil uil-arrow-right"></i></a>
+                        <?php endif; ?>
+                        <a href="index.php?pagina=MostrarInici&logout=1">Tancar Sessió <i class="uil uil-arrow-right"></i></a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
         <div class="content">
             <h1>Perfil de Usuario</h1>
@@ -40,7 +54,7 @@
                             <input id="name" placeholder="" name="username" type="text" value="<?php echo $_SESSION['username'] ?>" />
                             <button>Save</button>
                         <?php else: ?>
-                            <input id="name" placeholder=""  type="text" readonly value="<?php echo $_SESSION['username'] ?>" />
+                            <input id="name" placeholder="" type="text" readonly value="<?php echo $_SESSION['username'] ?>" />
                         <?php endif; ?>
                     </form>
                     <small>
@@ -66,7 +80,7 @@
                         <input id="email" placeholder="" name="email" type="email" value="<?php echo mostrarEmail(); ?>" />
                         <button>Save</button>
                     <?php else: ?>
-                        <input id="email" placeholder=""  type="email" readonly value="<?php echo mostrarEmail(); ?>" />
+                        <input id="email" placeholder="" type="email" readonly value="<?php echo mostrarEmail(); ?>" />
                     <?php endif; ?>
                 </form>
                 <small>
@@ -78,6 +92,7 @@
                 <!-- Botón para abrir el modal -->
                 <?php if (mostrarPassword() != ""): ?>
                     <button class="open" id="openModal">Cambiar Contraseña</button>
+
 
                     <!-- El modal -->
                     <div id="myModal" class="modal">
@@ -130,10 +145,42 @@
                 </small>
             </div>
             <button class="button logout"><a href="index.php?pagina=MostrarInici&logout=1">Cerrrar Sesion</a></button>
+            <!-- Botón para generar el código QR -->
+            <button id="generate-qr-btn">Generar QR</button>
+
+            <!-- Contenedor para mostrar el código QR -->
+        <div id="qr-code-overlay">
+            <div id="qr-code-container">
+                <img id="qr-code-image" src="" alt="Código QR">
+            </div>
+        </div>
+
             <!-- Input oculto para cargar la imagen -->
             <input type="file" id="file-input" accept="image/*" onchange="loadImage(event)">
         </div>
     </div>
+
+
+
+    <!-- <?php
+            // PHP: Comprobar si el usuario ya tiene una imagen guardada
+            $defaultImage = "Imagenes/profile-user.svg"; // URL predeterminada
+            $profileImage = (file_exists(!empty(isset($_SESSION['profile_image'])))) ? $_SESSION['profile_image'] : $defaultImage;
+            ?>
+    <div class="container">
+        <div class="nav-grid">
+            <nav class="nav-bar">
+                <ul>
+                    <li><a href="index.php?pagina=Inicio"><img class="icon" src="Imagenes/house.svg"><span>Inici</span></a></li>
+                    <li><a href="index.php?pagina=Mostrar"><img class="icon" src="Imagenes/newspaper.svg"><span>Articles</span></a></li>
+                    <li><a href="index.php?pagina=Insertar"><img class="icon" src="Imagenes/add-square.svg"><span>Insertar Article</span></a></li>
+                    <li><a href="index.php?pagina=Borrar"><img class="icon" src="Imagenes/delete-button.svg"><span>Borrar Article</span></a></li>
+                    <li><a href="index.php?pagina=Modificar"><img class="icon" src="Imagenes/edit.svg"><span>Modificar Article</span></a></li>
+                </ul>
+            </nav>
+        </div>
+        
+    </div> -->
     <script>
         // Obtener el modal
         var modal = document.getElementById("myModal");
@@ -178,10 +225,33 @@
         function previewImage(event) {
             const file = event.target.files[0];
             const profileImage = document.getElementById('profile-image');
-            profileImage.src = file;
+            profileImage.src = URL.createObjectURL(file);
             document.getElementById('upload-form').submit();
 
         }
+        document.getElementById('generate-qr-btn').addEventListener('click', function() {
+            // Obtener el contenedor del código QR
+            var qrImage = document.getElementById('qr-code-image');
+            var qrOverlay = document.getElementById('qr-code-overlay');
+
+            const username = document.getElementById('name').value;
+            const photo = document.getElementById('profile-image').src;
+            const email = document.getElementById('email').value;
+            const bio = document.getElementById('bio').value;
+            fetch('/Backend_Pt5/generate_qr.php?text=' + encodeURIComponent(`Nombre: ${username}\nEmail: ${email}\nBio: ${bio}\nFoto: ${photo}`))
+                .then(response => response.json())
+                .then(data => {
+                    qrImage.src = data.url;
+                    qrOverlay.style.display = 'flex';
+                });
+        });
+
+        // Cerrar el overlay cuando se hace clic fuera del código QR
+        document.getElementById('qr-code-overlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
     </script>
 </body>
 

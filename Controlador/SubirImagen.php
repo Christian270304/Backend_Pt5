@@ -6,7 +6,7 @@ require_once 'Model/SubirImagen.php';
 $mensajes = [];
 $mostrar = '';
 
-// Verificar si se ha subido un archivo
+// Verificar si se ha subido un archivo para la imagen de perfil
 if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
     $fileTmpPath = $_FILES['profile_image']['tmp_name'];
     $fileName = $_FILES['profile_image']['name'];

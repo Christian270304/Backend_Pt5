@@ -1,107 +1,220 @@
-@import url('https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css');
-:root {
-    color-scheme: light dark;
-  }
-
+/* Christian Torres Barrantes */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 body {
-    background-color: #1a1a2e; /* Color de fondo opcional */
-    color: #c9d1d9;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+
+    /* Custom Properties */
+    --rojo-intenso: #FF1E1E;
+    --negro-carbon: #1C1C1C;
+    --blanco-hielo: #F7F7F7;
+    --gris-metalico: #B0B0B0;
+    --amarillo-dorado: #FFC300;
+}
+.container {
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+        'header'
+        'content';
+}
+.header {
+    grid-area: header;
+    background-color: var(--negro-carbon);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    width: 50px;
+    height: 50px;
+    background-color: var(--rojo-intenso);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    
+}
+.logo a {
+    text-decoration: none;
+    color: white;
+    border-radius: 40%;
+}
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 40%;
+}
+nav ul {
+    list-style: none;
+    display: flex;
     margin: 0;
     padding: 0;
 }
 
-.container {
-    display: grid;
-    min-height: 100vh;
-    grid-template-columns: auto 1fr;
-    grid-template-areas: 'nav content';
+nav ul li {
+    margin: 0 15px;
 }
 
-/*Barra de navegacion*/
-
-.nav-grid {
-    grid-area: nav;
-    display: flex;
-    min-height: 100vh;
-    background-color: #333; 
-    align-items: center;
-    position: fixed;
-  }
-  
-  .nav-bar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    font-family: sans-serif;
-    padding: 30px;
-    position: sticky;
-    top: 0;
-    width: fit-content;
-  }
-  
-  .nav-bar ul {
-    display: grid;
-    grid-template-rows: repeat(4, auto);
-    list-style: none;
-    padding: 0;
-  }
-  
-  .nav-bar li {
-    background-color: gray;
-    padding: 0;
-    border-radius: 10px;
-    margin-bottom: 2.5em;
-    position: relative;
-    width: 100%;
-  }
-  
-  .nav-bar li a {
-    display: flex;
-    flex-direction: column; 
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    color: #fff;
-    border-radius: 10px;
+nav ul li a {
+    color: var(--blanco-hielo);
     text-decoration: none;
-    transition: background 0.3s ease; 
-    width: 75%;
-    height: 60%;
-  }
-  
-  .nav-bar li:hover a {
-    background: #212120; 
-  }
-  
-  .nav-bar li:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .icon {
-    max-width: 30px;
-    max-height: 30px;
-    transition: transform 0.3s; 
-  }
-  
-  .nav-bar li:hover .icon {
-    transform: scale(1.2); 
-  }
-  
-  .nav-bar li:hover {
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--rojo-intenso);
+}
+.search-bar {
+    flex-grow: 0.5;
+    margin: 0 20px;
+}
+.search-bar input {
+    width: 50%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.articles-per-page {
+    display: flex;
+    align-items: center;
+}
+
+.articles-per-page label {
+    color: var(--blanco-hielo);
+    margin-right: 10px;
+}
+
+.articles-per-page input {
+    width: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.sort-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.sort-buttons button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    color: white;
     cursor: pointer;
-  }
-  
-  .nav-bar li span {
-    opacity: 0; 
-    transition: opacity 0.3s ease; 
-    margin-top: 10px; 
-  }
-  
-  .nav-bar li:hover span {
-    opacity: 1; 
-  }
+}
+
+.sort-buttons button:hover {
+    background-color: #777;
+}
+.user-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-icon img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.user-icon input[type="checkbox"] {
+    display: none;
+}
+
+.section-dropdown {
+    position: absolute;
+    padding: 5px;
+    background-color: #111;
+    top: 70px;
+    right: 0;
+    width: 200px;
+    border-radius: 4px;
+    display: block;
+    box-shadow: 0 14px 35px 0 rgba(9,9,12,0.4);
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: all 200ms linear;
+}
+
+.user-icon input[type="checkbox"]:checked ~ .section-dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.section-dropdown:before {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    content: '';
+    display: block;
+    z-index: 1;
+}
+
+.section-dropdown:after {
+    position: absolute;
+    top: -7px;
+    right: 10px; /* Mueve el triángulo a la derecha */
+    width: 0; 
+    height: 0; 
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent; 
+    border-bottom: 8px solid #111;
+    content: '';
+    display: block;
+    z-index: 2;
+    transition: all 200ms linear;
+}
+
+.section-dropdown a {
+    position: relative;
+    color: #fff;
+    transition: all 200ms linear;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 2px;
+    padding: 5px 0;
+    padding-left: 20px;
+    padding-right: 15px;
+    margin: 2px 0;
+    text-align: left;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-dropdown a:hover {
+    color: #102770;
+    background-color: #ffeba7;
+}
+
+.section-dropdown a .uil {
+    font-size: 22px;
+}
   /* Fin barra de navegacion*/
 
 
@@ -199,14 +312,12 @@ h1 {
 }
 
 .content {
-grid-area: content;
-    display: flex;
-    flex-direction: column; 
-    padding-top: 2.5%;
-    padding-bottom: 5%;
-    width: 100%; /* Asegúrate de que ocupe todo el ancho del contenedor */
-    max-width: 800px; /* Controla el ancho máximo del contenido */
-    margin: 0 30%; /* Para centrar horizontalmente en contenedores más grandes */
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
 }
 
 #caja_mensaje.errors {
@@ -279,17 +390,17 @@ grid-area: content;
   }
 
   /* Cambiar contraseña X */
-  .header {
+  .header-contra {
     width: 322px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .header h2 {
+  .header-contra h2 {
     margin: 0;
     font-size: 25px;
   }
-  .header .close {
+  .header-contra .close {
     color: #ffffff;
     cursor: pointer;
     font-size: 30px;
@@ -361,6 +472,34 @@ grid-area: content;
 
 i{
   color: #fff;
+}
+
+/* Estilos para el overlay del código QR */
+#qr-code-overlay {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+}
+
+/* Estilos para el contenedor del código QR */
+#qr-code-container {
+    background-color: #fff; /* Fondo blanco para el código QR */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#qr-code-image {
+    /* degradado */
+    background: linear-gradient(145deg, #f0f0f0, #1510a3);
+
 }
 
 

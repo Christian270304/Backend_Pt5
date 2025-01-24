@@ -9,7 +9,101 @@
 </head>
 
 <body>
-    <?php
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.php?pagina=Inicio">Inici</a></li>
+                    <li><a href="index.php?pagina=Mostrar">Articles</a></li>
+                    <li><a href="index.php?pagina=Insertar">Insertar Article</a></li>
+                </ul>
+            </nav>
+            <div class="user-icon">
+                <label for="dropdown">
+                    <?php
+                    // PHP: Comprobar si el usuario ya tiene una imagen guardada
+                    $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
+                    ?>
+                    <img src="<?php echo $profileImage; ?>" alt="Foto de perfil" id="userIcon">
+                </label>
+                <input hidden class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
+                <div class="section-dropdown">
+                    <?php if (isset($_SESSION['username'])): ?>
+                        <a href="index.php?pagina=Perfil">Perfil <i class="uil uil-arrow-right"></i></a>
+                        <a href="index.php?pagina=MostrarInici&logout=1">Tancar Sessió <i class="uil uil-arrow-right"></i></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="content-admin">
+            <h1>Administrar Usuarios</h1>
+            <input type="text" id="searchInput" placeholder="Buscar por Username o Email" onkeyup="searchUsers()">
+            <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="panel">
+                <div class="panel-body table-responsive">
+                    <table class="table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Acció</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                    require_once 'Model/Usuarios.php'; // Incluir el modelo que maneja los usuarios
+
+                    // Obtener la lista de usuarios
+                    $usuarios = obtenerUsuarios(); // Asegúrate de tener esta función en tu modelo
+
+                    foreach ($usuarios as $usuario) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($usuario['username']) . "</td>";
+                        echo "<td>" . htmlspecialchars($usuario['email']) . "</td>";
+                        echo "<td><a href='#' onclick='openDeleteModal(" . htmlspecialchars($usuario['id']) . ")'>Eliminar</a></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+            <button><a href="index.php?pagina=Mostrar">Volver</a></button>
+
+            <div id="deleteModal" class="modal">
+                        <div class="modal-content">
+                            <div class="header">
+                                <span class="close" id="closeModal">&times;</span>
+                                <h2>Confirmar Eliminación</h2>
+                            </div>
+                            <p>¿Desea eliminar este usuario? <input type="text" readonly value="<?php echo htmlspecialchars($usuario['username'])?>"></p>
+                            <p>¿También desea eliminar todos los artículos asociados?</p>
+                            <form id="deleteForm" method="POST" action="index.php?pagina=EliminarUsuario">
+                                <input type="hidden" name="user_id" id="user_id" value="">
+                                <button type="button" id="confirmDelete" class="btn">Eliminar Usuario y Artículos</button>
+                                <button type="button" id="confirmDeleteUser " class="btn">Eliminar Solo Usuario</button>
+                                <button type="button" id="cancelDelete" class="btn">Cancelar</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    
+        </div>
+    </div>
+
+    <!-- <?php
     // PHP: Comprobar si el usuario ya tiene una imagen guardada
     $defaultImage = "https://storage.googleapis.com/a1aa/image/JLwi3piUzQY3G92u0CH63SjxE3kuf8lWqsoTZH7fYWfAkqWnA.jpg"; // URL predeterminada
     $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
@@ -40,55 +134,8 @@
                 </ul>
             </nav>
         </div>
-        <div class="content">
-            <h1>Administrar Usuarios</h1>
-            <input type="text" id="searchInput" placeholder="Buscar por Username o Email" onkeyup="searchUsers()">
-            <table id="usersTable">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require_once 'Model/Usuarios.php'; // Incluir el modelo que maneja los usuarios
-
-                    // Obtener la lista de usuarios
-                    $usuarios = obtenerUsuarios(); // Asegúrate de tener esta función en tu modelo
-
-                    foreach ($usuarios as $usuario) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($usuario['username']) . "</td>";
-                        echo "<td>" . htmlspecialchars($usuario['email']) . "</td>";
-                        echo "<td><a href='#' onclick='openDeleteModal(" . htmlspecialchars($usuario['id']) . ")'>Eliminar</a></td>";
-                        echo "</tr>";
-                    }
-                    ?>
-                    
-                </tbody>
-            </table>
-            <button><a href="index.php?pagina=Inicio">Volver</a></button>
-
-            <div id="deleteModal" class="modal">
-                        <div class="modal-content">
-                            <div class="header">
-                                <span class="close" id="closeModal">&times;</span>
-                                <h2>Confirmar Eliminación</h2>
-                            </div>
-                            <p>¿Desea eliminar este usuario? <input type="text" readonly value="<?php echo htmlspecialchars($usuario['username'])?>"></p>
-                            <p>¿También desea eliminar todos los artículos asociados?</p>
-                            <form id="deleteForm" method="POST" action="index.php?pagina=EliminarUsuario">
-                                <input type="hidden" name="user_id" id="user_id" value="">
-                                <button type="button" id="confirmDelete" class="btn">Eliminar Usuario y Artículos</button>
-                                <button type="button" id="confirmDeleteUser " class="btn">Eliminar Solo Usuario</button>
-                                <button type="button" id="cancelDelete" class="btn">Cancelar</button>
-                            </form>
-                        </div>
-                    </div>
-        </div>
-    </div>
+        
+    </div> -->
     <script>
     // Función para abrir el modal de eliminación
     function openDeleteModal(userId) {

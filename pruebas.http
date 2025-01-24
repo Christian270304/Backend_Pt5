@@ -1,0 +1,17 @@
+### Obtener un usuario por su id
+GET http://localhost/Backend_Pt5/api/getuser/1
+
+### Error al no indicar un id
+GET http://localhost/Backend_Pt5/api/getuser
+
+### Obtener todos los usuarios
+GET http://localhost/Backend_Pt5/api/getusers
+
+### Obtener un articulo por su id
+GET http://localhost/Backend_Pt5/api/getarticle/1
+
+### Error al no indicar un id
+GET http://localhost/Backend_Pt5/api/getarticle
+
+###  Obtener todos los articulos
+GET http://localhost/Backend_Pt5/api/getarticles

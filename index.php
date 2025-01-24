@@ -56,6 +56,11 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
+        // Check if the request is for the API
+        if (strpos($_SERVER['REQUEST_URI'], '/Backend_Pt5/api/') !== false) {
+            require_once 'api/routes/apiRoutes.php';
+        }
+
         $opcion = isset($_GET['pagina']) ? $_GET['pagina'] : 'MostrarInici';
         switch ($opcion) {
             case 'Inicio':

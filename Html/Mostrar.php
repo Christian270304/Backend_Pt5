@@ -49,7 +49,11 @@
             </div>
             <div class="user-icon">
                 <label  for ="dropdown">
-                    <img src="images/profile-user-account.svg" alt="User Icon" id="userIcon">
+                <?php
+                    // PHP: Comprobar si el usuario ya tiene una imagen guardada
+                    $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
+                    ?>
+                    <img src="<?php echo $profileImage; ?>" alt="Foto de perfil" id="userIcon">
                 </label>
                 <input hidden class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
                 <div class="section-dropdown">
@@ -58,7 +62,7 @@
                         <?php if ($_SESSION['username'] === "admin"): ?>
                             <a href="index.php?pagina=Admin">Admin <i class="uil uil-arrow-right"></i></a>
                         <?php endif; ?>
-                        <a href="index.php?pagina=MostrarInici">Tancar Sessió <i class="uil uil-arrow-right"></i></a>
+                        <a href="index.php?pagina=MostrarInici&logout=1">Tancar Sessió <i class="uil uil-arrow-right"></i></a>
                     <?php else: ?>
                         <a href="index.php?pagina=Login">Iniciar Sessió <i class="uil uil-arrow-right"></i></a>
                         <a href="index.php?pagina=SignUp">Crear Compte <i class="uil uil-arrow-right"></i></a>
@@ -76,7 +80,7 @@
             $articulosPorPagina = validarEntero('articulosPorPagina', 5, 1, $totalArticulos); // Número de artículos por página
             $searchQuery = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; // Obtener la consulta de búsqueda
 
-            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_mostrar']) ? $_COOKIE['articulosPorPagina_mostrar'] : $articulosPorPagina), $searchQuery);  // Usar el valor de artículos por página
+            echo mostrarArticulos('Mostrar', $paginaActual, (isset($_COOKIE['articulosPorPagina_Mostrar']) ? $_COOKIE['articulosPorPagina_Mostrar'] : $articulosPorPagina), $searchQuery);  // Usar el valor de artículos por página
             ?>
     </div>
     

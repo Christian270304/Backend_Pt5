@@ -23,6 +23,18 @@
         return $articles;
     }
 
+    function nomUsuari($article_id){
+        global $conn;
+        $query = "SELECT users.username
+                  FROM articles
+                  JOIN users ON articles.user_id = users.id
+                  WHERE articles.id = :article_id";
+        $statement = $conn->prepare($query);
+        $statement->bindParam(':article_id',$article_id, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
     /*
         Funcion para contar cuantos articulos hay dentro de la base de datos.
     */
