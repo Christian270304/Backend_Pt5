@@ -32,7 +32,7 @@
         $statement = $conn->prepare($query);
         $statement->bindParam(':article_id',$article_id, PDO::PARAM_STR);
         $statement->execute();
-        return $statement->fetch();
+        return $statement->fetchColumn();
     }
 
     /*

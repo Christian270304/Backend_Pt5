@@ -35,17 +35,17 @@
         // Mostrar artículos según la página
         for ($i = $startIndex; $i < $endIndex; $i++) {
             $article = $articles[$i];
-            $usernameArray = nomUsuari($article['id']);
+            $username = nomUsuari($article['id']);
             
-            $username = is_array($usernameArray) ? implode(', ', $usernameArray) : $usernameArray;
-            $article_data .= '<button class="card" id="' . $article['id'] . '">';
-            $article_data .= '<img src="' . $article['ruta_imagen'] . '" alt="Imagen de ' . $article['titol'] . '">';
+            $article_data .= '<div class="card" id="' . $article['id'] . '">';
+            $article_data .= '<img class="img-article" src="' . $article['ruta_imagen'] . '" alt="Imagen de ' . $article['titol'] . '">';
             $article_data .= '<div class="article-content">';
             $article_data .= '<h4 class="titulo">' . $article['titol'] . '</h4>';
             $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
-            $article_data .= '<span>'.$username .'</span>';
+            $article_data .= '<span id="username" class="username">'.$username .'</span>';
+            $article_data .= '<button id="qr-generate" class="qr-content"> <img class="qr" src="images/codigo-qr.png" alt="QR" />  </button>';
             $article_data .= '</div>';
-            $article_data .= '</button>';
+            $article_data .= '</div>';
             
         }
     

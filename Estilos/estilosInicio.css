@@ -226,8 +226,8 @@ nav ul li a:hover {
   background-color: var(--blanco-hielo);
   border: 1px solid var(--blanco-hielo);
   border-radius: 20px;
-  width: 250px;
-  height: 350px;
+  width: 300px;
+  height: 400px;
   margin: 10px;
   box-shadow: 15px 10px 2px rgb(63, 59, 59);
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
@@ -250,7 +250,7 @@ nav ul li a:hover {
   color: var(--negro-carbon);
   text-align: justify;
 }
-.card img {
+.img-article {
   width: 100%;
   height: 50%;
   object-fit: cover;
@@ -260,7 +260,26 @@ nav ul li a:hover {
 .article-content {
   padding: 20px ;
 }
-
+.username {
+  font-size: 12px;
+  position:absolute;
+  right: 60px;
+  bottom: 28px;
+  font-weight: bold;
+}
+.qr-content{
+  position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.qr {
+  width: 20px;
+  height: 20px;
+  
+}
 .user-article {
   position: relative;
   background-color: var(--blanco-hielo);
@@ -439,4 +458,33 @@ nav ul li a:hover {
       padding: 8px 12px;
       margin: 0 3px;
   }
+}
+
+
+/* Estilos para el overlay del código QR */
+#qr-code-overlay {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
+}
+
+/* Estilos para el contenedor del código QR */
+#qr-code-container {
+  background-color: #fff; /* Fondo blanco para el código QR */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#qr-code-image {
+  /* degradado */
+  background: linear-gradient(145deg, #f0f0f0, #1510a3);
+
 }

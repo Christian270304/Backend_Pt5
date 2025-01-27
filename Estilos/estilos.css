@@ -227,8 +227,8 @@ nav ul li a:hover {
   background-color: var(--blanco-hielo);
   border: 1px solid var(--blanco-hielo);
   border-radius: 5px;
-  width: 250px;
-  height: 350px;
+  width: 350px;
+  height: 450px;
   margin: 10px;
   box-shadow: 15px 10px 2px rgb(63, 59, 59);
   transition: box-shadow 0.3s ease, background-color 0.3s ease;

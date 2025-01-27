@@ -152,6 +152,16 @@
                     exit;
                 }
                 break;
+            case 'UserProfile':
+                
+                    //require_once 'Controlador/UserProfile.php';
+                    include 'Html/UserProfile.php';
+                
+                break;
+            case 'LeerQR':
+                //require_once 'Controlador/UserProfile.php';
+                include 'Html/LeerQR.php';
+                break;
             case 'SignUp':
                 require_once 'Controlador/SignUp.php';
                 include 'Html/SignUp.php';
@@ -265,8 +275,16 @@
                 require_once 'Controlador/EliminarUsuario.php';
                 eliminarCuenta($_POST['user_id'],isset($_POST['eliminarArticulos'])? $_POST['eliminarArticulos']: false);
                 break;
+            case 'LeerQR':
+                require_once 'leerQR.php';
+                break;
             default:
-                include 'Html/Mostrar.php';
+            if (isset($_SESSION['username'])){
+                header("Location: index.php?pagina=Mostrar");
+                exit;
+            } else {
+                header("Location: index.php?pagina=MostrarInici");
+            }
         }
     } 
     

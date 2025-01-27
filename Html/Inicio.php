@@ -23,6 +23,7 @@
                         <li><a href="index.php?pagina=Inicio" id="showAllArticles" >Inici</a></li>
                         <li><a href="index.php?pagina=Mostrar" id="showMyArticles" >Articles</a></li>
                         <li><a href="index.php?pagina=Insertar" id="newArticle" >Crear Article</a></li>
+                        <li><a href="index.php?pagina=LeerQR">Leer QR</a></li>
                     </ul>
                 </nav>
                 <?php endif; ?>
@@ -81,7 +82,12 @@
             echo mostrarTodosArticulos( "Inicio",$paginaActual, (isset($_COOKIE['articulosPorPagina_Inicio']) ? $_COOKIE['articulosPorPagina_Inicio'] : $articulosPorPagina),$searchQuery);  // Usar el valor de artículos por página
             ?>
     </div>
-    
+    <!-- Contenedor para mostrar el código QR -->
+    <div id="qr-code-overlay">
+            <div id="qr-code-container">
+                <img id="qr-code-image" src="" alt="Código QR">
+            </div>
+        </div>
 </div>
 
 <!-- <?php
@@ -132,5 +138,26 @@
             
         </div>
     </div> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Selecciona todos los botones con la clase 'qr-generate'
+    const qrButtons = document.querySelectorAll('.qr-content');
+
+    // Asigna el evento a cada botón
+    qrButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            var qrImage = document.getElementById('qr-code-image');
+            var qrOverlay = document.getElementById('qr-code-overlay');
+            const username = document.getElementById('username').textContent;
+            fetch('/Backend_Pt5/generate_qr.php?text=' + encodeURIComponent(`/Backend_Pt5/index.php?pagina=UserProfile&username=${username}`))
+                .then(response => response.json())
+                .then(data => {
+                    qrImage.src = data.url;
+                    qrOverlay.style.display = 'flex';
+                });
+        });
+    });
+});
+    </script>
 </body>
 </html>
