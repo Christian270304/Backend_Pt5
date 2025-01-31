@@ -149,7 +149,8 @@
             var qrImage = document.getElementById('qr-code-image');
             var qrOverlay = document.getElementById('qr-code-overlay');
             const username = document.getElementById('username').textContent;
-            fetch('/Backend_Pt5/generate_qr.php?text=' + encodeURIComponent(`/Backend_Pt5/index.php?pagina=UserProfile&username=${username}`))
+            const url = `https://www.ctorres.cat/index.php?pagina=Login&username=${encodeURIComponent(username)}`;
+            fetch('/Backend_Pt5/generate_qr.php?text= + ${encodeURIComponent(url)}')
                 .then(response => response.json())
                 .then(data => {
                     qrImage.src = data.url;

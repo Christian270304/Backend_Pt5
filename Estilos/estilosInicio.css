@@ -486,5 +486,6 @@ nav ul li a:hover {
 #qr-code-image {
   /* degradado */
   background: linear-gradient(145deg, #f0f0f0, #1510a3);
-
+  width: 300px;
+  height: 300px;
 }

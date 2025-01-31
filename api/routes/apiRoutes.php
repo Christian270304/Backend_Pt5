@@ -1,7 +1,14 @@
 <?php
 require_once 'api/controllers/ApiController.php';
+require_once 'api/Middleware.php';
 
+
+
+//$uri = $_SERVER['REQUEST_URI'];
+//$base_path = "/Backend_Pt5/api/"; // Ajusta según tu carpeta
 $uri = str_replace('/Backend_Pt5/api/', '', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+$usuario = authenticate();
 
 // Use regex to capture the endpoint and the parameter
 if (preg_match('/^(\w+)(\/(\d+))?$/', $uri, $matches)) {
@@ -12,16 +19,16 @@ if (preg_match('/^(\w+)(\/(\d+))?$/', $uri, $matches)) {
 
     switch ($endpoint) {
         case 'getuser':
-            $controller->getUser($param); // Pass the parameter to the controller method
+            $controller->getUser($param);
             break;
         case 'getusers':
-            $controller->getUsers(); // Pass the parameter to the controller method
+            $controller->getUsers();
             break;
         case 'getarticle':
-            $controller->getArticle($param); // No parameter needed for this method
+            $controller->getArticle($param);
             break;
         case 'getarticles':
-            $controller->getArticles(); // No parameter needed for this method
+            $controller->getArticles();
             break;
         default:
             header("HTTP/1.0 404 Not Found");
@@ -32,5 +39,5 @@ if (preg_match('/^(\w+)(\/(\d+))?$/', $uri, $matches)) {
     header("HTTP/1.0 404 Not Found");
     echo json_encode(['error' => 'Invalid API endpoint']);
 }
-exit; // Ensure no further code is executed for API requests
+exit;
 ?>

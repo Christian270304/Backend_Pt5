@@ -9,11 +9,11 @@ $fileTmpPath = $_FILES['qrImage']["tmp_name"];
 
         $result = (new QRCode)->readFromFile($fileTmpPath); // -> DecoderResult
 
-	// you can now use the result instance...
-	$content = $result->data;
+        // you can now use the result instance...
+        $content = $result->data;
 
-	var_dump($content);
-        header('Location: ' . $content);
+	    header('Location: ' . $content);
+
     } catch (Throwable $exception) {
         var_dump($exception);
     }

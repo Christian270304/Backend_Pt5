@@ -72,6 +72,7 @@
                 Iniciar sesión con GitHub</a>
             <a href="index.php?pagina=SignUp" class="btn-link">No tengo cuenta 😔</a>
             <a href="index.php?pagina=RecuperarContra" class="btn-link">Te has olvidado la contraseña?</a>
+            <input hidden name="qr" value="<?= htmlspecialchars(isset($_GET['username']) ? $_GET['username'] : '', ENT_QUOTES, 'UTF-8'); ?>" />
         </form>
         
     </div>

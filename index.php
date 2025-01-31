@@ -213,6 +213,7 @@
             }
                
         }
+        
     } else if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $opcion = isset($_GET['pagina']) ? $_GET['pagina'] : 'Mostrar';
         switch ($opcion) {
@@ -236,7 +237,7 @@
                 break;
             case 'Login':
                 require_once 'Controlador/Login.php';
-                loginDatos($_POST['username'],$_POST['contra'],isset($_POST['g-recaptcha-response'])?$_POST['g-recaptcha-response']: "",isset($_POST['remember_me']) ? $_POST['remember_me'] : "");
+                loginDatos($_POST['username'],$_POST['contra'],isset($_POST['g-recaptcha-response'])?$_POST['g-recaptcha-response']: "",isset($_POST['remember_me']) ? $_POST['remember_me'] : "", isset($_POST['qr']) ? $_POST['qr'] : "");
                 break;
             case 'SignUp':
                 require_once 'Controlador/SignUp.php';

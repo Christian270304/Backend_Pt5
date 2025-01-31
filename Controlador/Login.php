@@ -1,6 +1,7 @@
 <?php
     // Christian Torres Barrantes
     require_once 'Model/Login.php';
+    require_once __DIR__ . '/../Utils/JWTUtils.php';
 
     /**
  * Función que verifica los datos cuando el usuario intenta loguear.
@@ -8,7 +9,13 @@
  * @param string $password Contraseña del usuario.
  * @param string $recaptcha Respuesta del reCAPTCHA.
  */
-function loginDatos($user, $password, $recaptcha, $rememberMe) {
+function loginDatos($user, $password, $recaptcha, $rememberMe, $QR) {
+    if ($QR == "") {
+        $booleanQR = false;
+    } else {
+        $booleanQR = true;
+    }
+    
     $defaultImage = "images/profile-user-account.svg";
     $recaptchaSecret = CLAVE_SECRETA;
     $showRecaptcha = false; 
@@ -40,7 +47,7 @@ function loginDatos($user, $password, $recaptcha, $rememberMe) {
     // Solo continuamos si no hay errores previos
     if (empty($mensajes)) {
         $result = buscarUsuario($username);
-        $mensajes = handleLogin($result, $contra, $defaultImage, $rememberMe);
+        $mensajes = handleLogin($result, $contra, $defaultImage, $rememberMe, $booleanQR, $QR);
     }
 
     // Mostrar errores si existen
@@ -93,7 +100,7 @@ function isRecaptchaValid($recaptchaSecret, $recaptchaResponse) {
  * @param string $defaultImage Imagen de perfil por defecto.
  * @return array Mensajes de error.
  */
-function handleLogin($result, $contra, $defaultImage, $rememberMe) {
+function handleLogin($result, $contra, $defaultImage, $rememberMe, $booleanQR, $QR) {
     $mensajes = [];
     
     if ($result) {
@@ -101,7 +108,8 @@ function handleLogin($result, $contra, $defaultImage, $rememberMe) {
             // Iniciar la sesión
             $_SESSION['username'] = $result['username'];
             $_SESSION['profile_image'] = file_exists($result['ruta_imagen']) ? $result['ruta_imagen'] : $defaultImage;
-            echo $rememberMe;
+            //$tokenJWT = JWT::generateToken($result['id']);
+            //$_SESSION['token'] = $tokenJWT;
             // Opción "Remember Me"
             if ($rememberMe === 'on') {
                 $token = bin2hex(random_bytes(32)); // Generar un token único
@@ -112,8 +120,11 @@ function handleLogin($result, $contra, $defaultImage, $rememberMe) {
                     echo "Error al crear la cookie.";
                 }
             }
-
-            header("Location: index.php?pagina=Mostrar");
+            if ($booleanQR) {
+                header("Location: index.php?pagina=UserProfile&username=" . $QR);
+            } else {
+                header("Location: index.php?pagina=Mostrar");
+            }
             
         } else {
             $_SESSION['login_attempts']++;

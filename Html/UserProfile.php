@@ -16,8 +16,6 @@
             </div>
             <?php
 
-            use Google\Service\AdExchangeBuyerII\Size;
-
             if (isset($_SESSION['username'])): ?>
                 <nav>
                     <ul>
@@ -59,12 +57,27 @@
         <div class="user-profile">
             <img src="path/to/profile-picture.jpg" alt="" class="profile-picture">
             
-            
+            <?php
+                require_once 'conexion.php';
+                global $conn;
+                $username = isset($_GET['username']) ? $_GET['username'] : "";
+                $sql = "SELECT * FROM users WHERE username = :username";
+                $statement = $conn->prepare($sql);
+            $statement->bindParam(':username', $username, PDO::PARAM_STR);
+            $statement->execute();
+            $resultado = $statement->fetch();
+            ?>
             <div class="header-profile">
-                <img alt="Foto de perfil" height="80" src="https://storage.googleapis.com/a1aa/image/m5gvfT3ccu0FAiVIej1qqZfZNFBP6dRfbvaIXZiLQgQF2liQB.jpg" width="80" />
+                <img alt="Foto de perfil" height="80" src="<?php if($resultado['ruta_imagen'] == null) { 
+                    echo "/Backend_Pt5/images/profile-user-account.svg";
+                } else {
+                    echo "/Backend_Pt5/" . $resultado['ruta_imagen'];
+
+                } 
+                ?>" width="80" />
                 <div class="info">
-                <h1 class="username">Nombre de Usuario</h1>
-                    <p>Email</p>
+                <h1 class="username"><?= $resultado['username']  ?></h1>
+                    <p><?= $resultado['email'] ?></p>
                     <p class="bio">Esta es la biografía del usuario. Aquí puedes escribir algo sobre ti.</p><br>
                     <div class="stats">
                         <div>
@@ -96,7 +109,7 @@
             
             <!-- Aquí se generarán los artículos del usuario -->
             <?php
-            require_once 'conexion.php';
+            
             global $conn;
             $username = isset($_GET['username']) ? $_GET['username'] : "";
             $query = "SELECT articles.*
