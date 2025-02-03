@@ -25,6 +25,10 @@
             <div class="user-icon">
                 <label for="dropdown">
                     <?php
+                    // Iniciar la sesión
+                    if (session_status() == PHP_SESSION_NONE) {
+                        session_start();
+                    }
                     // PHP: Comprobar si el usuario ya tiene una imagen guardada
                     $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage;
                     ?>
@@ -136,51 +140,47 @@
                 </small>
             </div>
             <div class="form-group">
-                <label for="bio">
-                    Bio
-                </label>
-                <textarea id="bio" placeholder="Explica un poco sobre ti"></textarea>
-                <small>
-                    Aqui puedes escribir sobre ti.
-                </small>
+                <form action="index.php?pagina=ChangeBio" method="POST">
+                    <label for="bio">
+                        Bio
+                    </label>
+                    <textarea id="bio" name="bio" placeholder="Explica un poco sobre ti"><?php echo mostrarBio(); ?></textarea>
+                    <small>
+                        Aqui puedes escribir sobre ti.
+                    </small>
+                    <button>Save</button>
+                </form>
             </div>
-            <button class="button logout"><a href="index.php?pagina=MostrarInici&logout=1">Cerrrar Sesion</a></button>
-            <!-- Botón para generar el código QR -->
-            <button id="generate-qr-btn">Generar QR</button>
+            <div class="buttons-container">
+                <!-- Botón para cerrar la sesion -->
+                <button class="logout-btn"><a href="index.php?pagina=MostrarInici&logout=1">Cerrrar Sesion</a></button>
+                <!-- Botón para generar el código QR -->
+                <button id="generate-qr-btn" class="generate-qr-btn">Generar QR</button>
+
+                <!-- Botón para generar token de la api -->
+                <button id="generate-token-btn" class="generate-token-btn">Generar Token</button>
+            </div>
+
 
             <!-- Contenedor para mostrar el código QR -->
-        <div id="qr-code-overlay">
-            <div id="qr-code-container">
-                <img id="qr-code-image" src="" alt="Código QR">
+            <div id="qr-code-overlay">
+                <div id="qr-code-container">
+                    <img id="qr-code-image" src="" alt="Código QR">
+                </div>
             </div>
-        </div>
+
+            <!-- Contenedor para mostrar el token -->
+            <div id="token-overlay">
+                <div id="token-container">
+                    <h3 id="token"></h3>
+                </div>
+            </div>
 
             <!-- Input oculto para cargar la imagen -->
             <input type="file" id="file-input" accept="image/*" onchange="loadImage(event)">
         </div>
     </div>
 
-
-
-    <!-- <?php
-            // PHP: Comprobar si el usuario ya tiene una imagen guardada
-            $defaultImage = "Imagenes/profile-user.svg"; // URL predeterminada
-            $profileImage = (file_exists(!empty(isset($_SESSION['profile_image'])))) ? $_SESSION['profile_image'] : $defaultImage;
-            ?>
-    <div class="container">
-        <div class="nav-grid">
-            <nav class="nav-bar">
-                <ul>
-                    <li><a href="index.php?pagina=Inicio"><img class="icon" src="Imagenes/house.svg"><span>Inici</span></a></li>
-                    <li><a href="index.php?pagina=Mostrar"><img class="icon" src="Imagenes/newspaper.svg"><span>Articles</span></a></li>
-                    <li><a href="index.php?pagina=Insertar"><img class="icon" src="Imagenes/add-square.svg"><span>Insertar Article</span></a></li>
-                    <li><a href="index.php?pagina=Borrar"><img class="icon" src="Imagenes/delete-button.svg"><span>Borrar Article</span></a></li>
-                    <li><a href="index.php?pagina=Modificar"><img class="icon" src="Imagenes/edit.svg"><span>Modificar Article</span></a></li>
-                </ul>
-            </nav>
-        </div>
-        
-    </div> -->
     <script>
         // Obtener el modal
         var modal = document.getElementById("myModal");
@@ -233,12 +233,9 @@
             // Obtener el contenedor del código QR
             var qrImage = document.getElementById('qr-code-image');
             var qrOverlay = document.getElementById('qr-code-overlay');
-
-            const username = document.getElementById('name').value;
-            const photo = document.getElementById('profile-image').src;
-            const email = document.getElementById('email').value;
-            const bio = document.getElementById('bio').value;
-            fetch('/Backend_Pt5/generate_qr.php?text=' + encodeURIComponent(`Nombre: ${username}\nEmail: ${email}\nBio: ${bio}\nFoto: ${photo}`))
+            const username = '<?php echo $_SESSION['username']; ?>';
+            const url = `https://ctorres.cat/index.php?pagina=Login&username=${encodeURIComponent(username)}`;
+            fetch(`/Backend_Pt5/generate_qr.php?text=${encodeURIComponent(url)}`)
                 .then(response => response.json())
                 .then(data => {
                     qrImage.src = data.url;
@@ -248,6 +245,32 @@
 
         // Cerrar el overlay cuando se hace clic fuera del código QR
         document.getElementById('qr-code-overlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        // Generar token para la api
+        document.getElementById('generate-token-btn').addEventListener('click', function() {
+            // Obtener el contenedor del código QR
+            var token = document.getElementById('token');
+            var tokenOverlay = document.getElementById('token-overlay');
+            
+            fetch(`/Backend_Pt5/api/utils/JWT.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    token.innerHTML = data.token;
+                    tokenOverlay.style.display = 'flex';
+                });
+        });
+
+        // Cerrar el overlay cuando se hace clic fuera del Token
+        document.getElementById('token-overlay').addEventListener('click', function(event) {
             if (event.target === this) {
                 this.style.display = 'none';
             }

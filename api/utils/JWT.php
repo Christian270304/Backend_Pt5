@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . '/../../libs/vendor/autoload.php';
+require_once __DIR__ . '/../../env.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 class JWTHandler {
-    private static $secret_key = "tu_clave_secreta"; // 🔒 Cambia esto por una clave segura
-    private static $algorithm = "HS256";
+    private static $secret_key = API_KEY; 
+    private static $algorithm = ALGORITMO;
 
     // Función para generar un token JWT
     public static function generateToken($data) {
@@ -26,5 +27,18 @@ class JWTHandler {
             return false; // Si el token no es válido, retorna falso
         }
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    if (isset($_SESSION['username'])) {
+        $username = $_SESSION['username'];
+        $token = JWTHandler::generateToken(['username' => $username]);
+        echo json_encode(['token' => $token]);
+    } else {
+        http_response_code(401);
+        echo json_encode(['error' => 'Usuario no autenticado']);
+    }
+    exit;
 }
 ?>

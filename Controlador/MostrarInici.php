@@ -43,7 +43,9 @@
             $article_data .= '<h4 class="titulo">' . $article['titol'] . '</h4>';
             $article_data .= '<p class="texto">' . $article['cos'] . '</p>';
             $article_data .= '<span id="username" class="username">'.$username .'</span>';
-            $article_data .= '<button id="qr-generate" class="qr-content"> <img class="qr" src="images/codigo-qr.png" alt="QR" />  </button>';
+            if ($cat == 'Inicio') {
+                $article_data .= '<button id="qr-generate" class="qr-content"> <img class="qr" src="images/codigo-qr.png" alt="QR" />  </button>';
+            }
             $article_data .= '</div>';
             $article_data .= '</div>';
             

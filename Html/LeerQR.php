@@ -27,8 +27,9 @@
             
         <div class="user-icon">
                 <label  for ="dropdown">
-                
-                    <img src="" alt="Foto de perfil" id="userIcon">
+                <?php // PHP: Comprobar si el usuario ya tiene una imagen guardada
+                    $profileImage = (!empty(isset($_SESSION['profile_image']))) ? $_SESSION['profile_image'] : $defaultImage; ?>
+                    <img src="<?php echo $profileImage; ?>" alt="Foto de perfil" id="userIcon">
                 </label>
                 <input hidden class="dropdown" type="checkbox" id="dropdown" name="dropdown" />
                 <div class="section-dropdown">
@@ -47,10 +48,13 @@
     </div>
     <div class="content">
         <h1>Leer QR</h1>
+        
         <form action="index.php?pagina=LeerQR" method="post" enctype="multipart/form-data">
+            
             <label for="qrImage">Sube una imagen de un código QR:</label>
-            <input type="file" name="qrImage" id="qrImage" accept="image/*" required>
+            <input type="file" name="qrImage" id="qrImage" accept="image/png" required>
             <input type="submit" value="Leer QR">
+            <?= isset($error)? "<label style='color: red; font-weight: bold;'>".$error."</label>": ''; ?>
         </form>
     </div>
     

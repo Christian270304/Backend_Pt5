@@ -56,7 +56,7 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] === 'GET'){
-        // Check if the request is for the API
+        // API
         if (strpos($_SERVER['REQUEST_URI'], '/Backend_Pt5/api/') !== false) {
             require_once 'api/routes/apiRoutes.php';
         }
@@ -117,7 +117,7 @@
                     }
                 }
               
-                if (isset($_SESSION['username']) && isset($_GET['logout'])) {
+                if (isset($_SESSION['username']) || isset($_GET['logout'])) {
                     setcookie('session_token', '', time() - 3600, "/"); 
                     session_unset();
                     session_destroy();
@@ -153,10 +153,8 @@
                 }
                 break;
             case 'UserProfile':
-                
-                    //require_once 'Controlador/UserProfile.php';
+                    require_once 'Controlador/UserProfile.php';
                     include 'Html/UserProfile.php';
-                
                 break;
             case 'LeerQR':
                 //require_once 'Controlador/UserProfile.php';
@@ -215,6 +213,10 @@
         }
         
     } else if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if (strpos($_SERVER['REQUEST_URI'], '/Backend_Pt5/api/utils/JWT.php') !== false) {
+            require_once 'api/utils/JWT.php';
+            exit;
+        }
         $opcion = isset($_GET['pagina']) ? $_GET['pagina'] : 'Mostrar';
         switch ($opcion) {
             case 'Insertar':
@@ -267,6 +269,10 @@
             case 'ChangeEmail':
                 require_once 'Controlador/Perfil.php';
                 changeEmail($_POST['email']);
+                break;
+            case 'ChangeBio':
+                require_once 'Controlador/Perfil.php';
+                changeBio($_POST['bio']);
                 break;
             case 'ChangeUsername':
                 require_once 'Controlador/Perfil.php';

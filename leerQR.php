@@ -1,21 +1,51 @@
 <?php
+//session_start();
 
 require_once __DIR__ . '/libs/vendor/autoload.php';
 
 use chillerlan\QRCode\QRCode;
-$fileTmpPath = $_FILES['qrImage']["tmp_name"];
 
-    try {
+$fileTmpPath = $_FILES['qrImage']['tmp_name'];
+$fileType = mime_content_type($fileTmpPath);
 
-        $result = (new QRCode)->readFromFile($fileTmpPath); // -> DecoderResult
+// Verifica que el archivo sea una imagen PNG
+if ($fileType !== 'image/png') {
+    $error = "El archivo no es una imagen PNG";
+    include_once 'Html/LeerQR.php';
+    exit;
+}
 
-        // you can now use the result instance...
-        $content = $result->data;
+try {
+    $result = (new QRCode)->readFromFile($fileTmpPath); // -> DecoderResult
 
-	    header('Location: ' . $content);
+    // you can now use the result instance...
+    $content = trim($result->data); // Elimina espacios en blanco al inicio y al final
+   
 
-    } catch (Throwable $exception) {
-        var_dump($exception);
+    // Expresión regular para validar que el contenido comience con la URL fija
+    $pattern = '/^https:\/\/www\.ctorres\.cat\/index\.php\?pagina=Login&username=([^&]+)/';
+    if (preg_match($pattern, $content, $matches)) {
+        
+
+        // Extrae el nombre de usuario del contenido
+        $username = $matches[1];
+        
+        // Verifica si el usuario tiene la sesión iniciada
+        if (isset($_SESSION['username'])) {
+            $redirectUrl = "https://www.ctorres.cat/index.php?pagina=UserProfile&username=" . urlencode($username);
+            header('Location: ' . $redirectUrl);
+            exit;
+        } else {
+            header('Location: ' . $content);
+            exit;
+        }
+    } else {
+        $error = "El contenido del QR no es válido";
+        include_once 'Html/LeerQR.php';
     }
-
+    exit;
+} catch (Throwable $exception) {
+    $error = "Algo ha ido mal al leer el QR";
+    include_once 'Html/LeerQR.php';
+}
 ?>

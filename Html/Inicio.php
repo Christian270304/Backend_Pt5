@@ -140,25 +140,33 @@
     </div> -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-    // Selecciona todos los botones con la clase 'qr-generate'
-    const qrButtons = document.querySelectorAll('.qr-content');
+            // Selecciona todos los botones con la clase 'qr-generate'
+            const qrButtons = document.querySelectorAll('.qr-content');
 
-    // Asigna el evento a cada botón
-    qrButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            var qrImage = document.getElementById('qr-code-image');
-            var qrOverlay = document.getElementById('qr-code-overlay');
-            const username = document.getElementById('username').textContent;
-            const url = `https://www.ctorres.cat/index.php?pagina=Login&username=${encodeURIComponent(username)}`;
-            fetch('/Backend_Pt5/generate_qr.php?text= + ${encodeURIComponent(url)}')
-                .then(response => response.json())
-                .then(data => {
-                    qrImage.src = data.url;
-                    qrOverlay.style.display = 'flex';
+            // Asigna el evento a cada botón
+            qrButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    var qrImage = document.getElementById('qr-code-image');
+                    var qrOverlay = document.getElementById('qr-code-overlay');
+                    const username = document.getElementById('username').textContent;
+                    const url = `https://ctorres.cat/index.php?pagina=Login&username=${encodeURIComponent(username)}`;
+                    fetch(`/Backend_Pt5/generate_qr.php?text=${encodeURIComponent(url)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            qrImage.src = data.url;
+                            qrOverlay.style.display = 'flex';
+                        });
                 });
+            });
+            // Oculta el QR cuando se hace clic fuera de él
+            document.addEventListener('click', function(event) {
+                var qrOverlay = document.getElementById('qr-code-overlay');
+                var qrImage = document.getElementById('qr-code-image');
+                if (qrOverlay.style.display === 'flex' && !qrImage.contains(event.target)) {
+                    qrOverlay.style.display = 'none';
+                }
+            });
         });
-    });
-});
     </script>
 </body>
 </html>

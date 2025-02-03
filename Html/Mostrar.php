@@ -24,6 +24,7 @@
                         <li><a href="index.php?pagina=Inicio" id="showAllArticles" >Inici</a></li>
                         <li><a href="index.php?pagina=Mostrar" id="showMyArticles" >Articles</a></li>
                         <li><a href="index.php?pagina=Insertar" id="newArticle" >Crear Article</a></li>
+                        <li><a href="index.php?pagina=LeerQR">Leer QR</a></li>
                     </ul>
                 </nav>
         <?php endif; ?>

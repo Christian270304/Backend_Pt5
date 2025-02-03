@@ -2,7 +2,7 @@
     // Christian Torres Barrantes
 
     require_once 'Model/Perfil.php';
-
+    
     function mostrarEmail() {
         $user_id = idUsuario($_SESSION['username']);
         $email = email($user_id);
@@ -15,6 +15,13 @@
         $username = username($user_id);
         
         return $username;
+    }
+
+    function mostrarBio() {
+        $user_id = idUsuario($_SESSION['username']);
+        $bio = bio($user_id);
+        
+        return $bio;
     }
 
     function mostrarPassword() {
@@ -101,6 +108,41 @@
                 }
             } else {
                 $errors[] = "Aquest correu ya existeix";
+            }
+        }
+        if (!empty($errors)) {
+            $mostrar .= '<div id="caja_mensaje" class="errors">';
+            foreach ($errors as $mensaje) {
+                $mostrar .= $mensaje . '<br/>';
+            }
+            $mostrar .= '</div>';
+        }
+
+        if (!empty($mensajes)) {
+            $mostrar .= '<div id="caja_mensaje" class="mensaje">';
+            foreach ($mensajes as $mensaje) {
+                $mostrar .= $mensaje . '<br/>';
+            }
+            $mostrar .= '</div>';
+        }
+        include 'Html/Perfil.php';
+    }
+
+    function changeBio($bio){
+        $mensajes=[];
+        $errors = [];
+        $mostrar = '';
+
+        if (empty($bio)) {
+            $errors[] = "El camp de la bio no pot estar buit";
+        }
+
+        if (empty($mensajes) && empty($errors)){
+            $user = buscarUsuario($_SESSION['username']);
+            if (cambiarBio($bio,$user['id'])){
+                $mensajes[] = "S'ha modificat la bio";
+            } else {
+                $errors[] = "No s'ha pogut modificar la bio";
             }
         }
         if (!empty($errors)) {

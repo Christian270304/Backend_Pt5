@@ -486,20 +486,170 @@ i{
     justify-content: center;
     align-items: center;
     z-index: 1000; /* Asegurarse de que esté por encima de otros elementos */
-}
-
-/* Estilos para el contenedor del código QR */
-#qr-code-container {
+  }
+  
+  /* Estilos para el contenedor del código QR */
+  #qr-code-container {
     background-color: #fff; /* Fondo blanco para el código QR */
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-#qr-code-image {
+  }
+  
+  #qr-code-image {
     /* degradado */
     background: linear-gradient(145deg, #f0f0f0, #1510a3);
+    width: 300px;
+    height: 300px;
+  }
 
+  /* Estilos para el overlay del Token */
+  #token-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Contenedor del token */
+#token-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    width: 500px;
+    position: relative;
+    text-align: center;
+    transform: scale(0.9);
+    animation: modalSlideIn 0.3s ease-out forwards;
+}
+
+/* Texto del token */
+#token {
+    color: #2d3436;
+    font-size: 1.4rem;
+    margin: 0;
+    word-break: break-all;
+    font-family: 'Courier New', monospace;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 2px dashed #ced4da;
+}
+
+
+/* Estilos base para todos los botones */
+.buttons-container>button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #token-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+    
+    #token {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+}
+
+
+/* Botón de Cerrar Sesión */
+.logout-btn {
+    background-color: #ff4757;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.button.logout:hover {
+    background-color: #ff6b81;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+}
+
+.logout-btn a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+/* Botón Generar QR */
+.generate-qr-btn {
+    background-color: #2ed573;
+    color: white;
+}
+
+.generate-qr-btn:hover {
+    background-color: #7bed9f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
+}
+
+/* Botón Generar Token */
+.generate-token-btn {
+    background-color: #3742fa;
+    color: white;
+}
+
+.generate-token-btn:hover {
+    background-color: #5352ed;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(55, 66, 250, 0.4);
+}
+
+/* Efectos comunes al hacer clic */
+button:active {
+    transform: translateY(1px);
+}
+
+/* Opcional: Contenedor para alinear los botones */
+.buttons-container {
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 

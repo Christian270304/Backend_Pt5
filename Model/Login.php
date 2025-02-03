@@ -28,4 +28,26 @@
         $stmt->execute([':token' => $token]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    function articulosUsuario($username) {
+        global $conn;
+        $query = "SELECT articles.*
+                        FROM articles
+                        INNER JOIN users ON articles.user_id = users.id
+                        WHERE users.username = :username";
+            $statement = $conn->prepare($query);
+            $statement->bindParam(':username', $username, PDO::PARAM_STR);
+            $statement->execute();
+            $resultado = $statement->fetchAll();
+            $articles = [];
+            foreach ($resultado as $row) {
+                $articles[] = [
+                    'id' => $row['id'],
+                    'titol' => $row['titol'],
+                    'cos' => $row['cos'],
+                    'ruta_imagen' => $row['ruta_imagen']
+                ];
+            }
+            return $articles;
+    }
 ?>

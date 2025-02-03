@@ -8,7 +8,8 @@
     <title>User-Profile</title>
 </head>
 
-<body><div class="header">
+<body>
+    <div class="header">
             <div class="logo">
                 <a href="">
                     <img src="/Backend_Pt5/images/favicon.png" alt="Logotip de la pàgina">
@@ -52,23 +53,14 @@
             </div>
         </div>
     <div class="container">
-        
+        <?php if (!(isset($error))):?>
         <!-- Perfil del Usuario -->
         <div class="user-profile">
             <img src="path/to/profile-picture.jpg" alt="" class="profile-picture">
             
-            <?php
-                require_once 'conexion.php';
-                global $conn;
-                $username = isset($_GET['username']) ? $_GET['username'] : "";
-                $sql = "SELECT * FROM users WHERE username = :username";
-                $statement = $conn->prepare($sql);
-            $statement->bindParam(':username', $username, PDO::PARAM_STR);
-            $statement->execute();
-            $resultado = $statement->fetch();
-            ?>
             <div class="header-profile">
-                <img alt="Foto de perfil" height="80" src="<?php if($resultado['ruta_imagen'] == null) { 
+                <img alt="Foto de perfil" height="80" src="
+                <?php if($resultado['ruta_imagen'] == null) { 
                     echo "/Backend_Pt5/images/profile-user-account.svg";
                 } else {
                     echo "/Backend_Pt5/" . $resultado['ruta_imagen'];
@@ -78,10 +70,10 @@
                 <div class="info">
                 <h1 class="username"><?= $resultado['username']  ?></h1>
                     <p><?= $resultado['email'] ?></p>
-                    <p class="bio">Esta es la biografía del usuario. Aquí puedes escribir algo sobre ti.</p><br>
+                    <p class="bio"><?= $resultado['bio'] ?></p><br>
                     <div class="stats">
                         <div>
-                            <p>454</p>
+                            <p><?= count($articles)?></p>
                             <p>publicaciones</p>
                         </div>
                         <div>
@@ -105,46 +97,14 @@
 
             
             <div class="gallery">
-                
-            
-            <!-- Aquí se generarán los artículos del usuario -->
-            <?php
-            
-            global $conn;
-            $username = isset($_GET['username']) ? $_GET['username'] : "";
-            $query = "SELECT articles.*
-                        FROM articles
-                        INNER JOIN users ON articles.user_id = users.id
-                        WHERE users.username = :username";
-            $statement = $conn->prepare($query);
-            $statement->bindParam(':username', $username, PDO::PARAM_STR);
-            $statement->execute();
-            $resultado = $statement->fetchAll();
-            $articles = [];
-            foreach ($resultado as $row) {
-                $articles[] = [
-                    'id' => $row['id'],
-                    'titol' => $row['titol'],
-                    'cos' => $row['cos'],
-                    'ruta_imagen' => $row['ruta_imagen']
-                ];
-            }
-            // Ejemplo de generación de artículos en PHP
-            for ($i = 0; $i < count($articles); $i++) {
-                $article = $articles[$i];
-
-
-                echo '<div class="card" id="' . $article['id'] . '">';
-                echo '<img class="img-article" src="/Backend_Pt5/' . $article['ruta_imagen'] . '" alt="Imagen de ' . $article['titol'] . '">';
-                echo '<div class="article-content">';
-                echo '<h4 class="titulo">' . $article['titol'] . '</h4>';
-                echo '<p class="texto">' . $article['cos'] . '</p>';
-                echo '</div>';
-                echo '</div>';
-            }
+            <?=
+            formatoArticulos($articles);
             ?>
             </div>
         </div>
+        <?php else: ?>
+            <h1><?= $error ?></h1>
+        <?php endif; ?>
     </div>
 </body>
 

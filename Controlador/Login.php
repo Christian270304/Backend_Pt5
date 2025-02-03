@@ -1,7 +1,7 @@
 <?php
     // Christian Torres Barrantes
     require_once 'Model/Login.php';
-    require_once __DIR__ . '/../Utils/JWTUtils.php';
+   
 
     /**
  * Función que verifica los datos cuando el usuario intenta loguear.
@@ -108,8 +108,7 @@ function handleLogin($result, $contra, $defaultImage, $rememberMe, $booleanQR, $
             // Iniciar la sesión
             $_SESSION['username'] = $result['username'];
             $_SESSION['profile_image'] = file_exists($result['ruta_imagen']) ? $result['ruta_imagen'] : $defaultImage;
-            //$tokenJWT = JWT::generateToken($result['id']);
-            //$_SESSION['token'] = $tokenJWT;
+            
             // Opción "Remember Me"
             if ($rememberMe === 'on') {
                 $token = bin2hex(random_bytes(32)); // Generar un token único

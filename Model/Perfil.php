@@ -45,6 +45,18 @@
         }
     }
 
+    function cambiarBio($bio,$user_id){
+        global $conn;
+        $query = "UPDATE users SET bio = :bio WHERE id = :id";
+        $stmt = $conn->prepare($query);
+        $resultado = $stmt->execute([':bio' => $bio ,':id' => $user_id]);
+        if ($resultado && $stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function  cambiarUsername($username,$user_id){
         global $conn;
         $query = "UPDATE users SET username = :username WHERE id = :id";
@@ -64,6 +76,15 @@
         $stmt->execute([':user_id' => $user_id]);
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         return $resultado ? $resultado['email'] : null;
+    }
+
+    function bio($user_id) {
+        global $conn;
+        $query = "SELECT bio FROM users WHERE id = :user_id";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':user_id' => $user_id]);
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $resultado ? $resultado['bio'] : null;
     }
 
     function username($user_id) {
