@@ -217,6 +217,10 @@
             require_once 'api/utils/JWT.php';
             exit;
         }
+        if (strpos($_SERVER['REQUEST_URI'], '/Backend_Pt5/api/refreshtoken') !== false) {
+            require_once 'api/RefreshToken.php';
+            exit;
+        }
         $opcion = isset($_GET['pagina']) ? $_GET['pagina'] : 'Mostrar';
         switch ($opcion) {
             case 'Insertar':

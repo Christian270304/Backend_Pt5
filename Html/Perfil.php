@@ -172,7 +172,14 @@
             <!-- Contenedor para mostrar el token -->
             <div id="token-overlay">
                 <div id="token-container">
-                    <h3 id="token"></h3>
+                    <label for="token">Token</label>
+                    <h3 id="token"></h3><br>
+                    <label for="refreshtoken">Refresh Token</label>
+                    <h3 id="refreshtoken"></h3><br><br>
+                    <small>No compartir los tokens</small>
+                </div>
+                <div id="refreshtoken-container">
+                    
                 </div>
             </div>
 
@@ -253,6 +260,7 @@
         document.getElementById('generate-token-btn').addEventListener('click', function() {
             // Obtener el contenedor del código QR
             var token = document.getElementById('token');
+            var refreshtoken = document.getElementById('refreshtoken');
             var tokenOverlay = document.getElementById('token-overlay');
             
             fetch(`/Backend_Pt5/api/utils/JWT.php`, {
@@ -263,8 +271,9 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
+                    
                     token.innerHTML = data.token;
+                    refreshtoken.innerHTML = data.refreshToken;
                     tokenOverlay.style.display = 'flex';
                 });
         });
