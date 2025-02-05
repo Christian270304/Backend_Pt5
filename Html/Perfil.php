@@ -272,17 +272,9 @@
             .then(response => response.json())
             .then(data => {
                 token.innerHTML = data.token;
+                console.log(data.refreshToken);
                 refreshtoken.innerHTML = data.refreshToken;
                 tokenOverlay.style.display = 'flex';
-
-                // Guardar el refresh token en la base de datos
-                fetch(`/Backend_Pt5/index.php?pagina=GuardarRefreshToken`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ refreshToken: data.refreshToken })
-                });
             });
         });
 

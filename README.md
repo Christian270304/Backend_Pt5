@@ -379,3 +379,20 @@ Para el usuario admin lo que he hecho a sido crear una nueva vista que solo pued
 ### Barra de cerca
 
 La pagina incluye una barra de búsqueda que permite a los usuarios buscar artículos basados en palabras clave. Esto facilita la navegación y permite a los usuarios encontrar rápidamente el contenido que están buscando.
+
+
+# Practica 6
+
+### Fase 0: Creació de la vista d'articles compartits
+Para esta fase he tenido que modificar la interfaz en la vista donde se muestran todos los articulos una vez el usario ha iniciado sesion. Esta modificacion consiste en agregar un boton en la parte inferior derecha de cada articulo donde si hace click se le muestra un QR, este QR contiene el link del perfil del usuario el cual ha escrito ese articulo.
+
+### FASE1: Lectura APIRest. Generació de codi QR. Tractament de dades amb Ajax
+Para esta fase lo unico que he hecho a sido la generacion de QR y el tratamiento de datos con Ajax, para esto lo que hago es un fetch al fichero de creacion de QR y le paso un enlace a http://localhost/Backend_Pt5/index.php?pagina=Login&username= , asi cuando el usuario intenta escanear el QR con el movil se le redirige a la pagina de login con el username para que una vez iniciada la sesion se vaya directamente a la vista de mostrar UserProfile.
+
+### FASE2: Creació d'una APIRest i Lectura de codi QR amb validació de dades
+Para esta fase lo que he hecho a sido crear una carpeta nueva dedicada a la api, donde esta el fichero apiRoutes.php donde se encuentran todas las rutas de los enpoints. Para tener todas las rutas centralizadas en el index.php en el htaccess tengo que cualquier ruta que contenga /api/ redirecciona al index.php.
+
+Para acceder a la api el usuario tiene que poner en la ruta del proyecto o en el dominio /api/y-el-enpoint al que quiere acceder. Ademas tendra que poner un token en el header de Bearer.
+Para poder conseguir este token el usuario tiene que registrase en la pagina si es que aun no esta e ir al perfil y darle al boton de generar token. Aqui le dara dos token, el token normal que le servira para acceder a los enpoint el cual dura 1h y luego esta el refreshtoken. Este token lo que hace es que una vez caducado el token principal , el usuario puede volver a generar otro token principal con el refreshtoken. Para poder generar otro token el usuario tendra que acceder al endpoint /api/refreshtoken mediante POST y en el header poner el refreshtoken. Si el refreshtoken es valido le retornara un nuevo token para que pueda volver a usar la api durante 1h mas.
+
+Por la parte de leer QR he generado una nueva vista que se puede acceder desde la barra de navegación, en esta vista el usuario puede escanear el QR siempre y cuando el QR sea un png. Aqui el controlador detecta si hay una sesion iniciado para que directamente si tiene sesion le vaya a la pagina del Usuario. De lo contrario tiene que iniciar sesion.

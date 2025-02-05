@@ -25,7 +25,7 @@ function recuperarPassword($email)
 
             // Guardar el token en la base de datos junto con el correo del usuario
             $expira = date("Y-m-d H:i:s", strtotime('+1 hour')); // El token expira en 1 hora
-            insertarToken($usuario['id'], $token, $expira);
+            insertarToken($usuario['id'], $token, $expira, 'recuperar');
 
             // Enviar un correo electrónico al usuario con el enlace de recuperación
 
@@ -67,13 +67,6 @@ function recuperarPassword($email)
     
 }
 
-function GuardarRefreshToken($token){
-    $usuario = obtenerUsuarioPorCorreo($_SESSION['username']);
-    if ($usuario) {
-        $expira = date("Y-m-d H:i:s", strtotime('+30 days'));
-        insertarToken($usuario['id'], $token, $expira);
-    } 
-}
 
 
 function mostrarMensaje($mensaje, $tipo = 'success')

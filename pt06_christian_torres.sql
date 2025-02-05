@@ -2,9 +2,9 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: proxysql-01.dd.scip.local
--- Tiempo de generación: 04-02-2025 a las 22:59:02
--- Versión del servidor: 10.10.7-MariaDB-1:10.10.7+maria~deb11
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 05-02-2025 a las 16:48:46
+-- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -75,13 +75,9 @@ CREATE TABLE `tokens` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `token` varchar(100) NOT NULL,
-  `expira` datetime NOT NULL
+  `expira` datetime NOT NULL,
+  `type` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `tokens`
---
-
 
 -- --------------------------------------------------------
 
@@ -109,7 +105,7 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `bio`, `ruta_imagen`
 (2, 'eduardo_81', 'n551bjajq@yahoo.es', '$2y$10$h5as3MdK7d.KbT3F3pWgh.wLg4ii5fIxtn8cjuLbSp4Y4zxkCKCV6', 'Apasionado por la tecnología y los gadgets. Siempre en busca de las últimas novedades en el mundo digital.', '', '', '2024-10-25 17:42:51'),
 (3, 'gorka_63', 'zrt5pg2i@lycos.es', '$2y$10$fIxW5A8f2wGWp8TYH19gv.F3HL8tPT4opN5OZVAQ6CfONILrf3t26', 'Viajero incansable y amante de la fotografía. Capturando el mundo un clic a la vez.', '', '', '2024-10-25 17:43:10'),
 (4, 'franciscojesus_74', '65swvtqw3@caramail.com', '$2y$10$pSn2uk1hfAGMa94eqAWChejtgcq5H0wFWvyGvyWFs2SgkUemg91Ma', 'Cocinero aficionado y fanático de la gastronomía. Siempre experimentando con nuevos sabores.', '', '', '2024-10-25 17:43:30'),
-(5, 'merce_72', 'u3xtm8fwy@lycos.es', '$2y$10$3f/1U5MMrM4r8HYbnvvisekR2kEadUSnvs1sYYE1DvbndNMBxA/A.', 'Lectora empedernida y escritora en formación. Cada página es una nueva aventura.📚✒️', '', '', '2024-10-25 17:43:49');
+(5, 'merce_72', 'u3xtm8fwy@lycos.es', '$2y$10$3f/1U5MMrM4r8HYbnvvisekR2kEadUSnvs1sYYE1DvbndNMBxA/A.', 'Lectora empedernida y escritora en formación. Cada página es una nueva aventura.', '', '', '2024-10-25 17:43:49');
 
 --
 -- Índices para tablas volcadas
@@ -156,6 +152,15 @@ ALTER TABLE `tokens`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+DELIMITER $$
+--
+-- Eventos
+--
+CREATE DEFINER=`root`@`localhost` EVENT `Eliminar_tokens` ON SCHEDULE EVERY 30 DAY STARTS '2025-02-01 16:47:34' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM tokens
+WHERE expira < NOW()$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -20,11 +20,23 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Insertar token en la base de datos
-    function insertarToken($usuario, $token, $expira) {
+    // Obtener Token refresh
+    function obtenerTokenRefresh($username) {
         global $conn;
-        $stmt = $conn->prepare("INSERT INTO tokens (user_id, token, expira) VALUES (:id, :token, :expira)");
-        return $stmt->execute([':id' => $usuario, ':token' => $token, ':expira' => $expira]);
+        $query = "SELECT t.token
+                FROM users u
+                JOIN tokens t ON u.id = t.user_id
+                WHERE u.username = :username AND t.type = 'refreshtoken'";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':username' => $username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['token'];
+    }
+
+    // Insertar token en la base de datos
+    function insertarToken($usuario, $token, $expira, $type) {
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO tokens (user_id, token, expira, type) VALUES (:id, :token, :expira, :type)");
+        return $stmt->execute([':id' => $usuario, ':token' => $token, ':expira' => $expira, ':type' => $type]);
     }
 
     // Funcion para verificar si el usuario tiene una cuenta de Google

@@ -5,12 +5,18 @@ require_once __DIR__ . '/libs/vendor/autoload.php';
 
 use chillerlan\QRCode\QRCode;
 
+$maxFileSize = 10 * 1024; // 2MB
 $fileTmpPath = $_FILES['qrImage']['tmp_name'];
 $fileType = mime_content_type($fileTmpPath);
 
 // Verifica que el archivo sea una imagen PNG
 if ($fileType !== 'image/png') {
     $error = "El archivo no es una imagen PNG";
+    include_once 'Html/LeerQR.php';
+    exit;
+} 
+ if (filesize($fileTmpPath) > $maxFileSize) {
+    $error = "El archivo es demasiado grande. El tamaño máximo permitido es de 2MB.";
     include_once 'Html/LeerQR.php';
     exit;
 }

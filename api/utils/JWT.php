@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../libs/vendor/autoload.php';
 require_once __DIR__ . '/../../env.php';
+require_once __DIR__ . '/../../Model/RecuperarContra.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -14,7 +15,7 @@ class JWTHandler {
     public static function generateToken($data) {
         $payload = [
             "iat" => time(), 
-            "exp" => time() + (60), // Expira en 1 hora
+            "exp" => time() + (60), 
             "data" => $data
         ];
         return JWT::encode($payload, self::$secret_key, self::$algorithm);
@@ -52,7 +53,15 @@ class JWTHandler {
         if (isset($_SESSION['username'])) {
             $username = $_SESSION['username'];
             $token = JWTHandler::generateToken(['username' => $username]);
-            $refreshToken = JWTHandler::generateRefreshToken(['username' => $username]);
+            if (obtenerTokenRefresh($username)){
+                $refreshToken = obtenerTokenRefresh($username);
+                
+            } else {
+                $refreshToken = JWTHandler::generateRefreshToken(['username' => $username]);
+                $id = obtenerUsuarioPorUsername($username);
+                insertarToken($id['id'], $refreshToken, (time() + (60 * 60 * 24 * 30)), 'refreshtoken');
+            }
+           
             echo json_encode(['token' => $token, 'refreshToken' => $refreshToken]);
         } else {
             http_response_code(401);

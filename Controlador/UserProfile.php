@@ -1,5 +1,5 @@
 <?php
-require_once 'model/Login.php';
+require_once __DIR__ . '../model/Login.php';
 
 $username = isset($_GET['username']) ? $_GET['username'] : "";
 $resultado = buscarUsuario($username);

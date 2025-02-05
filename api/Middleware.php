@@ -1,20 +1,22 @@
 <?php
 require_once "api/utils/JWT.php"; // Asegúrate de que la ruta es correcta
 
+header('Content-Type: application/json');
 
 function authenticate() {
    
     $headers = getallheaders();
-    header('Content-Type: application/json');
-    if (!isset($headers['Bearer']) ) {
-       
+    $authHeader = isset($headers['Authorization']) ? $headers['Authorization'] : '';
+    
+    if (!$authHeader) {
         http_response_code(401);
         echo json_encode(['message' => 'Access denied', "error" => "Token no proporcionado"]);
-        exit();
+        exit;
     }
+    
 
     
-    $token = str_replace("Bearer ", "", $headers['Bearer']);
+    $token = str_replace('Bearer ', '', $authHeader);
     $decoded = JWTHandler::validateToken($token);
 
     if (!$decoded) {
@@ -23,6 +25,5 @@ function authenticate() {
         exit();
     }
     echo json_encode(['message' => 'Access granted', 'userData' => $decoded->data]);
-    return $decoded->data; 
 }
 ?>
