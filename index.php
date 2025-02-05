@@ -230,6 +230,15 @@
             case 'Borrar':
                 include 'Html/Borrar.php';
                 break;
+            case 'Tokens':
+                require_once 'api/utils/JWT.php';
+                $JWT = new JWTHandler();
+                $JWT->crearTokens();
+                break;
+            case 'GuardarRefreshToken':
+                require_once 'Controlador/RecuperarContra.php';
+                GuardarRefreshToken($_POST['refreshToken']);
+                break;
             case 'BorrarVerificar':
                 if ($_POST['boton'] === 'Si') {
                     // Acción cuando se presiona el botón "Sí"

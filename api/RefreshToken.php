@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../Utils/JWT.php';
+require_once __DIR__ . '../Utils/JWT.php';
 
 header('Content-Type: application/json');
 
@@ -23,8 +23,8 @@ if (!$userData) {
 }
 
 // Generar un nuevo access token
-$accessToken = JWTHandler::generateToken(['id' => $userData->data->id, 'username' => $userData->data->username]);
+$accessToken = JWTHandler::generateToken(['username' => $userData->data->username, 'username' => $userData->data->username]);
 
-echo json_encode(['accessToken' => $accessToken]);
+echo json_encode(['message'=>'Token Generado','accessToken' => $accessToken]);
 
 ?>

@@ -11,6 +11,15 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Obtener usuario por username
+    function obtenerUsuarioPorUsername($username) {
+        global $conn;
+        $query = "SELECT id FROM users WHERE username = :username";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':username' => $username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Insertar token en la base de datos
     function insertarToken($usuario, $token, $expira) {
         global $conn;

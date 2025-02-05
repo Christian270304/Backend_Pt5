@@ -67,6 +67,14 @@ function recuperarPassword($email)
     
 }
 
+function GuardarRefreshToken($token){
+    $usuario = obtenerUsuarioPorCorreo($_SESSION['username']);
+    if ($usuario) {
+        $expira = date("Y-m-d H:i:s", strtotime('+30 days'));
+        insertarToken($usuario['id'], $token, $expira);
+    } 
+}
+
 
 function mostrarMensaje($mensaje, $tipo = 'success')
 {

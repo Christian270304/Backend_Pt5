@@ -17,8 +17,5 @@ GET http://localhost/Backend_Pt5/api/getarticle
 GET http://localhost/Backend_Pt5/api/getarticles
 
 ###
-POST http://localhost/Backend_Pt5/api/login
-{
-    "username": "admin",
-    "password": "123456"
-}
+POST http://localhost/Backend_Pt5/api/refreshtoken
+Authorization : Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3Mzg3NTg3ODYsImV4cCI6MTczOTM2MzU4NiwiZGF0YSI6eyJ1c2VybmFtZSI6ImFkbWluIn19.pc1enFhYhA5Ts9mLUhoy5MB07XMYJ_pNCeC8rGYfBqM

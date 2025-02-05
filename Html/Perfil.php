@@ -263,19 +263,27 @@
             var refreshtoken = document.getElementById('refreshtoken');
             var tokenOverlay = document.getElementById('token-overlay');
             
-            fetch(`/Backend_Pt5/api/utils/JWT.php`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    
-                    token.innerHTML = data.token;
-                    refreshtoken.innerHTML = data.refreshToken;
-                    tokenOverlay.style.display = 'flex';
+            fetch(`/Backend_Pt5/index.php?pagina=Tokens`, {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                token.innerHTML = data.token;
+                refreshtoken.innerHTML = data.refreshToken;
+                tokenOverlay.style.display = 'flex';
+
+                // Guardar el refresh token en la base de datos
+                fetch(`/Backend_Pt5/index.php?pagina=GuardarRefreshToken`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ refreshToken: data.refreshToken })
                 });
+            });
         });
 
         // Cerrar el overlay cuando se hace clic fuera del Token
